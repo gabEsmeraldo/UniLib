@@ -32,7 +32,7 @@
                 android:id="@+id/TextViewSearchBooks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pesquisar Livros"
+                android:text="Gerenciar Acervo"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -124,7 +124,7 @@
                                 android:backgroundTint="#F3F4F6"
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="3dp"
-                                android:text="Computação"
+                                android:text="5 Exemplares totais"
                                 android:textColor="#0D4C92"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
@@ -202,7 +202,7 @@
                                 android:backgroundTint="#F3F4F6"
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="3dp"
-                                android:text="Engenharia"
+                                android:text="3 Exemplares totais"
                                 android:textColor="#0D4C92"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
@@ -280,7 +280,7 @@
                                 android:backgroundTint="#F3F4F6"
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="3dp"
-                                android:text="Computação"
+                                android:text="2 Exemplares totais"
                                 android:textColor="#0D4C92"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
@@ -361,7 +361,7 @@
                                 android:backgroundTint="#F3F4F6"
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="3dp"
-                                android:text="Redes"
+                                android:text="10 Exemplares totais"
                                 android:textColor="#0D4C92"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
@@ -455,26 +455,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Empréstimos"
-                android:textColor="#9BAAC0"
-                android:textSize="10sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_person"
-                app:tint="#9BAAC0" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Conta"
                 android:textColor="#9BAAC0"
                 android:textSize="10sp"
                 android:textStyle="bold" />
