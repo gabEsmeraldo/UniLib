@@ -11,7 +11,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/header_dark_blue"
+        android:background="#0D5DA3"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
         android:paddingTop="48dp"
