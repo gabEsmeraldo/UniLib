@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F4F6">
+
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0D5DA3"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="🔍"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/TextViewSearchBooks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gerenciar Acervo"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/EditTextSearch"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_chat_input_bar"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:drawablePadding="10dp"
+            android:drawableTint="#9CA3AF"
+            android:hint="Título ou ISBN..."
+            android:inputType="text"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="#374151"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintTop_toBottomOf="@id/headerLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="6dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="6dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <FrameLayout
+                        android:layout_width="70dp"
+                        android:layout_height="95dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_book_blue">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="📘"
+                            android:textSize="24sp" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Algoritmos e Estruturas de Dados"
+                            android:textColor="#1F2937"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Thomas Cormen • ISBN: 9788521614746"
+                            android:textColor="#6B7280"
+                            android:textSize="11sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="6dp"
+                                android:background="@drawable/bg_chat_input_bar"
+                                android:backgroundTint="#F3F4F6"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="3dp"
+                                android:text="5 Exemplares totais"
+                                android:textColor="#0D4C92"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_chat_input_bar"
+                                android:backgroundTint="#DCFCE7"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="3dp"
+                                android:text="3 disponíveis"
+                                android:textColor="#166534"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="6dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <FrameLayout
+                        android:layout_width="70dp"
+                        android:layout_height="95dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_book_purple">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="📙"
+                            android:textSize="24sp" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Engenharia de Software"
+                            android:textColor="#1F2937"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ian Sommerville • ISBN: 9788579220152"
+                            android:textColor="#6B7280"
+                            android:textSize="11sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="6dp"
+                                android:background="@drawable/bg_chat_input_bar"
+                                android:backgroundTint="#F3F4F6"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="3dp"
+                                android:text="3 Exemplares totais"
+                                android:textColor="#0D4C92"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_chat_input_bar"
+                                android:backgroundTint="#FFDADA"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="3dp"
+                                android:text="Indisponível"
+                                android:textColor="#B91C1C"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="6dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <FrameLayout
+                        android:layout_width="70dp"
+                        android:layout_height="95dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_book_green">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="📗"
+                            android:textSize="24sp" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Clean Code"
+                            android:textColor="#1F2937"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Robert C. Martin • ISBN: 9788575222001"
+                            android:textColor="#6B7280"
+                            android:textSize="11sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="6dp"
+                                android:background="@drawable/bg_chat_input_bar"
+                                android:backgroundTint="#F3F4F6"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="3dp"
+                                android:text="2 Exemplares totais"
+                                android:textColor="#0D4C92"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_chat_input_bar"
+                                android:backgroundTint="#DCFCE7"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="3dp"
+                                android:text="5 disponíveis"
+                                android:textColor="#166534"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="6dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <FrameLayout
+                        android:layout_width="70dp"
+                        android:layout_height="95dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_book_red">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="📕"
+                            android:textSize="24sp" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Redes de Computadores"
+                            android:textColor="#1F2937"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tanenbaum · ISBN: 9788575023382"
+                            android:textColor="#6B7280"
+                            android:textSize="11sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="6dp"
+                                android:background="@drawable/bg_chat_input_bar"
+                                android:backgroundTint="#F3F4F6"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="3dp"
+                                android:text="10 Exemplares totais"
+                                android:textColor="#0D4C92"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_chat_input_bar"
+                                android:backgroundTint="#DCFCE7"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="3dp"
+                                android:text="1 Disponível"
+                                android:textColor="#166534"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:background="#FFFFFF"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_nav_active"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_home"
+                app:tint="#1474C4" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textColor="#1474C4"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_search"
+                app:tint="#9BAAC0" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pesquisa"
+                android:textColor="#9BAAC0"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_book"
+                app:tint="#9BAAC0" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Empréstimos"
+                android:textColor="#9BAAC0"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
