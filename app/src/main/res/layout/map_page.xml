@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F9FC"
+    tools:context=".MainActivity">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:id="@+id/headerBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_home_hero"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="Voltar"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="#FFFFFF" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="Mapa da Biblioteca"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="@drawable/bg_icon_button">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center"
+                android:contentDescription="Notificações"
+                android:src="@drawable/ic_notifications"
+                android:tint="#FFFFFF" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_badge_dot" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- BOTTOM NAV -->
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:background="#FFFFFF"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_home"
+                android:tint="#9BAAC0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textColor="#9BAAC0"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_search"
+                android:tint="#9BAAC0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pesquisa"
+                android:textColor="#9BAAC0"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_book"
+                android:tint="#9BAAC0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Empréstimos"
+                android:textColor="#9BAAC0"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_person"
+                android:tint="#9BAAC0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Conta"
+                android:textColor="#9BAAC0"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- CONTEÚDO -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <!-- CARD TÍTULO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/bg_pending_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Localização do livro"
+                    android:textColor="#1E2D3D"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Algoritmos e Estruturas de Dados"
+                    android:textColor="#1474C4"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:lineSpacingExtra="2dp"
+                    android:text="Use o mapa abaixo para localizar a área da biblioteca onde o exemplar está disponível."
+                    android:textColor="#6B7A90"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- MAPA -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="420dp"
+                android:background="@drawable/bg_map_card"
+                android:padding="16dp">
+
+                <!-- ÁREA INTERNA DO MAPA -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mapArea"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_map_inner"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- TÍTULO PEQUENO -->
+                    <TextView
+                        android:id="@+id/tvMapLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:text="Mapa esquemático da biblioteca"
+                        android:textColor="#7C8CA3"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- ESTANTE A -->
+                    <LinearLayout
+                        android:id="@+id/shelfA"
+                        android:layout_width="120dp"
+                        android:layout_height="74dp"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/bg_shelf_block"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvMapLabel">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Estante A"
+                            android:textColor="#6E7E96"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- ESTANTE B DESTACADA -->
+                    <LinearLayout
+                        android:id="@+id/shelfB"
+                        android:layout_width="120dp"
+                        android:layout_height="74dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="18dp"
+                        android:background="@drawable/bg_shelf_block_active"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvMapLabel">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Estante B"
+                            android:textColor="#1474C4"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- ESTANTE C -->
+                    <LinearLayout
+                        android:id="@+id/shelfC"
+                        android:layout_width="120dp"
+                        android:layout_height="74dp"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginTop="26dp"
+                        android:background="@drawable/bg_shelf_block"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/shelfA">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Estante C"
+                            android:textColor="#6E7E96"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- ESTANTE D -->
+                    <LinearLayout
+                        android:id="@+id/shelfD"
+                        android:layout_width="120dp"
+                        android:layout_height="74dp"
+                        android:layout_marginTop="26dp"
+                        android:layout_marginEnd="18dp"
+                        android:background="@drawable/bg_shelf_block"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/shelfB">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Estante D"
+                            android:textColor="#6E7E96"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- CORREDOR CENTRAL -->
+                    <View
+                        android:id="@+id/corridorVertical"
+                        android:layout_width="22dp"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginBottom="26dp"
+                        android:background="@drawable/bg_corridor"
+                        app:layout_constraintBottom_toTopOf="@id/entryBox"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvMapLabel" />
+
+                    <!-- CORREDOR HORIZONTAL SUPERIOR -->
+                    <View
+                        android:id="@+id/corridorTop"
+                        android:layout_width="0dp"
+                        android:layout_height="18dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_corridor"
+                        app:layout_constraintBottom_toBottomOf="@id/shelfA"
+                        app:layout_constraintEnd_toStartOf="@id/shelfB"
+                        app:layout_constraintStart_toEndOf="@id/shelfA"
+                        app:layout_constraintTop_toTopOf="@id/shelfA" />
+
+                    <!-- CORREDOR HORIZONTAL INFERIOR -->
+                    <View
+                        android:id="@+id/corridorBottom"
+                        android:layout_width="0dp"
+                        android:layout_height="18dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_corridor"
+                        app:layout_constraintBottom_toBottomOf="@id/shelfC"
+                        app:layout_constraintEnd_toStartOf="@id/shelfD"
+                        app:layout_constraintStart_toEndOf="@id/shelfC"
+                        app:layout_constraintTop_toTopOf="@id/shelfC" />
+
+                    <!-- LINHA DE ROTA -->
+                    <View
+                        android:id="@+id/routeVertical"
+                        android:layout_width="4dp"
+                        android:layout_height="120dp"
+                        android:background="@drawable/bg_route_line"
+                        app:layout_constraintBottom_toTopOf="@id/shelfB"
+                        app:layout_constraintEnd_toEndOf="@id/corridorVertical"
+                        app:layout_constraintStart_toStartOf="@id/corridorVertical"
+                        app:layout_constraintTop_toBottomOf="@id/entryBox" />
+
+                    <View
+                        android:id="@+id/routeHorizontal"
+                        android:layout_width="70dp"
+                        android:layout_height="4dp"
+                        android:background="@drawable/bg_route_line"
+                        app:layout_constraintBottom_toBottomOf="@id/corridorTop"
+                        app:layout_constraintEnd_toStartOf="@id/shelfB"
+                        app:layout_constraintStart_toEndOf="@id/corridorVertical"
+                        app:layout_constraintTop_toTopOf="@id/corridorTop" />
+
+                    <!-- PONTO DO LIVRO -->
+                    <LinearLayout
+                        android:id="@+id/bookPoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="18dp"
+                        android:layout_marginBottom="-6dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toTopOf="@id/shelfB"
+                        app:layout_constraintEnd_toEndOf="@id/shelfB">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="Localização do livro"
+                            android:src="@drawable/ic_location_pin"
+                            android:tint="#E84545" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Livro"
+                            android:textColor="#E84545"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- ENTRADA -->
+                    <LinearLayout
+                        android:id="@+id/entryBox"
+                        android:layout_width="116dp"
+                        android:layout_height="46dp"
+                        android:layout_marginStart="18dp"
+                        android:layout_marginBottom="18dp"
+                        android:background="@drawable/bg_map_entry"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Entrada"
+                            android:textColor="#1474C4"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- LEGENDA -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="18dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:contentDescription="Legenda"
+                            android:src="@drawable/ic_location_pin"
+                            android:tint="#E84545" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="Estante B · Prateleira 3"
+                            android:textColor="#5C6B82"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- CARD INFO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_pending_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Como encontrar"
+                    android:textColor="#1E2D3D"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="1. Entre pela área principal da biblioteca.&#10;2. Siga até a Estante B.&#10;3. Procure a Prateleira 3.&#10;4. O livro estará sinalizado no local indicado no mapa."
+                    android:textColor="#6B7A90"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
