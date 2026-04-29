@@ -67,6 +67,7 @@
             android:paddingVertical="6dp">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/CardView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -86,6 +87,7 @@
                         android:layout_height="95dp"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/bg_book_blue">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -98,6 +100,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -105,17 +108,20 @@
                             android:textColor="#1F2937"
                             android:textSize="15sp"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Thomas Cormen • ISBN: 9788521614746"
                             android:textColor="#6B7280"
                             android:textSize="11sp" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -128,6 +134,7 @@
                                 android:textColor="#0D4C92"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -145,6 +152,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/CardView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -164,6 +172,7 @@
                         android:layout_height="95dp"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/bg_book_purple">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -176,6 +185,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -183,17 +193,20 @@
                             android:textColor="#1F2937"
                             android:textSize="15sp"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Ian Sommerville • ISBN: 9788579220152"
                             android:textColor="#6B7280"
                             android:textSize="11sp" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -206,6 +219,7 @@
                                 android:textColor="#0D4C92"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -223,6 +237,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/CardView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -242,6 +257,7 @@
                         android:layout_height="95dp"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/bg_book_green">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -254,6 +270,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -261,17 +278,20 @@
                             android:textColor="#1F2937"
                             android:textSize="15sp"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Robert C. Martin • ISBN: 9788575222001"
                             android:textColor="#6B7280"
                             android:textSize="11sp" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -284,6 +304,7 @@
                                 android:textColor="#0D4C92"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -299,7 +320,9 @@
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
+                android:id="@+id/CardView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -347,6 +370,7 @@
                             android:text="Tanenbaum · ISBN: 9788575023382"
                             android:textColor="#6B7280"
                             android:textSize="11sp" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
