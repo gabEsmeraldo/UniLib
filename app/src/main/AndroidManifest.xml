@@ -12,6 +12,75 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UniLib">
         <activity
+            android:name=".activities.UserSearchPage"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UserHomePage"
+            android:exported="false" />
+        <activity
+            android:name=".activities.user_account"
+            android:exported="false" />
+        <activity
+            android:name=".activities.StartPage"
+            android:exported="false" />
+        <activity
+            android:name=".activities.map_page"
+            android:exported="false" />
+        <activity
+            android:name=".activities.LoginPage"
+            android:exported="false" />
+        <activity
+            android:name=".activities.emprestimo_page"
+            android:exported="false" />
+        <activity
+            android:name=".activities.emprestimo_admin_page_ativos"
+            android:exported="false" />
+        <activity
+            android:name=".activities.emprestimo_admin_page"
+            android:exported="false" />
+        <activity
+            android:name=".activities.emprestimo_card_reserva"
+            android:exported="false" />
+        <activity
+            android:name=".activities.emprestimo_card_atrasado"
+            android:exported="false" />
+        <activity
+            android:name=".activities.emprestimo_card_ativo"
+            android:exported="false" />
+        <activity
+            android:name=".activities.chat_ia_page"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CadastroPage"
+            android:exported="false" />
+        <activity
+            android:name=".activities.BookDetails"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AdminSearchPage"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AdminHomePage"
+            android:exported="false" />
+        <activity
+            android:name=".activities.admin_emprestimo_card_pendente"
+            android:exported="false" />
+        <activity
+            android:name=".activities.admin_emprestimo_card_atrasado"
+            android:exported="false" />
+        <activity
+            android:name=".activities.admin_emprestimo_card_ativo"
+            android:exported="false" />
+        <activity
+            android:name=".activities.admin_book_details"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AdminAddBook"
+            android:exported="false" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
