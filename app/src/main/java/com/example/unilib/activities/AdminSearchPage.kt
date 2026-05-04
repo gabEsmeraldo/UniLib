@@ -11,6 +11,8 @@ class AdminSearchPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.admin_search_page)
 
+        AdminNavBarHelper.setup(this, AdminNavTab.SEARCH)
+
         val cardAlgoritmos = findViewById<CardView>(R.id.CardView1)
         val cardEngenharia = findViewById<CardView>(R.id.CardView2)
         val cardCleanCode = findViewById<CardView>(R.id.CardView3)
@@ -35,7 +37,7 @@ class AdminSearchPage : AppCompatActivity() {
     }
 
     private fun irParaDetalhes(titulo: String) {
-        val intent = Intent(this, BookDetails::class.java)
+        val intent = Intent(this, admin_book_details::class.java)
         intent.putExtra("TITULO_LIVRO", titulo)
         startActivity(intent)
     }

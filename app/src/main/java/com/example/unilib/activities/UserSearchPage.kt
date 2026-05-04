@@ -18,15 +18,17 @@ class UserSearchPage : AppCompatActivity() {
         val cardCleanCode = findViewById<CardView>(R.id.CardView3)
         val cardRedes = findViewById<CardView>(R.id.CardView4)
 
-        cardAlgoritmos.setOnClickListener { irParaDetalhes("Algoritmos e Estruturas de Dados") }
-        cardEngenharia.setOnClickListener { irParaDetalhes("Engenharia de Software") }
-        cardCleanCode.setOnClickListener { irParaDetalhes("Clean Code") }
-        cardRedes.setOnClickListener { irParaDetalhes("Redes de Computadores") }
+        cardAlgoritmos.setOnClickListener { irParaDetalhes("Algoritmos e Estruturas de Dados", "blue") }
+        cardEngenharia.setOnClickListener { irParaDetalhes("Engenharia de Software", "purple") }
+        cardCleanCode.setOnClickListener { irParaDetalhes("Clean Code", "green") }
+        cardRedes.setOnClickListener { irParaDetalhes("Redes de Computadores", "red") }
     }
 
-    private fun irParaDetalhes(titulo: String) {
+    private fun irParaDetalhes(titulo: String, color: String) {
         val intent = Intent(this, BookDetails::class.java)
         intent.putExtra("TITULO_LIVRO", titulo)
+        intent.putExtra("BOOK_COLOR", color)
+        intent.putExtra("NAV_TAB", NavTab.SEARCH.name)
         startActivity(intent)
     }
 }
