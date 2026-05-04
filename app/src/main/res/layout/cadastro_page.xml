@@ -123,11 +123,11 @@
                 android:textColor="#1E2D3D"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Matrícula -->
+            <!-- CPF -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="MATRÍCULA"
+                android:text="CPF"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="#5B6B85"
@@ -136,10 +136,10 @@
                 android:fontFamily="sans-serif" />
 
             <EditText
-                android:id="@+id/etMatricula"
+                android:id="@+id/etCPF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ex: 2024001234"
+                android:hint="Ex: 000000000-00"
                 android:inputType="number"
                 android:padding="12dp"
                 android:background="@drawable/input_background"
