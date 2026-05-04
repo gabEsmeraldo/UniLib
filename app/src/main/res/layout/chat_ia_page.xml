@@ -177,7 +177,6 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:hint="Envie sua mensagem"
-            android:hintTextColor="#9BAAC0"
             android:inputType="text"
             android:minHeight="24dp"
             android:textColor="#1E2D3D"

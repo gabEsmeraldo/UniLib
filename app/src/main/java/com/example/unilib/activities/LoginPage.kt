@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import com.example.unilib.R
 import android.widget.ImageView
@@ -15,12 +16,18 @@ class LoginPage : AppCompatActivity() {
         setContentView(R.layout.login_page)
 
         val btnEntrar = findViewById<Button>(R.id.btnEnter)
+        val editEmail = findViewById<EditText>(R.id.editEmail)
         val txtCriarConta = findViewById<TextView>(R.id.TextViewCreateAccount)
         val btnReturn = findViewById<ImageView>(R.id.ImageViewReturn)
         val frameLayout = findViewById<FrameLayout>(R.id.FrameLayoutReturn)
 
         btnEntrar.setOnClickListener {
-            val intent = Intent(this, UserHomePage::class.java)
+            val targetActivity = if (editEmail.text.toString().contains("admin", ignoreCase = true)) {
+                AdminHomePage::class.java
+            } else {
+                UserHomePage::class.java
+            }
+            val intent = Intent(this, targetActivity)
             startActivity(intent)
             finish()
         }

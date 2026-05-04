@@ -171,7 +171,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="82dp"
+        android:layout_marginBottom="16dp"
         android:contentDescription="Chat IA"
         android:src="@drawable/ic_chat"
         android:tint="#FFFFFF"
@@ -243,7 +243,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1 empréstimo ativo"
+                            android:text="2 empréstimos ativos"
                             android:textColor="#FFFFFF"
                             android:textSize="13sp"
                             android:textStyle="bold" />
@@ -270,22 +270,14 @@
                 android:paddingBottom="8dp">
 
                 <TextView
-                    android:id="@+id/tvSeeAllRecommended"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="📖 Recomendados para você"
+                    android:text="Recomendados para você"
                     android:textColor="#1E2D3D"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ver todos"
-                    android:textColor="#1474C4"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
             </LinearLayout>
 
             <HorizontalScrollView
@@ -475,19 +467,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="🆕 Novidades no acervo"
+                    android:text="Novidades no acervo"
                     android:textColor="#1E2D3D"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tvSeeAllNews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ver todos"
-                    android:textColor="#1474C4"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
             </LinearLayout>
 
             <HorizontalScrollView
