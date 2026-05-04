@@ -63,7 +63,8 @@ class BookDetails : AppCompatActivity() {
             "blue" to BookColorTheme(R.drawable.bg_book_blue, "#0D47A1", "#1565C0"),
             "green" to BookColorTheme(R.drawable.bg_book_green, "#004D40", "#00695C"),
             "purple" to BookColorTheme(R.drawable.bg_book_purple, "#4A148C", "#6A1B9A"),
-            "red" to BookColorTheme(R.drawable.bg_book_red, "#B71C1C", "#C62828")
+            "red" to BookColorTheme(R.drawable.bg_book_red, "#B71C1C", "#C62828"),
+            "gray" to BookColorTheme(R.drawable.bg_book_gray, "#37474F", "#546E7A")
         )
 
         val colorByTitle = mapOf(
@@ -75,7 +76,9 @@ class BookDetails : AppCompatActivity() {
             "Algoritmos e Estruturas de Dados" to "blue",
             "Engenharia de Software" to "purple",
             "Clean Code" to "green",
-            "Redes de Computadores" to "red"
+            "Redes de Computadores" to "red",
+            "Inteligência Artificial" to "red",
+            "Banco de Dados" to "gray"
         )
 
         val booksByTitle = listOf(
@@ -159,6 +162,24 @@ class BookDetails : AppCompatActivity() {
                 borrowed = "1",
                 location = "D-03",
                 synopsis = "Aborda conceitos essenciais de redes, protocolos, camadas, transmissao de dados e funcionamento da Internet."
+            ),
+            BookInfo(
+                title = "Inteligência Artificial",
+                author = "Russell & Norvig",
+                isbn = "978-85-508-0534-8",
+                available = "5",
+                borrowed = "1",
+                location = "D-07",
+                synopsis = "Introduz conceitos de agentes inteligentes, busca, representacao de conhecimento, aprendizado de maquina e tomada de decisao."
+            ),
+            BookInfo(
+                title = "Banco de Dados",
+                author = "Date, C.J.",
+                isbn = "978-85-352-9176-2",
+                available = "2",
+                borrowed = "3",
+                location = "B-11",
+                synopsis = "Cobre modelagem relacional, algebra relacional, normalizacao, SQL e fundamentos para projeto e manutencao de bancos de dados."
             )
         ).associateBy { it.title }
     }

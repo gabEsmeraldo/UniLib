@@ -35,10 +35,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="Detalhes - Admin"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:textStyle="bold" />
+
+        <Space
+            android:layout_width="36dp"
+            android:layout_height="24dp" />
     </LinearLayout>
 
     <!-- SCROLL CONTENT -->
@@ -71,15 +76,22 @@
                 android:paddingBottom="28dp">
 
                 <!-- Book Cover -->
-                <ImageView
-                    android:id="@+id/ivBookCover"
+                <FrameLayout
+                    android:id="@+id/bookCover"
                     android:layout_width="140dp"
                     android:layout_height="200dp"
-                    android:background="@drawable/bg_book_blue"
-                    android:contentDescription="Capa do livro"
-                    android:scaleType="centerCrop" />
+                    android:background="@drawable/bg_book_blue">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="📘"
+                        android:textSize="48sp" />
+                </FrameLayout>
 
                 <!-- Book Title -->
+
                 <TextView
                     android:id="@+id/tvBookTitle"
                     android:layout_width="wrap_content"

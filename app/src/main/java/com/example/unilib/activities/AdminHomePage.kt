@@ -14,6 +14,7 @@ class AdminHomePage : AppCompatActivity() {
 
         AdminNavBarHelper.setup(this, AdminNavTab.HOME)
         setupNavigation()
+        setupBookCards()
     }
 
     private fun setupNavigation() {
@@ -31,5 +32,26 @@ class AdminHomePage : AppCompatActivity() {
             startActivity(Intent(this, AdminSearchPage::class.java))
             finish()
         }
+    }
+
+    private fun setupBookCards() {
+        findViewById<View>(R.id.cardAlgoritmosAdminHome)?.setOnClickListener {
+            openBookDetails("Algoritmos e Estruturas de Dados", "blue")
+        }
+
+        findViewById<View>(R.id.cardCleanCodeAdminHome)?.setOnClickListener {
+            openBookDetails("Clean Code", "green")
+        }
+
+        findViewById<View>(R.id.cardBancoDadosAdminHome)?.setOnClickListener {
+            openBookDetails("Banco de Dados", "red")
+        }
+    }
+
+    private fun openBookDetails(title: String, color: String) {
+        val intent = Intent(this, admin_book_details::class.java)
+        intent.putExtra("TITULO_LIVRO", title)
+        intent.putExtra("BOOK_COLOR", color)
+        startActivity(intent)
     }
 }
