@@ -1,8 +1,10 @@
 package com.example.unilib.activities
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
@@ -22,6 +24,14 @@ class BookDetails : AppCompatActivity() {
 
         val requestedColor = intent.getStringExtra("BOOK_COLOR") ?: colorByTitle[book.title] ?: "blue"
         applyBookColor(requestedColor)
+
+        val btnLocalizar = findViewById<LinearLayout>(R.id.btnLocalizar)
+
+        btnLocalizar.setOnClickListener {
+            val intent = Intent(this, map_page::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun renderBook(book: BookInfo) {
