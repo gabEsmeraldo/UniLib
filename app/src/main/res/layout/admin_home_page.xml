@@ -34,6 +34,7 @@
             android:textStyle="bold" />
 
         <FrameLayout
+            android:id="@+id/btnAddBook"
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:background="@drawable/bg_icon_button">
@@ -64,6 +65,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/navAdminHome"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -87,6 +89,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navAdminSearch"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -109,6 +112,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navAdminLoans"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -284,6 +288,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvManageCollection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gerenciar"
