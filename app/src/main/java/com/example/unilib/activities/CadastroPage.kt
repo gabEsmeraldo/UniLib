@@ -2,35 +2,29 @@ package com.example.unilib.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageButton
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.unilib.R
 
 class CadastroPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.cadastro_page)
 
-        val btnBack = findViewById<ImageButton>(R.id.btnBack)
-        val btnCadastrar = findViewById<Button>(R.id.btnCadastrar)
-        val btnFazerLogin = findViewById<Button>(R.id.btnFazerLogin)
+        setupButtons()
+    }
 
-        btnBack.setOnClickListener {
-            val intent = Intent(this, LoginPage::class.java)
-            startActivity(intent)
+    private fun setupButtons() {
+        findViewById<View>(R.id.btnBack).setOnClickListener {
             finish()
         }
 
-        btnCadastrar.setOnClickListener {
-            val intent = Intent(this, LoginPage::class.java)
-            startActivity(intent)
-            finish()
+        findViewById<View>(R.id.btnCadastrar).setOnClickListener {
+            startActivity(Intent(this, UserHomePage::class.java))
         }
 
-        btnFazerLogin.setOnClickListener {
-            val intent = Intent(this, LoginPage::class.java)
-            startActivity(intent)
-            finish()
+        findViewById<View>(R.id.btnFazerLogin).setOnClickListener {
+            startActivity(Intent(this, LoginPage::class.java))
         }
     }
 }

@@ -330,9 +330,12 @@
                     android:paddingEnd="18dp">
 
                     <LinearLayout
+                        android:id="@+id/cardAlgoritmosAdminHome"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -382,9 +385,12 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/cardCleanCodeAdminHome"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -434,8 +440,11 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/cardBancoDadosAdminHome"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout

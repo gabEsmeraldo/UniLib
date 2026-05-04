@@ -220,7 +220,7 @@
                                 android:backgroundTint="#FFDADA"
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="3dp"
-                                android:text="Indisponível"
+                                android:text="0 disponiveis"
                                 android:textColor="#B91C1C"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
@@ -293,7 +293,7 @@
                                 android:backgroundTint="#F3F4F6"
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="3dp"
-                                android:text="2 Exemplares totais"
+                                android:text="6 Exemplares totais"
                                 android:textColor="#0D4C92"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
@@ -305,7 +305,7 @@
                                 android:backgroundTint="#DCFCE7"
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="3dp"
-                                android:text="5 disponíveis"
+                                android:text="1 disponivel"
                                 android:textColor="#166534"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
@@ -482,3 +482,4 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

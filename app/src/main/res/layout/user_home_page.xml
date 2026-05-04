@@ -293,9 +293,12 @@
                     android:paddingEnd="18dp">
 
                     <LinearLayout
+                        android:id="@+id/cardAlgoritmosHome"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -346,9 +349,12 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/cardCleanCodeHome"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -399,8 +405,11 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/cardEngenhariaHome"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -487,9 +496,12 @@
                     android:paddingEnd="18dp">
 
                     <LinearLayout
+                        android:id="@+id/cardIaHome"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -540,8 +552,11 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/cardBancoDadosHome"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout

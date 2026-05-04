@@ -19,26 +19,27 @@ class AdminSearchPage : AppCompatActivity() {
         val cardRedes = findViewById<CardView>(R.id.CardView4)
 
         cardAlgoritmos.setOnClickListener {
-            irParaDetalhes("Algoritmos e Estruturas de Dados")
+            irParaDetalhes("Algoritmos e Estruturas de Dados", "blue")
         }
 
         cardEngenharia.setOnClickListener {
-            irParaDetalhes("Engenharia de Software")
+            irParaDetalhes("Engenharia de Software", "purple")
         }
 
         cardCleanCode.setOnClickListener {
-            irParaDetalhes("Clean Code")
+            irParaDetalhes("Clean Code", "green")
         }
 
         cardRedes.setOnClickListener {
-            irParaDetalhes("Redes de Computadores")
+            irParaDetalhes("Redes de Computadores", "red")
         }
 
     }
 
-    private fun irParaDetalhes(titulo: String) {
+    private fun irParaDetalhes(titulo: String, color: String) {
         val intent = Intent(this, admin_book_details::class.java)
         intent.putExtra("TITULO_LIVRO", titulo)
+        intent.putExtra("BOOK_COLOR", color)
         startActivity(intent)
     }
 }
