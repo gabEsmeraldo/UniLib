@@ -22,17 +22,10 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="🔍"
-                android:textSize="20sp" />
-
-            <TextView
                 android:id="@+id/TextViewSearchBooks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gerenciar Acervo"
+                android:text="Acervo"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -227,7 +220,7 @@
                                 android:backgroundTint="#FFDADA"
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="3dp"
-                                android:text="Indisponível"
+                                android:text="0 disponiveis"
                                 android:textColor="#B91C1C"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
@@ -300,7 +293,7 @@
                                 android:backgroundTint="#F3F4F6"
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="3dp"
-                                android:text="2 Exemplares totais"
+                                android:text="6 Exemplares totais"
                                 android:textColor="#0D4C92"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
@@ -312,7 +305,7 @@
                                 android:backgroundTint="#DCFCE7"
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="3dp"
-                                android:text="5 disponíveis"
+                                android:text="1 disponivel"
                                 android:textColor="#166534"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
@@ -424,6 +417,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
+            android:id="@+id/navAdminHome"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -445,6 +439,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navAdminSearch"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -465,6 +460,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navAdminLoans"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -486,3 +482,4 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($env:ANDROID_HOME; [System.Environment]::GetEnvironmentVariable\\(\"ANDROID_HOME\", \"User\"\\); [System.Environment]::GetEnvironmentVariable\\(\"ANDROID_HOME\", \"Machine\"\\))",
+      "Bash(adb devices *)",
+      "PowerShell($adb = \"$env:LOCALAPPDATA\\\\Android\\\\Sdk\\\\platform-tools\\\\adb.exe\"; & $adb -s emulator-5554 shell am start -n \"com.example.unilib/.activities.StartPage\")",
+      "Bash(./gradlew assembleDebug --quiet)"
+    ]
+  }
+}

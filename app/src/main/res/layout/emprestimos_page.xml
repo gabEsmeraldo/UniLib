@@ -95,7 +95,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:id="@+id/nav_home"
+            android:id="@+id/navHome"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -118,7 +118,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/nav_search"
+            android:id="@+id/navSearch"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -141,7 +141,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/nav_emprestimos"
+            android:id="@+id/navLoans"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -165,7 +165,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/nav_conta"
+            android:id="@+id/navAccount"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"

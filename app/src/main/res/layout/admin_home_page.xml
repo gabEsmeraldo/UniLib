@@ -34,17 +34,37 @@
             android:textStyle="bold" />
 
         <FrameLayout
+            android:id="@+id/btnAdminLogout"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:background="@drawable/bg_icon_button">
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_icon_circle_red">
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
-                android:contentDescription="Adicionar livro"
-                android:src="@drawable/ic_add"
-                android:tint="#FFFFFF" />
+                android:contentDescription="Sair"
+                android:src="@drawable/ic_logout"
+                app:tint="#E74C3C" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/btnAddBook"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:background="@drawable/bg_icon_button"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Adicionar"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </FrameLayout>
     </LinearLayout>
 
@@ -64,6 +84,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/navAdminHome"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -75,7 +96,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_home"
-                android:tint="#1474C4" />
+                app:tint="#1474C4" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -87,6 +108,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navAdminSearch"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -97,7 +119,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_search"
-                android:tint="#9BAAC0" />
+                app:tint="#9BAAC0" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -109,6 +131,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navAdminLoans"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -119,7 +142,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_book"
-                android:tint="#9BAAC0" />
+                app:tint="#9BAAC0" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -170,7 +193,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Bibliotecário(a) 👨‍💼"
+                    android:text="Bibliotecário(a)"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -278,12 +301,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="📚 Acervo em Destaque"
+                    android:text="Acervo em Destaque"
                     android:textColor="#1E2D3D"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvManageCollection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gerenciar"
@@ -306,9 +330,12 @@
                     android:paddingEnd="18dp">
 
                     <LinearLayout
+                        android:id="@+id/cardAlgoritmosAdminHome"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -358,9 +385,12 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/cardCleanCodeAdminHome"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -410,8 +440,11 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/cardBancoDadosAdminHome"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -475,7 +508,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="⏳ Aprovações Pendentes"
+                    android:text="Aprovações Pendentes"
                     android:textColor="#1E2D3D"
                     android:textSize="16sp"
                     android:textStyle="bold"

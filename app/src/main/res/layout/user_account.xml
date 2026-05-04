@@ -161,6 +161,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvVerTodasReservas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ver todos"
@@ -184,9 +185,12 @@
 
                     <!-- Book Card 1 -->
                     <LinearLayout
+                        android:id="@+id/cardReservaCalculo"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -238,9 +242,12 @@
 
                     <!-- Book Card 2 -->
                     <LinearLayout
+                        android:id="@+id/cardReservaCleanArchitecture"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -292,8 +299,11 @@
 
                     <!-- Book Card 3 -->
                     <LinearLayout
+                        android:id="@+id/cardReservaDesignPatterns"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -365,23 +375,19 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ver todos"
-                    android:textColor="#1474C4"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- Empréstimo Card 1 -->
             <LinearLayout
+                android:id="@+id/cardEmprestimoAlgoritmos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
                 android:layout_marginEnd="18dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_card_white"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="12dp">
@@ -432,12 +438,15 @@
 
             <!-- Empréstimo Card 2 -->
             <LinearLayout
+                android:id="@+id/cardEmprestimoDesenvolvimento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
                 android:layout_marginEnd="18dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_card_white"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="12dp">
@@ -503,7 +512,8 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
-                    android:paddingVertical="14dp">
+                    android:paddingVertical="14dp"
+                    android:visibility="gone">
 
                     <FrameLayout
                         android:layout_width="36dp"
@@ -552,7 +562,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="64dp"
-                    android:background="#E8EDF3" />
+                    android:background="#E8EDF3"
+                    android:visibility="gone" />
 
                 <!-- Privacidade e LGPD -->
                 <LinearLayout
@@ -561,7 +572,8 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
-                    android:paddingVertical="14dp">
+                    android:paddingVertical="14dp"
+                    android:visibility="gone">
 
                     <FrameLayout
                         android:layout_width="36dp"
@@ -610,12 +622,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="64dp"
-                    android:background="#E8EDF3" />
+                    android:background="#E8EDF3"
+                    android:visibility="gone" />
 
                 <!-- Sair -->
                 <LinearLayout
+                    android:id="@+id/btnSair"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
@@ -684,7 +700,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:id="@+id/nav_home"
+            android:id="@+id/navHome"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -709,7 +725,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/nav_search"
+            android:id="@+id/navSearch"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -734,7 +750,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/nav_emprestimos"
+            android:id="@+id/navLoans"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -759,7 +775,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/nav_conta"
+            android:id="@+id/navAccount"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"

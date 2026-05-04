@@ -35,10 +35,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="Detalhes do Livro"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:textStyle="bold" />
+
+        <Space
+            android:layout_width="36dp"
+            android:layout_height="24dp" />
     </LinearLayout>
 
     <!-- SCROLL CONTENT -->
@@ -60,6 +65,7 @@
 
             <!-- HERO SECTION -->
             <LinearLayout
+                android:id="@+id/heroSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_home_hero"
@@ -72,6 +78,7 @@
 
                 <!-- Book Cover -->
                 <FrameLayout
+                    android:id="@+id/bookCover"
                     android:layout_width="140dp"
                     android:layout_height="200dp"
                     android:background="@drawable/bg_book_blue">
@@ -454,7 +461,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:id="@+id/nav_home"
+            android:id="@+id/navHome"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -479,7 +486,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/nav_search"
+            android:id="@+id/navSearch"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -504,7 +511,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/nav_emprestimos"
+            android:id="@+id/navLoans"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -529,7 +536,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/nav_conta"
+            android:id="@+id/navAccount"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"

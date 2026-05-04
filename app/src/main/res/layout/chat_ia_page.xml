@@ -59,6 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/navHome"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -81,6 +82,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navSearch"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -103,10 +105,10 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navLoans"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_nav_active"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -126,6 +128,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navAccount"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -174,7 +177,6 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:hint="Envie sua mensagem"
-            android:hintTextColor="#9BAAC0"
             android:inputType="text"
             android:minHeight="24dp"
             android:textColor="#1E2D3D"
