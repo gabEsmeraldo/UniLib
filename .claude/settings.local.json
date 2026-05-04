@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($env:ANDROID_HOME; [System.Environment]::GetEnvironmentVariable\\(\"ANDROID_HOME\", \"User\"\\); [System.Environment]::GetEnvironmentVariable\\(\"ANDROID_HOME\", \"Machine\"\\))"
+    ]
+  }
+}
