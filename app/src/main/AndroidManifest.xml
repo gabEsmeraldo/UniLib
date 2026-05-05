@@ -44,15 +44,6 @@
             android:name=".activities.emprestimo_admin_page"
             android:exported="false" />
         <activity
-            android:name=".activities.emprestimo_card_reserva"
-            android:exported="false" />
-        <activity
-            android:name=".activities.emprestimo_card_atrasado"
-            android:exported="false" />
-        <activity
-            android:name=".activities.emprestimo_card_ativo"
-            android:exported="false" />
-        <activity
             android:name=".activities.chat_ia_page"
             android:exported="false" />
         <activity
@@ -68,25 +59,10 @@
             android:name=".activities.AdminHomePage"
             android:exported="false" />
         <activity
-            android:name=".activities.admin_emprestimo_card_pendente"
-            android:exported="false" />
-        <activity
-            android:name=".activities.admin_emprestimo_card_atrasado"
-            android:exported="false" />
-        <activity
-            android:name=".activities.admin_emprestimo_card_ativo"
-            android:exported="false" />
-        <activity
             android:name=".activities.admin_book_details"
             android:exported="false" />
         <activity
             android:name=".activities.AdminAddBook"
-            android:exported="false" />
-        <activity
-            android:name=".activities.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
             android:exported="false" />
     </application>
 

@@ -17,7 +17,9 @@ class UserHomePage : AppCompatActivity() {
         setupBookCards()
 
         findViewById<FloatingActionButton>(R.id.fabChat)?.setOnClickListener {
-            startActivity(Intent(this, chat_ia_page::class.java))
+            val intent = Intent(this, chat_ia_page::class.java)
+            intent.putExtra("NAV_TAB", NavTab.HOME.name)
+            startActivity(intent)
         }
     }
 

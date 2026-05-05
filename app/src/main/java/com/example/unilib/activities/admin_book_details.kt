@@ -13,7 +13,8 @@ class admin_book_details : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.admin_book_details)
 
-        AdminNavBarHelper.setup(this, AdminNavTab.NONE)
+        val activeTab = intent.getStringExtra("ADMIN_NAV_TAB")?.let { runCatching { AdminNavTab.valueOf(it) }.getOrNull() } ?: AdminNavTab.HOME
+        AdminNavBarHelper.setup(this, activeTab)
         findViewById<View>(R.id.btnBack)?.setOnClickListener { finish() }
 
         val requestedTitle = intent.getStringExtra("TITULO_LIVRO")

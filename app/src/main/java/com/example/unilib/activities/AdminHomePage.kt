@@ -52,6 +52,7 @@ class AdminHomePage : AppCompatActivity() {
         val intent = Intent(this, admin_book_details::class.java)
         intent.putExtra("TITULO_LIVRO", title)
         intent.putExtra("BOOK_COLOR", color)
+        intent.putExtra("ADMIN_NAV_TAB", AdminNavTab.HOME.name)
         startActivity(intent)
     }
 }
