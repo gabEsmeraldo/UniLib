@@ -15,6 +15,7 @@ class AdminAddBook : AppCompatActivity() {
 
         val btnEnter = findViewById<Button>(R.id.btnEnter)
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
+        val btnCancel = findViewById<Button>(R.id.btnCancel)
 
         btnBack.setOnClickListener {
             val intent = Intent(this, AdminHomePage::class.java)
@@ -27,6 +28,8 @@ class AdminAddBook : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        btnCancel.setOnClickListener { finish() }
     
     }
 

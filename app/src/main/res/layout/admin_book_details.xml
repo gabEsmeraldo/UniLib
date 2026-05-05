@@ -65,6 +65,7 @@
 
             <!-- HERO SECTION -->
             <LinearLayout
+                android:id="@+id/heroSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_home_hero"
@@ -330,6 +331,38 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <!-- SINOPSE READ-ONLY SECTION -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/bg_card_white"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SINOPSE"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#9BAAC0"
+                    android:letterSpacing="0.05" />
+
+                <TextView
+                    android:id="@+id/tvSinopseDisplay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Um livro clássico sobre algoritmos e estruturas de dados, cobrindo análise de complexidade, ordenação, estruturas de dados avançadas e algoritmos em grafos."
+                    android:textColor="#3D4D5E"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="4dp" />
+
+            </LinearLayout>
+
             <!-- ACTION BUTTONS SECTION -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -339,11 +372,159 @@
                 android:layout_marginEnd="18dp"
                 android:orientation="vertical">
 
+                <!-- Editar Nome Button -->
+                <LinearLayout
+                    android:id="@+id/btnEditarNome"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_action_row"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="Editar nome"
+                        android:src="@drawable/ic_edit"
+                        app:tint="#1E2D3D" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="Editar nome do livro"
+                        android:textColor="#1E2D3D"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:contentDescription="Ir"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#9BAAC0" />
+                </LinearLayout>
+
+                <!-- Editar Autor Button -->
+                <LinearLayout
+                    android:id="@+id/btnEditarAutor"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_action_row"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="Editar autor"
+                        android:src="@drawable/ic_person"
+                        app:tint="#1E2D3D" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="Editar autor do livro"
+                        android:textColor="#1E2D3D"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:contentDescription="Ir"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#9BAAC0" />
+                </LinearLayout>
+
+                <!-- Editar Imagem Button -->
+                <LinearLayout
+                    android:id="@+id/btnEditarImagem"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_action_row"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="Editar imagem"
+                        android:src="@drawable/ic_add"
+                        app:tint="#1E2D3D" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="Editar imagem do livro"
+                        android:textColor="#1E2D3D"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:contentDescription="Ir"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#9BAAC0" />
+                </LinearLayout>
+
+                <!-- Editar Quantidade Button -->
+                <LinearLayout
+                    android:id="@+id/btnEditarQuantidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_action_row"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="Editar quantidade"
+                        android:src="@drawable/ic_book"
+                        app:tint="#1E2D3D" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="Editar quantidade de exemplares"
+                        android:textColor="#1E2D3D"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:contentDescription="Ir"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="#9BAAC0" />
+                </LinearLayout>
+
                 <!-- Editar Sinopse Button -->
                 <LinearLayout
                     android:id="@+id/btnEditarSinopse"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/bg_action_row"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
