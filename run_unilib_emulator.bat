@@ -15,7 +15,7 @@ if not exist "%ADB%" (
 )
 
 echo Checking emulator connection...
-for /f "tokens=1" %%D in ('"%ADB%" devices ^| findstr /R "^emulator-[0-9][0-9]*[ ]*device"') do (
+for /f "tokens=1" %%D in ('%ADB% devices ^| findstr /R "^emulator-[0-9][0-9]* *device"') do (
     set "EMULATOR_FOUND=1"
 )
 
@@ -39,8 +39,8 @@ if errorlevel 1 (
 )
 popd
 
-echo Launching app...
-"%ADB%" shell monkey -p %PACKAGE_NAME% -c android.intent.category.LAUNCHER 1
+echo Launching StartPage...
+"%ADB%" shell am start -n %PACKAGE_NAME%/.activities.StartPage
 if errorlevel 1 (
     echo.
     echo App launch failed.
@@ -49,5 +49,5 @@ if errorlevel 1 (
 )
 
 echo.
-echo UniLib installed and launched successfully.
+echo UniLib installed and StartPage launched successfully.
 pause

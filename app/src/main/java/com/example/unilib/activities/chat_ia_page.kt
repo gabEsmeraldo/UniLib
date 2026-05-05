@@ -11,7 +11,8 @@ class chat_ia_page : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.chat_ia_page)
 
-        NavBarHelper.setup(this, NavTab.NONE)
+        val activeTab = intent.getStringExtra("NAV_TAB")?.let { runCatching { NavTab.valueOf(it) }.getOrNull() } ?: NavTab.HOME
+        NavBarHelper.setup(this, activeTab)
 
         findViewById<View>(R.id.btnBack)?.setOnClickListener {
             finish()

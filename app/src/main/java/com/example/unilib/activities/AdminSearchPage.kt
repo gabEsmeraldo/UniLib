@@ -40,6 +40,7 @@ class AdminSearchPage : AppCompatActivity() {
         val intent = Intent(this, admin_book_details::class.java)
         intent.putExtra("TITULO_LIVRO", titulo)
         intent.putExtra("BOOK_COLOR", color)
+        intent.putExtra("ADMIN_NAV_TAB", AdminNavTab.SEARCH.name)
         startActivity(intent)
     }
 }
