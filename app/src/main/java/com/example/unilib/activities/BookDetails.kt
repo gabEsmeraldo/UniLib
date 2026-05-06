@@ -29,6 +29,7 @@ class BookDetails : AppCompatActivity() {
 
         btnLocalizar.setOnClickListener {
             val intent = Intent(this, map_page::class.java)
+            intent.putExtra("NAV_TAB", activeTab.name)
             startActivity(intent)
             finish()
         }

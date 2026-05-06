@@ -22,6 +22,7 @@ class LoginPage : AppCompatActivity() {
         val frameLayout = findViewById<FrameLayout>(R.id.FrameLayoutReturn)
 
         btnEntrar.setOnClickListener {
+            // Mock-only shortcut until real authentication exists.
             val targetActivity = if (editEmail.text.toString().contains("admin", ignoreCase = true)) {
                 AdminHomePage::class.java
             } else {

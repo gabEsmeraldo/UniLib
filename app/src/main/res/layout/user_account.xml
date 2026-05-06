@@ -131,12 +131,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/badge_usuario_ativo"
-                        android:text="Usuário Ativo"
-                        android:textColor="#2E7D32"
-                        android:textSize="11sp"
+                        android:layout_marginTop="4dp"
+                        android:text="CPF: 123.456.789-00"
+                        android:textColor="#5C6B82"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
+
                 </LinearLayout>
             </LinearLayout>
 
