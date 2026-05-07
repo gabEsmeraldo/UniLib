@@ -14,7 +14,8 @@ class user_account : AppCompatActivity() {
 
         NavBarHelper.setup(this, NavTab.ACCOUNT)
 
-        setupBookCards()
+        setupReservasAtivas()
+        setupUltimosEmprestimos()
         setupAccountActions()
         setupNotificationsButton()
     }
@@ -25,10 +26,36 @@ class user_account : AppCompatActivity() {
         }
     }
 
-    private fun setupBookCards() {
-        openBook(R.id.cardReservaCalculo, "Cálculo Vol. 1", "blue")
-        openBook(R.id.cardReservaCleanArchitecture, "Clean Architecture", "green")
-        openBook(R.id.cardReservaDesignPatterns, "Design Patterns", "purple")
+    private fun setupReservasAtivas() {
+        findViewById<View>(R.id.cardReservaCalculo)?.setOnClickListener {
+            ReservaAtivaModalHelper.show(
+                activity = this,
+                nomeLivro = "Livro reservado",
+                tempoRestante = "17 minutos",
+                codigo = "6XH-987"
+            )
+        }
+
+        findViewById<View>(R.id.cardReservaCleanArchitecture)?.setOnClickListener {
+            ReservaAtivaModalHelper.show(
+                activity = this,
+                nomeLivro = "Livro reservado",
+                tempoRestante = "17 minutos",
+                codigo = "6XH-987"
+            )
+        }
+
+        findViewById<View>(R.id.cardReservaDesignPatterns)?.setOnClickListener {
+            ReservaAtivaModalHelper.show(
+                activity = this,
+                nomeLivro = "Livro reservado",
+                tempoRestante = "17 minutos",
+                codigo = "6XH-987"
+            )
+        }
+    }
+
+    private fun setupUltimosEmprestimos() {
         openBook(R.id.cardEmprestimoAlgoritmos, "Algoritmos 1", "blue")
         openBook(R.id.cardEmprestimoDesenvolvimento, "Desenvolvimento", "green")
     }
