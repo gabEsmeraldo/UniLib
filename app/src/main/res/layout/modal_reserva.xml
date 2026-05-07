@@ -10,7 +10,7 @@
     android:paddingEnd="20dp"
     android:paddingBottom="22dp">
 
-    <!-- HEADER COM SETINHA -->
+    <!-- HEADER COM SETINHA E TÍTULO DESTACADO -->
     <LinearLayout
         android:id="@+id/headerReservaModal"
         android:layout_width="match_parent"
@@ -33,46 +33,37 @@
         <TextView
             android:id="@+id/tvReservaTitle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:gravity="center"
+            android:background="@drawable/bg_modal_title_outline"
             android:text="Livro Reservado"
-            android:textAlignment="center"
             android:textColor="#1E2D3D"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
-        <!-- Espaço vazio para manter o título centralizado -->
         <View
             android:layout_width="28dp"
             android:layout_height="28dp" />
 
     </LinearLayout>
 
-    <!-- CARD DA MENSAGEM -->
-    <LinearLayout
-        android:id="@+id/cardReservaMensagem"
+    <!-- TEXTO SEM BACKGROUND DIFERENTE -->
+    <TextView
+        android:id="@+id/tvReservaMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/bg_notification_item"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:layout_marginBottom="18dp">
-
-        <TextView
-            android:id="@+id/tvReservaMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="O Livro estará reservado por 30 minutos, apresente a reserva na biblioteca para receber o livro"
-            android:textColor="#1E2D3D"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:lineSpacingExtra="4dp" />
-
-    </LinearLayout>
+        android:text="O Livro estará reservado por 30 minutos, apresente a reserva na biblioteca para receber o livro"
+        android:textColor="#1E2D3D"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="18dp" />
 
     <!-- BOTÃO CONFIRMAR -->
     <androidx.appcompat.widget.AppCompatButton
