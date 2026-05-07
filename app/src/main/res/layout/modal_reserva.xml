@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/modalReservaContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_modal_notifications"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="22dp">
+
+    <!-- HEADER COM SETINHA -->
+    <LinearLayout
+        android:id="@+id/headerReservaModal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginBottom="18dp">
+
+        <ImageView
+            android:id="@+id/btnBackReserva"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Voltar"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="#1474C4" />
+
+        <TextView
+            android:id="@+id/tvReservaTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Livro Reservado"
+            android:textAlignment="center"
+            android:textColor="#1E2D3D"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Espaço vazio para manter o título centralizado -->
+        <View
+            android:layout_width="28dp"
+            android:layout_height="28dp" />
+
+    </LinearLayout>
+
+    <!-- CARD DA MENSAGEM -->
+    <LinearLayout
+        android:id="@+id/cardReservaMensagem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_notification_item"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:layout_marginBottom="18dp">
+
+        <TextView
+            android:id="@+id/tvReservaMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="O Livro estará reservado por 30 minutos, apresente a reserva na biblioteca para receber o livro"
+            android:textColor="#1E2D3D"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:lineSpacingExtra="4dp" />
+
+    </LinearLayout>
+
+    <!-- BOTÃO CONFIRMAR -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnConfirmarReserva"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Confirmar"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_button_blue"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null" />
+
+</LinearLayout>

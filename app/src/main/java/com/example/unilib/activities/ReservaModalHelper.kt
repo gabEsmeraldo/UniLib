@@ -11,25 +11,25 @@ import android.view.WindowManager
 import android.widget.Button
 import com.example.unilib.R
 
-object NotificationsModalHelper {
+object ReservaModalHelper {
 
     fun show(activity: Activity) {
         val dialog = Dialog(activity)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.modal_notifications)
+        dialog.setContentView(R.layout.modal_reserva)
         dialog.setCanceledOnTouchOutside(true)
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val btnBackNotifications = dialog.findViewById<View>(R.id.btnBackNotifications)
-        val btnMarkAsRead = dialog.findViewById<Button>(R.id.btnMarkAsRead)
+        val btnBackReserva = dialog.findViewById<View>(R.id.btnBackReserva)
+        val btnConfirmarReserva = dialog.findViewById<Button>(R.id.btnConfirmarReserva)
 
-        btnBackNotifications.setOnClickListener {
+        btnBackReserva.setOnClickListener {
             dialog.dismiss()
         }
 
-        btnMarkAsRead.setOnClickListener {
+        btnConfirmarReserva.setOnClickListener {
             dialog.dismiss()
         }
 
