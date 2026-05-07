@@ -3,6 +3,7 @@ package com.example.unilib.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
 
@@ -15,10 +16,17 @@ class user_account : AppCompatActivity() {
 
         setupBookCards()
         setupAccountActions()
+        setupNotificationsButton()
+    }
+
+    private fun setupNotificationsButton() {
+        findViewById<FrameLayout>(R.id.btnNotifications).setOnClickListener {
+            NotificationsModalHelper.show(this)
+        }
     }
 
     private fun setupBookCards() {
-        openBook(R.id.cardReservaCalculo, "C\u00e1lculo Vol. 1", "blue")
+        openBook(R.id.cardReservaCalculo, "Cálculo Vol. 1", "blue")
         openBook(R.id.cardReservaCleanArchitecture, "Clean Architecture", "green")
         openBook(R.id.cardReservaDesignPatterns, "Design Patterns", "purple")
         openBook(R.id.cardEmprestimoAlgoritmos, "Algoritmos 1", "blue")
