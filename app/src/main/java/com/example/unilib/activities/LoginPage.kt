@@ -17,13 +17,23 @@ class LoginPage : AppCompatActivity() {
 
         val btnEntrar = findViewById<Button>(R.id.btnEnter)
         val editEmail = findViewById<EditText>(R.id.editEmail)
+        val editPassword = findViewById<EditText>(R.id.editPassword)
         val txtCriarConta = findViewById<TextView>(R.id.TextViewCreateAccount)
+        val txtForgotPassword = findViewById<TextView>(R.id.TextViewForgotPassword)
         val btnReturn = findViewById<ImageView>(R.id.ImageViewReturn)
         val frameLayout = findViewById<FrameLayout>(R.id.FrameLayoutReturn)
 
         btnEntrar.setOnClickListener {
+            val emailText = editEmail.text.toString().trim()
+            val passwordText = editPassword.text.toString()
+
+            if (emailText.isEmpty() || passwordText.isEmpty()) {
+                DadosIncorretosModalHelper.show(this)
+                return@setOnClickListener
+            }
+
             // Mock-only shortcut until real authentication exists.
-            val targetActivity = if (editEmail.text.toString().contains("admin", ignoreCase = true)) {
+            val targetActivity = if (emailText.contains("admin", ignoreCase = true)) {
                 AdminHomePage::class.java
             } else {
                 UserHomePage::class.java
@@ -31,6 +41,10 @@ class LoginPage : AppCompatActivity() {
             val intent = Intent(this, targetActivity)
             startActivity(intent)
             finish()
+        }
+
+        txtForgotPassword.setOnClickListener {
+            ResetSenhaModalHelper.show(this)
         }
 
         txtCriarConta.setOnClickListener {

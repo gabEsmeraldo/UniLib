@@ -95,9 +95,13 @@
             android:padding="16dp">
 
             <!-- Cards container - PENDENTES only -->
-            <include layout="@layout/admin_emprestimo_card_pendente" />
+            <include
+                android:id="@+id/cardPendenteOne"
+                layout="@layout/admin_emprestimo_card_pendente" />
 
-            <include layout="@layout/admin_emprestimo_card_pendente" />
+            <include
+                android:id="@+id/cardPendenteTwo"
+                layout="@layout/admin_emprestimo_card_pendente" />
 
         </LinearLayout>
     </ScrollView>

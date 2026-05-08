@@ -54,12 +54,13 @@ object DevolucaoAtrasadaModalHelper {
         dialog.show()
 
         dialog.window?.let { window ->
+            val width = (activity.resources.displayMetrics.widthPixels * 0.88).toInt()
             window.setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
+                width,
                 WindowManager.LayoutParams.WRAP_CONTENT
             )
 
-            window.setGravity(Gravity.BOTTOM)
+            window.setGravity(Gravity.CENTER)
 
             val params = window.attributes
             params.dimAmount = 0.55f

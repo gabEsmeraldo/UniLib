@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/modalReservaContainer"
+    android:id="@+id/modalEmailInexistenteContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -10,9 +10,8 @@
     android:paddingEnd="20dp"
     android:paddingBottom="22dp">
 
-    <!-- HEADER COM SETINHA E TÍTULO DESTACADO -->
     <LinearLayout
-        android:id="@+id/headerReservaModal"
+        android:id="@+id/headerEmailInexistenteModal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -20,7 +19,7 @@
         android:layout_marginBottom="18dp">
 
         <ImageView
-            android:id="@+id/btnBackReserva"
+            android:id="@+id/btnBackEmailInexistente"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:padding="4dp"
@@ -31,14 +30,14 @@
             android:tint="#1474C4" />
 
         <TextView
-            android:id="@+id/tvReservaTitle"
+            android:id="@+id/tvEmailInexistenteTitle"
             android:layout_width="0dp"
             android:layout_height="34dp"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:gravity="center"
-            android:text="Livro Reservado"
+            android:text="E-mail inexistente"
             android:textColor="#1E2D3D"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -49,12 +48,11 @@
 
     </LinearLayout>
 
-    <!-- TEXTO SEM BACKGROUND DIFERENTE -->
     <TextView
-        android:id="@+id/tvReservaMessage"
+        android:id="@+id/tvEmailInexistenteMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="O Livro estará reservado por 30 minutos, apresente a reserva na biblioteca para receber o livro"
+        android:text="Esse e-mail não possui uma conta ativa, confira os dados inseridos"
         android:textColor="#1E2D3D"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -62,11 +60,10 @@
         android:lineSpacingExtra="4dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="18dp" />
+        android:layout_marginBottom="22dp" />
 
-    <!-- BOTÃO CONFIRMAR -->
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnConfirmarReserva"
+        android:id="@+id/btnConfirmarEmailInexistente"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Confirmar"

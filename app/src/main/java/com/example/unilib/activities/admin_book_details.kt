@@ -22,6 +22,36 @@ class admin_book_details : AppCompatActivity() {
 
         val requestedColor = intent.getStringExtra("BOOK_COLOR") ?: colorByTitle[book.title] ?: "blue"
         applyBookColor(requestedColor)
+
+        wireEditModals(book)
+    }
+
+    private fun wireEditModals(book: BookInfo) {
+        findViewById<View>(R.id.btnEditarNome)?.setOnClickListener {
+            EditarNomeModalHelper.show(this, book.title)
+        }
+        findViewById<View>(R.id.btnEditarAutor)?.setOnClickListener {
+            EditarAutorModalHelper.show(this, book.author)
+        }
+        findViewById<View>(R.id.btnEditarImagem)?.setOnClickListener {
+            EditarImagemModalHelper.show(this)
+        }
+        findViewById<View>(R.id.btnEditarQuantidade)?.setOnClickListener {
+            EditarQuantidadeModalHelper.show(
+                this,
+                currentQuantity = book.total,
+                availableLabel = "${book.available} Disponíveis"
+            )
+        }
+        findViewById<View>(R.id.btnEditarSinopse)?.setOnClickListener {
+            EditarSinopseModalHelper.show(this, book.synopsis)
+        }
+        findViewById<View>(R.id.btnEditarTags)?.setOnClickListener {
+            EditarTagsModalHelper.show(this)
+        }
+        findViewById<View>(R.id.btnExcluirLivro)?.setOnClickListener {
+            ConfirmarExclusaoModalHelper.show(this, book.title)
+        }
     }
 
     private fun renderBook(book: BookInfo) {

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/modalConfirmarEmprestimoContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_modal_notifications"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="22dp">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginBottom="18dp">
+
+        <ImageView
+            android:id="@+id/btnBackConfirmarEmprestimo"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Voltar"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="#1474C4" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:gravity="center"
+            android:text="Confirmar retirada"
+            android:textColor="#1E2D3D"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="28dp"
+            android:layout_height="28dp" />
+    </LinearLayout>
+
+    <!-- STATE: INPUT -->
+    <LinearLayout
+        android:id="@+id/stateInputCodigo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Insira o código de retirada apresentado pelo aluno"
+            android:textColor="#1E2D3D"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="14dp" />
+
+        <EditText
+            android:id="@+id/etCodigoRetirada"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_modal_title_outline"
+            android:hint="A4C123"
+            android:inputType="textCapCharacters"
+            android:maxLength="6"
+            android:gravity="center"
+            android:letterSpacing="0.3"
+            android:fontFamily="monospace"
+            android:textAllCaps="true"
+            android:textColor="#1E2D3D"
+            android:textColorHint="#C9D1DD"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="22dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCancelarConfirmarEmprestimo"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Cancelar"
+                android:textAllCaps="false"
+                android:textColor="#1474C4"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_button_outline"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnConfirmarRetirada"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Confirmar"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_button_blue"
+                android:backgroundTint="@null"
+                android:stateListAnimator="@null" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- STATE: ERROR -->
+    <LinearLayout
+        android:id="@+id/stateErroCodigo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Código inválido ou expirado, insira novamente"
+            android:textColor="#B91C1C"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="22dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTentarNovamenteCodigo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Tentar novamente"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_button_blue"
+            android:backgroundTint="@null"
+            android:stateListAnimator="@null" />
+    </LinearLayout>
+
+    <!-- STATE: SUCCESS -->
+    <LinearLayout
+        android:id="@+id/stateRetiradaConfirmada"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_check"
+            android:tint="#16A34A"
+            android:layout_marginBottom="14dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Retirada Confirmada"
+            android:textColor="#1E2D3D"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_marginBottom="22dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnFecharRetiradaConfirmada"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Fechar"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_button_blue"
+            android:backgroundTint="@null"
+            android:stateListAnimator="@null" />
+    </LinearLayout>
+
+</LinearLayout>
