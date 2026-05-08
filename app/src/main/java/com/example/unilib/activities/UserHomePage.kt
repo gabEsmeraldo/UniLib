@@ -3,6 +3,7 @@ package com.example.unilib.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -15,7 +16,17 @@ class UserHomePage : AppCompatActivity() {
 
         NavBarHelper.setup(this, NavTab.HOME)
         setupBookCards()
+        setupNotificationsButton()
+        setupChatButton()
+    }
 
+    private fun setupNotificationsButton() {
+        findViewById<FrameLayout>(R.id.btnNotifications).setOnClickListener {
+            NotificationsModalHelper.show(this)
+        }
+    }
+
+    private fun setupChatButton() {
         findViewById<FloatingActionButton>(R.id.fabChat)?.setOnClickListener {
             val intent = Intent(this, chat_ia_page::class.java)
             intent.putExtra("NAV_TAB", NavTab.HOME.name)

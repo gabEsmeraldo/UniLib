@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/modalNotificationsContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_modal_notifications"
+    android:paddingStart="20dp"
+    android:paddingTop="18dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="22dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:id="@+id/btnBackNotifications"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Voltar"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="#1474C4" />
+
+        <TextView
+            android:id="@+id/tvNotificationsTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Notificações não lidas"
+            android:textAlignment="center"
+            android:textColor="#1E2D3D"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="28dp"
+            android:layout_height="28dp" />
+
+    </LinearLayout>
+
+    <!-- NOTIFICAÇÃO 1 -->
+    <LinearLayout
+        android:id="@+id/cardNotificationOne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_notification_item"
+        android:paddingStart="14dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/tvNotificationOneText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="O empréstimo do livro POO Simplificado acabará nesta semana"
+            android:textColor="#1E2D3D"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="2dp" />
+
+        <TextView
+            android:id="@+id/tvNotificationOneDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hoje"
+            android:textAlignment="textEnd"
+            android:textColor="#5B6B85"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+    <!-- NOTIFICAÇÃO 2 -->
+    <LinearLayout
+        android:id="@+id/cardNotificationTwo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_notification_item"
+        android:paddingStart="14dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="18dp">
+
+        <TextView
+            android:id="@+id/tvNotificationTwoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hoje é o último dia para devolver o livro Desenvolvimento web, não esqueça para evitar taxas de devolução"
+            android:textColor="#1E2D3D"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="2dp" />
+
+        <TextView
+            android:id="@+id/tvNotificationTwoDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3 Dias atrás"
+            android:textAlignment="textEnd"
+            android:textColor="#5B6B85"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnMarkAsRead"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Marcar como lido"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_button_blue"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null" />
+
+</LinearLayout>
