@@ -95,11 +95,17 @@
             android:padding="16dp">
 
             <!-- Cards container - ATIVOS + ATRASADOS -->
-            <include layout="@layout/admin_emprestimo_card_ativo" />
+            <include
+                android:id="@+id/cardAtivoOne"
+                layout="@layout/admin_emprestimo_card_ativo" />
 
-            <include layout="@layout/admin_emprestimo_card_atrasado" />
+            <include
+                android:id="@+id/cardAtrasadoOne"
+                layout="@layout/admin_emprestimo_card_atrasado" />
 
-            <include layout="@layout/admin_emprestimo_card_ativo" />
+            <include
+                android:id="@+id/cardAtivoTwo"
+                layout="@layout/admin_emprestimo_card_ativo" />
 
         </LinearLayout>
     </ScrollView>

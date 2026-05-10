@@ -5,46 +5,34 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.TextView
 import com.example.unilib.R
 
-object ReservaAtivaModalHelper {
+object EditarImagemModalHelper {
 
-    fun show(
-        activity: Activity,
-        nomeLivro: String = "Livro reservado",
-        tempoRestante: String = "17 minutos",
-        codigo: String = "6XH-987"
-    ) {
+    fun show(activity: Activity) {
         val dialog = Dialog(activity)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.modal_reserva_ativa)
+        dialog.setContentView(R.layout.modal_editar_imagem)
         dialog.setCanceledOnTouchOutside(true)
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val btnCancelar = dialog.findViewById<Button>(R.id.btnCancelarReservaAtiva)
-        val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarReservaAtiva)
+        val btnBack = dialog.findViewById<View>(R.id.btnBackEditarImagem)
+        val placeholder = dialog.findViewById<View>(R.id.imagePlaceholder)
+        val btnCancelar = dialog.findViewById<Button>(R.id.btnCancelarEditarImagem)
+        val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarEditarImagem)
 
-        val tvTitle = dialog.findViewById<TextView>(R.id.tvReservaAtivaTitle)
-        val tvMessage = dialog.findViewById<TextView>(R.id.tvReservaAtivaMessage)
-        val tvCodigo = dialog.findViewById<TextView>(R.id.tvReservaAtivaCodigo)
+        // Placeholder is decorative — no real picker integration yet.
+        placeholder.setOnClickListener { /* no-op */ }
 
-        tvTitle.text = nomeLivro
-        tvMessage.text = "Apresente o código na biblioteca nos próximos $tempoRestante para receber o livro emprestado"
-        tvCodigo.text = codigo
-
-        btnCancelar.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        btnConfirmar.setOnClickListener {
-            dialog.dismiss()
-        }
+        btnBack.setOnClickListener { dialog.dismiss() }
+        btnCancelar.setOnClickListener { dialog.dismiss() }
+        btnConfirmar.setOnClickListener { dialog.dismiss() }
 
         dialog.show()
 
@@ -54,7 +42,6 @@ object ReservaAtivaModalHelper {
                 width,
                 WindowManager.LayoutParams.WRAP_CONTENT
             )
-
             window.setGravity(Gravity.CENTER)
 
             val params = window.attributes
