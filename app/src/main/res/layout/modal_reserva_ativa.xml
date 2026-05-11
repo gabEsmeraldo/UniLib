@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/modalReservaAtivaContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_modal_notifications"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="22dp">
+
+    <!-- TÍTULO -->
+    <TextView
+        android:id="@+id/tvReservaAtivaTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Livro reservado"
+        android:textAlignment="center"
+        android:textColor="#1E2D3D"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="22dp" />
+
+    <!-- MENSAGEM -->
+    <TextView
+        android:id="@+id/tvReservaAtivaMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Apresente o código na biblioteca nos próximos 17 minutos para receber o livro emprestado"
+        android:textColor="#1E2D3D"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:lineSpacingExtra="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="22dp" />
+
+    <!-- CÓDIGO -->
+    <TextView
+        android:id="@+id/tvReservaAtivaCodigo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="6XH-987"
+        android:textColor="#1E2D3D"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:letterSpacing="0.08"
+        android:layout_marginBottom="24dp" />
+
+    <!-- BOTÕES -->
+    <LinearLayout
+        android:id="@+id/actionButtonsReservaAtiva"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancelarReservaAtiva"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="Cancelar"
+            android:textAllCaps="false"
+            android:textColor="#1474C4"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_button_outline"
+            android:backgroundTint="@null"
+            android:stateListAnimator="@null" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnConfirmarReservaAtiva"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Confirmar"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_button_blue"
+            android:backgroundTint="@null"
+            android:stateListAnimator="@null" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -16,5 +16,12 @@ class emprestimo_admin_page : AppCompatActivity() {
             startActivity(Intent(this, emprestimo_admin_page_ativos::class.java))
             finish()
         }
+
+        findViewById<View>(R.id.cardPendenteOne)?.setOnClickListener {
+            DetalhesEmprestimoModalHelper.show(this, EmprestimoStatus.PENDENTE)
+        }
+        findViewById<View>(R.id.cardPendenteTwo)?.setOnClickListener {
+            DetalhesEmprestimoModalHelper.show(this, EmprestimoStatus.PENDENTE)
+        }
     }
 }

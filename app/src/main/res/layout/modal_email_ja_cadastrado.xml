@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/modalEmailJaCadastradoContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_modal_notifications"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="22dp">
+
+    <LinearLayout
+        android:id="@+id/headerEmailJaCadastradoModal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginBottom="18dp">
+
+        <ImageView
+            android:id="@+id/btnBackEmailJaCadastrado"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:padding="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Voltar"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="#1474C4" />
+
+        <TextView
+            android:id="@+id/tvEmailJaCadastradoTitle"
+            android:layout_width="0dp"
+            android:layout_height="34dp"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:gravity="center"
+            android:text="E-mail já cadastrado"
+            android:textColor="#1E2D3D"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="28dp"
+            android:layout_height="28dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvEmailJaCadastradoMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Este e-mail já possui uma conta cadastrada, se dirija para a seção de reset de senha"
+        android:textColor="#1E2D3D"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="22dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnConfirmarEmailJaCadastrado"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Confirmar"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_button_blue"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null" />
+
+</LinearLayout>

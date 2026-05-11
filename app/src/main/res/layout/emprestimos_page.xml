@@ -58,7 +58,9 @@
             <!-- Active loan cards -->
             <include layout="@layout/emprestimo_card_ativo" />
 
-            <include layout="@layout/emprestimo_card_atrasado" />
+            <include
+                android:id="@+id/cardEmprestimoAtrasado"
+                layout="@layout/emprestimo_card_atrasado" />
 
             <!-- RESERVAS ATIVAS Section -->
             <TextView

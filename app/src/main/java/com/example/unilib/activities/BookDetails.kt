@@ -26,12 +26,17 @@ class BookDetails : AppCompatActivity() {
         applyBookColor(requestedColor)
 
         val btnLocalizar = findViewById<LinearLayout>(R.id.btnLocalizar)
+        val btnReservar = findViewById<LinearLayout>(R.id.btnReservar)
 
         btnLocalizar.setOnClickListener {
             val intent = Intent(this, map_page::class.java)
             intent.putExtra("NAV_TAB", activeTab.name)
             startActivity(intent)
             finish()
+        }
+
+        btnReservar.setOnClickListener {
+            ReservaModalHelper.show(this)
         }
     }
 

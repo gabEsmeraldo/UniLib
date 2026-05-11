@@ -3,6 +3,7 @@ package com.example.unilib.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
 
@@ -13,14 +14,48 @@ class user_account : AppCompatActivity() {
 
         NavBarHelper.setup(this, NavTab.ACCOUNT)
 
-        setupBookCards()
+        setupReservasAtivas()
+        setupUltimosEmprestimos()
         setupAccountActions()
+        setupNotificationsButton()
     }
 
-    private fun setupBookCards() {
-        openBook(R.id.cardReservaCalculo, "C\u00e1lculo Vol. 1", "blue")
-        openBook(R.id.cardReservaCleanArchitecture, "Clean Architecture", "green")
-        openBook(R.id.cardReservaDesignPatterns, "Design Patterns", "purple")
+    private fun setupNotificationsButton() {
+        findViewById<FrameLayout>(R.id.btnNotifications).setOnClickListener {
+            NotificationsModalHelper.show(this)
+        }
+    }
+
+    private fun setupReservasAtivas() {
+        findViewById<View>(R.id.cardReservaCalculo)?.setOnClickListener {
+            ReservaAtivaModalHelper.show(
+                activity = this,
+                nomeLivro = "Livro reservado",
+                tempoRestante = "17 minutos",
+                codigo = "6XH-987"
+            )
+        }
+
+        findViewById<View>(R.id.cardReservaCleanArchitecture)?.setOnClickListener {
+            ReservaAtivaModalHelper.show(
+                activity = this,
+                nomeLivro = "Livro reservado",
+                tempoRestante = "17 minutos",
+                codigo = "6XH-987"
+            )
+        }
+
+        findViewById<View>(R.id.cardReservaDesignPatterns)?.setOnClickListener {
+            ReservaAtivaModalHelper.show(
+                activity = this,
+                nomeLivro = "Livro reservado",
+                tempoRestante = "17 minutos",
+                codigo = "6XH-987"
+            )
+        }
+    }
+
+    private fun setupUltimosEmprestimos() {
         openBook(R.id.cardEmprestimoAlgoritmos, "Algoritmos 1", "blue")
         openBook(R.id.cardEmprestimoDesenvolvimento, "Desenvolvimento", "green")
     }
