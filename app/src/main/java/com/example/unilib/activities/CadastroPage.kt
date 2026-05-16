@@ -12,10 +12,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class CadastroPage : AppCompatActivity() {
 
-    private companion object {
-        val takenEmails = setOf("existente@unilib.com")
-    }
-
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
@@ -56,12 +52,6 @@ class CadastroPage : AppCompatActivity() {
 
             if (nome.isEmpty() || cpf.isEmpty() || email.isEmpty() || senha.isEmpty() || confirmaSenha.isEmpty()) {
                 Toast.makeText(this, "Todos os campos devem ser preenchidos", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-
-            if (email in takenEmails) {
-                EmailJaCadastradoModalHelper.show(this)
                 return@setOnClickListener
             }
 

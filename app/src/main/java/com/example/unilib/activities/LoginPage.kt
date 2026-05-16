@@ -53,18 +53,6 @@ class LoginPage : AppCompatActivity() {
                 .addOnFailureListener {
                     Toast.makeText(this, "Erro ao entrar: ${it.message}", Toast.LENGTH_LONG).show()
                 }
-
-
-
-
-            val targetActivity = if (emailText.contains("admin", ignoreCase = true)) {
-                AdminHomePage::class.java
-            } else {
-                UserHomePage::class.java
-            }
-            val intent = Intent(this, targetActivity)
-            startActivity(intent)
-            finish()
         }
 
         txtForgotPassword.setOnClickListener {
