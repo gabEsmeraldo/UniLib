@@ -2,6 +2,8 @@ package com.example.unilib.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -41,13 +43,35 @@ class CadastroPage : AppCompatActivity() {
 
         setupNavigationButtons()
 
+        editCPF.addTextChangedListener(object : TextWatcher {
+            private var isFormatting = false
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (isFormatting || s == null) return
+                isFormatting = true
+                val digits = s.toString().filter { it.isDigit() }.take(11)
+                val formatted = buildString {
+                    for (i in digits.indices) {
+                        if (i == 3 || i == 6) append('.')
+                        else if (i == 9) append('-')
+                        append(digits[i])
+                    }
+                }
+                if (formatted != s.toString()) {
+                    editCPF.setText(formatted)
+                    editCPF.setSelection(formatted.length)
+                }
+                isFormatting = false
+            }
+        })
 
         btnCadastrar.setOnClickListener {
             val nome = editNome.text.toString().trim()
             val email = editEmail.text.toString().trim().lowercase()
             val senha = editSenha.text.toString().trim()
             val confirmaSenha = editConfirmarSenha.text.toString().trim()
-            val cpf = editCPF.text.toString().trim()
+            val cpf = editCPF.text.toString().filter { it.isDigit() }
 
 
             if (nome.isEmpty() || cpf.isEmpty() || email.isEmpty() || senha.isEmpty() || confirmaSenha.isEmpty()) {
