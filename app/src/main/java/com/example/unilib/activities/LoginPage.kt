@@ -9,11 +9,19 @@ import android.widget.TextView
 import com.example.unilib.R
 import android.widget.ImageView
 import android.widget.FrameLayout
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginPage : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_page)
+
+        auth = FirebaseAuth.getInstance()
 
         val btnEntrar = findViewById<Button>(R.id.btnEnter)
         val editEmail = findViewById<EditText>(R.id.editEmail)
@@ -24,23 +32,27 @@ class LoginPage : AppCompatActivity() {
         val frameLayout = findViewById<FrameLayout>(R.id.FrameLayoutReturn)
 
         btnEntrar.setOnClickListener {
-            val emailText = editEmail.text.toString().trim()
-            val passwordText = editPassword.text.toString()
+            val emailText = editEmail.text.toString().trim().lowercase()
+            val passwordText = editPassword.text.toString().trim()
 
             if (emailText.isEmpty() || passwordText.isEmpty()) {
                 DadosIncorretosModalHelper.show(this)
                 return@setOnClickListener
             }
 
-            // Mock-only shortcut until real authentication exists.
-            val targetActivity = if (emailText.contains("admin", ignoreCase = true)) {
-                AdminHomePage::class.java
-            } else {
-                UserHomePage::class.java
-            }
-            val intent = Intent(this, targetActivity)
-            startActivity(intent)
-            finish()
+            auth.signInWithEmailAndPassword(emailText, passwordText)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Login realizado com sucesso", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, UserHomePage::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Erro ao entrar: E-mail ou senha incorretos.", Toast.LENGTH_LONG).show()
+                    }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Erro ao entrar: ${it.message}", Toast.LENGTH_LONG).show()
+                }
         }
 
         txtForgotPassword.setOnClickListener {
