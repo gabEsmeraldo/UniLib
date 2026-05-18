@@ -56,6 +56,7 @@
                 android:layout_marginBottom="8dp"/>
 
             <EditText
+                android:id="@+id/editBookTitle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_chat_input_bar"
@@ -75,6 +76,7 @@
                 android:layout_marginBottom="8dp"/>
 
             <EditText
+                android:id="@+id/editAuthor"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_chat_input_bar"
@@ -94,14 +96,17 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/editIsbn"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_chat_input_bar"
-                android:hint="978-XX-XXXX-XXX-X"
+                android:hint="978-X-XX-XXXXXX-X"
                 android:paddingHorizontal="16dp"
                 android:layout_marginBottom="20dp"
                 android:textSize="15sp"
-                android:inputType="number"/>
+                android:inputType="phone"
+                android:digits="0123456789-"
+                android:maxLength="17"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -113,6 +118,7 @@
                 android:layout_marginBottom="8dp"/>
 
             <EditText
+                android:id="@+id/editTags"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_chat_input_bar"
@@ -131,6 +137,7 @@
                 android:layout_marginBottom="8dp"/>
 
             <EditText
+                android:id="@+id/editSynopsis"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@drawable/bg_chat_input_bar"
@@ -151,6 +158,7 @@
                 android:layout_marginBottom="8dp"/>
 
             <EditText
+                android:id="@+id/editQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_chat_input_bar"
@@ -161,6 +169,7 @@
                 android:inputType="number"/>
 
             <LinearLayout
+                android:id="@+id/layoutAddImage"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginBottom="40dp"
