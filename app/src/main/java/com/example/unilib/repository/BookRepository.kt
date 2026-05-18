@@ -7,8 +7,9 @@ class BookRepository {
     private val db = FirebaseFirestore.getInstance()
     fun addBook(book: Book, onSuccess: () -> Unit, onError: (Exception) -> Unit) {
         book.available = book.quantity
-        db.collection("books")
-            .add(book)
+        val docRef = db.collection("books").document()
+        book.id = docRef.id
+        docRef.set(book)
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { onError(it) }
     }

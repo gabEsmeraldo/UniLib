@@ -1,6 +1,8 @@
 package com.example.unilib.activities
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -21,6 +23,27 @@ class AdminAddBook : AppCompatActivity() {
         val editBookTitle = findViewById<EditText>(R.id.editBookTitle)
         val editAuthor = findViewById<EditText>(R.id.editAuthor)
         val editIsbn = findViewById<EditText>(R.id.editIsbn)
+        editIsbn.addTextChangedListener(object : TextWatcher {
+            private var isFormatting = false
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (isFormatting || s == null) return
+                isFormatting = true
+                val digits = s.toString().filter { it.isDigit() }.take(13)
+                val formatted = buildString {
+                    for (i in digits.indices) {
+                        if (i == 3 || i == 4 || i == 6 || i == 12) append('-')
+                        append(digits[i])
+                    }
+                }
+                if (formatted != s.toString()) {
+                    editIsbn.setText(formatted)
+                    editIsbn.setSelection(formatted.length)
+                }
+                isFormatting = false
+            }
+        })
         val editTags = findViewById<EditText>(R.id.editTags)
         val editSynopsis = findViewById<EditText>(R.id.editSynopsis)
         val editQuantity = findViewById<EditText>(R.id.editQuantity)
@@ -36,7 +59,7 @@ class AdminAddBook : AppCompatActivity() {
         btnEnter.setOnClickListener {
             val title = editBookTitle.text.toString().trim()
             val author = editAuthor.text.toString().trim()
-            val isbn = editIsbn.text.toString().trim()
+            val isbn = editIsbn.text.toString().filter { it.isDigit() }
             val tagsText = editTags.text.toString().trim()
             val synopsis = editSynopsis.text.toString().trim()
             val quantityText = editQuantity.text.toString().trim()
@@ -50,7 +73,7 @@ class AdminAddBook : AppCompatActivity() {
                 return@setOnClickListener
             }
             val tags = if (tagsText.isNotEmpty()) {
-                tagsText.split(",").map { it.trim() }
+                tagsText.split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
             } else {
                 emptyList()
             }

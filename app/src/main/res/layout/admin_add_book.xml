@@ -100,11 +100,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_chat_input_bar"
-                android:hint="978-XX-XXXX-XXX-X"
+                android:hint="978-X-XX-XXXXXX-X"
                 android:paddingHorizontal="16dp"
                 android:layout_marginBottom="20dp"
                 android:textSize="15sp"
-                android:inputType="number"/>
+                android:inputType="phone"
+                android:digits="0123456789-"
+                android:maxLength="17"/>
 
             <TextView
                 android:layout_width="wrap_content"

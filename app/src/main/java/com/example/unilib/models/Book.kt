@@ -1,5 +1,6 @@
 package com.example.unilib.models
 
+import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.ServerTimestamp
 import java.util.Date
 
