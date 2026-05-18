@@ -11,10 +11,12 @@ import android.widget.ImageView
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginPage : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +24,7 @@ class LoginPage : AppCompatActivity() {
         setContentView(R.layout.login_page)
 
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         val btnEntrar = findViewById<Button>(R.id.btnEnter)
         val editEmail = findViewById<EditText>(R.id.editEmail)
@@ -43,9 +46,18 @@ class LoginPage : AppCompatActivity() {
             auth.signInWithEmailAndPassword(emailText, passwordText)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(this, "Login realizado com sucesso", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, UserHomePage::class.java))
-                        finish()
+                        val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
+                        db.collection("users").document(uid).get()
+                            .addOnSuccessListener { document ->
+                                Toast.makeText(this, "Login realizado com sucesso", Toast.LENGTH_SHORT).show()
+                                val isAdmin = document.getBoolean("admin") ?: false
+                                val destination = if (isAdmin) AdminHomePage::class.java else UserHomePage::class.java
+                                startActivity(Intent(this, destination))
+                                finish()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, "Erro ao verificar permissões: ${it.message}", Toast.LENGTH_LONG).show()
+                            }
                     } else {
                         Toast.makeText(this, "Erro ao entrar: E-mail ou senha incorretos.", Toast.LENGTH_LONG).show()
                     }
