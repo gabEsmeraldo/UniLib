@@ -91,7 +91,6 @@
                 android:orientation="horizontal"
                 android:padding="16dp">
 
-                <!-- Avatar with Initials -->
                 <FrameLayout
                     android:layout_width="60dp"
                     android:layout_height="60dp"
@@ -107,7 +106,6 @@
                         android:textStyle="bold" />
                 </FrameLayout>
 
-                <!-- User Info -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -173,189 +171,21 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- HORIZONTAL SCROLL - RESERVAS -->
+            <!-- HORIZONTAL SCROLL - RESERVAS DINÂMICAS -->
             <HorizontalScrollView
+                android:id="@+id/reservasScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none">
 
                 <LinearLayout
+                    android:id="@+id/reservasContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingStart="18dp"
-                    android:paddingEnd="18dp">
+                    android:paddingEnd="18dp" />
 
-                    <!-- Book Card 1 -->
-                    <LinearLayout
-                        android:id="@+id/cardReservaCalculo"
-                        android:layout_width="110dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="110dp"
-                            android:layout_height="155dp"
-                            android:background="@drawable/bg_book_blue">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="📘"
-                                android:textSize="34sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom|start"
-                                android:layout_marginStart="6dp"
-                                android:layout_marginBottom="6dp"
-                                android:background="@drawable/bg_avail_tag"
-                                android:paddingStart="6dp"
-                                android:paddingTop="2dp"
-                                android:paddingEnd="6dp"
-                                android:paddingBottom="2dp"
-                                android:text="Reservado"
-                                android:textColor="#FFFFFF"
-                                android:textSize="9sp"
-                                android:textStyle="bold" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:maxLines="1"
-                            android:text="Cálculo Vol. 1"
-                            android:textColor="#1E2D3D"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="James Stewart"
-                            android:textColor="#9BAAC0"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- Book Card 2 -->
-                    <LinearLayout
-                        android:id="@+id/cardReservaCleanArchitecture"
-                        android:layout_width="110dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="110dp"
-                            android:layout_height="155dp"
-                            android:background="@drawable/bg_book_green">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="📗"
-                                android:textSize="34sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom|start"
-                                android:layout_marginStart="6dp"
-                                android:layout_marginBottom="6dp"
-                                android:background="@drawable/bg_avail_tag"
-                                android:paddingStart="6dp"
-                                android:paddingTop="2dp"
-                                android:paddingEnd="6dp"
-                                android:paddingBottom="2dp"
-                                android:text="Reservado"
-                                android:textColor="#FFFFFF"
-                                android:textSize="9sp"
-                                android:textStyle="bold" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:maxLines="1"
-                            android:text="Clean Architecture"
-                            android:textColor="#1E2D3D"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Robert Martin"
-                            android:textColor="#9BAAC0"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- Book Card 3 -->
-                    <LinearLayout
-                        android:id="@+id/cardReservaDesignPatterns"
-                        android:layout_width="110dp"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="110dp"
-                            android:layout_height="155dp"
-                            android:background="@drawable/bg_book_purple">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="📙"
-                                android:textSize="34sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom|start"
-                                android:layout_marginStart="6dp"
-                                android:layout_marginBottom="6dp"
-                                android:background="@drawable/bg_avail_tag"
-                                android:paddingStart="6dp"
-                                android:paddingTop="2dp"
-                                android:paddingEnd="6dp"
-                                android:paddingBottom="2dp"
-                                android:text="Reservado"
-                                android:textColor="#FFFFFF"
-                                android:textSize="9sp"
-                                android:textStyle="bold" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:maxLines="1"
-                            android:text="Design Patterns"
-                            android:textColor="#1E2D3D"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Gang of Four"
-                            android:textColor="#9BAAC0"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-                </LinearLayout>
             </HorizontalScrollView>
 
             <!-- ÚLTIMOS EMPRÉSTIMOS SECTION -->
@@ -380,7 +210,6 @@
 
             </LinearLayout>
 
-            <!-- Empréstimo Card 1 -->
             <LinearLayout
                 android:id="@+id/cardEmprestimoAlgoritmos"
                 android:layout_width="match_parent"
@@ -439,7 +268,6 @@
                     android:src="@drawable/ic_chevron_right" />
             </LinearLayout>
 
-            <!-- Empréstimo Card 2 -->
             <LinearLayout
                 android:id="@+id/cardEmprestimoDesenvolvimento"
                 android:layout_width="match_parent"
@@ -508,127 +336,6 @@
                 android:background="@drawable/bg_card_white"
                 android:orientation="vertical">
 
-                <!-- Editar Perfil -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="14dp"
-                    android:visibility="gone">
-
-                    <FrameLayout
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_icon_circle_blue">
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_person"
-                            app:tint="#1474C4" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Editar Perfil"
-                            android:textColor="#1E2D3D"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Altere seus dados pessoais"
-                            android:textColor="#9BAAC0"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_chevron_right" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="64dp"
-                    android:background="#E8EDF3"
-                    android:visibility="gone" />
-
-                <!-- Privacidade e LGPD -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="14dp"
-                    android:visibility="gone">
-
-                    <FrameLayout
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_icon_circle_purple">
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_shield"
-                            app:tint="#9575CD" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Privacidade e LGPD"
-                            android:textColor="#1E2D3D"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Gerencie suas preferências"
-                            android:textColor="#9BAAC0"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_chevron_right" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="64dp"
-                    android:background="#E8EDF3"
-                    android:visibility="gone" />
-
-                <!-- Sair -->
                 <LinearLayout
                     android:id="@+id/btnSair"
                     android:layout_width="match_parent"

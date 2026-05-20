@@ -6,25 +6,125 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
+import com.example.unilib.repository.ReservationRepository
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 
 class BookDetails : AppCompatActivity() {
+
+    private val db = FirebaseFirestore.getInstance()
+
+    private var activeTab: NavTab = NavTab.NONE
+    private var currentBookId: String? = null
+    private var currentBookTitle: String? = null
+    private var isCreatingReservation = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.book_details)
 
-        val activeTab = intent.getStringExtra("NAV_TAB")?.let { runCatching { NavTab.valueOf(it) }.getOrNull() } ?: NavTab.NONE
+        activeTab = intent.getStringExtra("NAV_TAB")
+            ?.let { runCatching { NavTab.valueOf(it) }.getOrNull() }
+            ?: NavTab.NONE
+
         NavBarHelper.setup(this, activeTab)
-        findViewById<View>(R.id.btnBack)?.setOnClickListener { finish() }
 
-        val requestedTitle = intent.getStringExtra("TITULO_LIVRO")
-        val book = requestedTitle?.let { booksByTitle[it] } ?: booksByTitle.values.first()
-        renderBook(book)
+        findViewById<View>(R.id.btnBack)?.setOnClickListener {
+            finish()
+        }
 
-        val requestedColor = intent.getStringExtra("BOOK_COLOR") ?: colorByTitle[book.title] ?: "blue"
-        applyBookColor(requestedColor)
+        setupActionButtons()
+        loadBookFromFirestore()
+    }
 
+    /**
+     * Busca o livro real no Firestore.
+     * Prioriza BOOK_ID, pois é o identificador mais seguro.
+     * Se a tela anterior ainda não enviar BOOK_ID, busca pelo campo title.
+     */
+    private fun loadBookFromFirestore() {
+        val bookId = intent.getStringExtra("BOOK_ID")
+        val title = intent.getStringExtra("TITULO_LIVRO")
+
+        when {
+            !bookId.isNullOrBlank() -> {
+                db.collection("books")
+                    .document(bookId)
+                    .get()
+                    .addOnSuccessListener { document ->
+                        if (!document.exists()) {
+                            showErrorAndClose("Livro não encontrado.")
+                            return@addOnSuccessListener
+                        }
+
+                        currentBookId = document.id
+                        currentBookTitle = document.getString("title")
+                        renderBook(document)
+                    }
+                    .addOnFailureListener { exception ->
+                        showErrorAndClose(exception.message ?: "Erro ao carregar livro.")
+                    }
+            }
+
+            !title.isNullOrBlank() -> {
+                db.collection("books")
+                    .whereEqualTo("title", title)
+                    .limit(1)
+                    .get()
+                    .addOnSuccessListener { result ->
+                        val document = result.documents.firstOrNull()
+
+                        if (document == null) {
+                            showErrorAndClose("Livro não encontrado no banco.")
+                            return@addOnSuccessListener
+                        }
+
+                        currentBookId = document.id
+                        currentBookTitle = document.getString("title")
+                        renderBook(document)
+                    }
+                    .addOnFailureListener { exception ->
+                        showErrorAndClose(exception.message ?: "Erro ao carregar livro.")
+                    }
+            }
+
+            else -> {
+                showErrorAndClose("Nenhum livro foi informado.")
+            }
+        }
+    }
+
+    /**
+     * Preenche a tela com dados reais do documento books/{bookId}.
+     */
+    private fun renderBook(document: DocumentSnapshot) {
+        val title = document.getString("title") ?: "Livro"
+        val author = document.getString("author") ?: "Autor não informado"
+        val isbn = document.get("isbn")?.toString() ?: ""
+        val available = getLongField(document, "available") ?: 0L
+        val quantity = getLongField(document, "quantity")
+            ?: getLongField(document, "copies")
+            ?: 0L
+        val borrowed = (quantity - available).coerceAtLeast(0L)
+        val location = document.getString("location") ?: "Não informado"
+        val synopsis = document.getString("synopsis") ?: "Sinopse não informada"
+
+        findViewById<TextView>(R.id.tvBookTitle).text = title
+        findViewById<TextView>(R.id.tvBookAuthor).text = author
+        findViewById<TextView>(R.id.tvIsbnHero).text = "ISBN: $isbn"
+        findViewById<TextView>(R.id.tvIsbn).text = isbn
+        findViewById<TextView>(R.id.tvDisponiveis).text = available.toString()
+        findViewById<TextView>(R.id.tvEmprestados).text = borrowed.toString()
+        findViewById<TextView>(R.id.tvLocalizacao).text = location
+        findViewById<TextView>(R.id.tvSinopse).text = synopsis
+
+        applyBookColor("blue")
+    }
+
+    private fun setupActionButtons() {
         val btnLocalizar = findViewById<LinearLayout>(R.id.btnLocalizar)
         val btnReservar = findViewById<LinearLayout>(R.id.btnReservar)
 
@@ -36,37 +136,114 @@ class BookDetails : AppCompatActivity() {
         }
 
         btnReservar.setOnClickListener {
-            ReservaModalHelper.show(this)
+            if (currentBookId.isNullOrBlank() && currentBookTitle.isNullOrBlank()) {
+                Toast.makeText(this, "Livro ainda não carregado.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            ReservaModalHelper.show(
+                activity = this,
+                onConfirm = {
+                    createReservation()
+                }
+            )
         }
     }
 
-    private fun renderBook(book: BookInfo) {
-        findViewById<TextView>(R.id.tvBookTitle).text = book.title
-        findViewById<TextView>(R.id.tvBookAuthor).text = book.author
-        findViewById<TextView>(R.id.tvIsbnHero).text = "ISBN: ${book.isbn}"
-        findViewById<TextView>(R.id.tvIsbn).text = book.isbn
-        findViewById<TextView>(R.id.tvDisponiveis).text = book.available
-        findViewById<TextView>(R.id.tvEmprestados).text = book.borrowed
-        findViewById<TextView>(R.id.tvLocalizacao).text = book.location
-        findViewById<TextView>(R.id.tvSinopse).text = book.synopsis
+    /**
+     * Cria a reserva real somente após o usuário confirmar no modal.
+     * Se existir BOOK_ID, usa o ID do documento. Caso contrário, usa o título carregado.
+     */
+    private fun createReservation() {
+        if (isCreatingReservation) {
+            return
+        }
+
+        isCreatingReservation = true
+
+        Toast.makeText(this, "Criando reserva...", Toast.LENGTH_SHORT).show()
+
+        val bookId = currentBookId
+        val title = currentBookTitle
+
+        if (!bookId.isNullOrBlank()) {
+            ReservationRepository.createReservationByBookId(
+                bookId = bookId,
+                onSuccess = { result ->
+                    onReservationCreated(result)
+                },
+                onError = { exception ->
+                    onReservationError(exception)
+                }
+            )
+            return
+        }
+
+        if (!title.isNullOrBlank()) {
+            ReservationRepository.createReservationByBookTitle(
+                bookTitle = title,
+                onSuccess = { result ->
+                    onReservationCreated(result)
+                },
+                onError = { exception ->
+                    onReservationError(exception)
+                }
+            )
+            return
+        }
+
+        isCreatingReservation = false
+        Toast.makeText(this, "Livro não encontrado.", Toast.LENGTH_LONG).show()
+    }
+
+    private fun onReservationCreated(result: ReservationRepository.ReservationCreatedResult) {
+        isCreatingReservation = false
+
+        ReservaAtivaModalHelper.show(
+            activity = this,
+            nomeLivro = result.bookTitle,
+            tempoRestante = "30 minutos",
+            codigo = result.reservationCode
+        )
+
+        loadBookFromFirestore()
+    }
+
+    private fun onReservationError(exception: Exception) {
+        isCreatingReservation = false
+
+        Toast.makeText(
+            this,
+            exception.message ?: "Erro ao criar reserva.",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun applyBookColor(color: String) {
         val theme = colorThemes[color] ?: colorThemes.getValue("blue")
+
         findViewById<View>(R.id.bookCover).setBackgroundResource(theme.coverDrawable)
         findViewById<View>(R.id.headerBar).setBackgroundColor(Color.parseColor(theme.darkColor))
         findViewById<View>(R.id.heroSection).setBackgroundColor(Color.parseColor(theme.heroColor))
     }
 
-    private data class BookInfo(
-        val title: String,
-        val author: String,
-        val isbn: String,
-        val available: String,
-        val borrowed: String,
-        val location: String,
-        val synopsis: String
-    )
+    private fun showErrorAndClose(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        finish()
+    }
+
+    private fun getLongField(document: DocumentSnapshot, field: String): Long? {
+        val value = document.get(field) ?: return null
+
+        return when (value) {
+            is Long -> value
+            is Int -> value.toLong()
+            is Double -> value.toLong()
+            is Float -> value.toLong()
+            is String -> value.toLongOrNull()
+            else -> null
+        }
+    }
 
     private data class BookColorTheme(
         val coverDrawable: Int,
@@ -82,121 +259,5 @@ class BookDetails : AppCompatActivity() {
             "red" to BookColorTheme(R.drawable.bg_book_red, "#B71C1C", "#C62828"),
             "gray" to BookColorTheme(R.drawable.bg_book_gray, "#37474F", "#546E7A")
         )
-
-        val colorByTitle = mapOf(
-            "C\u00e1lculo Vol. 1" to "blue",
-            "Clean Architecture" to "green",
-            "Design Patterns" to "purple",
-            "Algoritmos 1" to "blue",
-            "Desenvolvimento" to "green",
-            "Algoritmos e Estruturas de Dados" to "blue",
-            "Engenharia de Software" to "purple",
-            "Clean Code" to "green",
-            "Redes de Computadores" to "red",
-            "Inteligência Artificial" to "red",
-            "Banco de Dados" to "gray"
-        )
-
-        val booksByTitle = listOf(
-            BookInfo(
-                title = "C\u00e1lculo Vol. 1",
-                author = "James Stewart",
-                isbn = "978-85-216-2583-4",
-                available = "2",
-                borrowed = "4",
-                location = "B-04",
-                synopsis = "Livro introdutorio de calculo diferencial e integral, com exemplos aplicados, exercicios e fundamentos para cursos de ciencias exatas."
-            ),
-            BookInfo(
-                title = "Clean Architecture",
-                author = "Robert C. Martin",
-                isbn = "978-85-7522-706-8",
-                available = "1",
-                borrowed = "3",
-                location = "C-10",
-                synopsis = "Apresenta principios para organizar sistemas de software com baixo acoplamento, regras de negocio protegidas e codigo mais facil de manter."
-            ),
-            BookInfo(
-                title = "Design Patterns",
-                author = "Gang of Four",
-                isbn = "978-02-0163-361-0",
-                available = "1",
-                borrowed = "2",
-                location = "C-12",
-                synopsis = "Catalogo classico de padroes de projeto orientados a objetos, com solucoes reutilizaveis para problemas recorrentes de arquitetura."
-            ),
-            BookInfo(
-                title = "Algoritmos 1",
-                author = "Thomas H. Cormen et al.",
-                isbn = "978-85-216-1474-6",
-                available = "3",
-                borrowed = "2",
-                location = "A-12",
-                synopsis = "Introducao ao estudo de algoritmos, estruturas de dados e analise de complexidade para resolver problemas computacionais com eficiencia."
-            ),
-            BookInfo(
-                title = "Desenvolvimento",
-                author = "Ian Sommerville",
-                isbn = "978-85-7922-015-2",
-                available = "2",
-                borrowed = "3",
-                location = "B-08",
-                synopsis = "Material de apoio para desenvolvimento e engenharia de software, cobrindo requisitos, projeto, implementacao, testes e manutencao."
-            ),
-            BookInfo(
-                title = "Algoritmos e Estruturas de Dados",
-                author = "Thomas H. Cormen et al.",
-                isbn = "978-85-216-1474-6",
-                available = "3",
-                borrowed = "2",
-                location = "A-12",
-                synopsis = "Introducao ao estudo de algoritmos, estruturas de dados e analise de complexidade para resolver problemas computacionais com eficiencia."
-            ),
-            BookInfo(
-                title = "Engenharia de Software",
-                author = "Ian Sommerville",
-                isbn = "978-85-7922-015-2",
-                available = "2",
-                borrowed = "3",
-                location = "B-08",
-                synopsis = "Apresenta fundamentos de engenharia de software, processos, requisitos, arquitetura, testes e evolucao de sistemas."
-            ),
-            BookInfo(
-                title = "Clean Code",
-                author = "Robert C. Martin",
-                isbn = "978-85-7522-200-1",
-                available = "1",
-                borrowed = "5",
-                location = "C-09",
-                synopsis = "Guia pratico para escrever codigo legivel, simples e testavel, com tecnicas de refatoracao e boas praticas de manutencao."
-            ),
-            BookInfo(
-                title = "Redes de Computadores",
-                author = "Andrew S. Tanenbaum",
-                isbn = "978-85-7605-924-0",
-                available = "4",
-                borrowed = "1",
-                location = "D-03",
-                synopsis = "Aborda conceitos essenciais de redes, protocolos, camadas, transmissao de dados e funcionamento da Internet."
-            ),
-            BookInfo(
-                title = "Inteligência Artificial",
-                author = "Russell & Norvig",
-                isbn = "978-85-508-0534-8",
-                available = "5",
-                borrowed = "1",
-                location = "D-07",
-                synopsis = "Introduz conceitos de agentes inteligentes, busca, representacao de conhecimento, aprendizado de maquina e tomada de decisao."
-            ),
-            BookInfo(
-                title = "Banco de Dados",
-                author = "Date, C.J.",
-                isbn = "978-85-352-9176-2",
-                available = "2",
-                borrowed = "3",
-                location = "B-11",
-                synopsis = "Cobre modelagem relacional, algebra relacional, normalizacao, SQL e fundamentos para projeto e manutencao de bancos de dados."
-            )
-        ).associateBy { it.title }
     }
 }
