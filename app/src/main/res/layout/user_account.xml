@@ -173,189 +173,21 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- HORIZONTAL SCROLL - RESERVAS -->
+            <!-- HORIZONTAL SCROLL - RESERVAS DINÂMICAS -->
             <HorizontalScrollView
+                android:id="@+id/reservasScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none">
 
                 <LinearLayout
+                    android:id="@+id/reservasContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingStart="18dp"
-                    android:paddingEnd="18dp">
+                    android:paddingEnd="18dp" />
 
-                    <!-- Book Card 1 -->
-                    <LinearLayout
-                        android:id="@+id/cardReservaCalculo"
-                        android:layout_width="110dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="110dp"
-                            android:layout_height="155dp"
-                            android:background="@drawable/bg_book_blue">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="📘"
-                                android:textSize="34sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom|start"
-                                android:layout_marginStart="6dp"
-                                android:layout_marginBottom="6dp"
-                                android:background="@drawable/bg_avail_tag"
-                                android:paddingStart="6dp"
-                                android:paddingTop="2dp"
-                                android:paddingEnd="6dp"
-                                android:paddingBottom="2dp"
-                                android:text="Reservado"
-                                android:textColor="#FFFFFF"
-                                android:textSize="9sp"
-                                android:textStyle="bold" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:maxLines="1"
-                            android:text="Cálculo Vol. 1"
-                            android:textColor="#1E2D3D"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="James Stewart"
-                            android:textColor="#9BAAC0"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- Book Card 2 -->
-                    <LinearLayout
-                        android:id="@+id/cardReservaCleanArchitecture"
-                        android:layout_width="110dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="110dp"
-                            android:layout_height="155dp"
-                            android:background="@drawable/bg_book_green">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="📗"
-                                android:textSize="34sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom|start"
-                                android:layout_marginStart="6dp"
-                                android:layout_marginBottom="6dp"
-                                android:background="@drawable/bg_avail_tag"
-                                android:paddingStart="6dp"
-                                android:paddingTop="2dp"
-                                android:paddingEnd="6dp"
-                                android:paddingBottom="2dp"
-                                android:text="Reservado"
-                                android:textColor="#FFFFFF"
-                                android:textSize="9sp"
-                                android:textStyle="bold" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:maxLines="1"
-                            android:text="Clean Architecture"
-                            android:textColor="#1E2D3D"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Robert Martin"
-                            android:textColor="#9BAAC0"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- Book Card 3 -->
-                    <LinearLayout
-                        android:id="@+id/cardReservaDesignPatterns"
-                        android:layout_width="110dp"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="110dp"
-                            android:layout_height="155dp"
-                            android:background="@drawable/bg_book_purple">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="📙"
-                                android:textSize="34sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom|start"
-                                android:layout_marginStart="6dp"
-                                android:layout_marginBottom="6dp"
-                                android:background="@drawable/bg_avail_tag"
-                                android:paddingStart="6dp"
-                                android:paddingTop="2dp"
-                                android:paddingEnd="6dp"
-                                android:paddingBottom="2dp"
-                                android:text="Reservado"
-                                android:textColor="#FFFFFF"
-                                android:textSize="9sp"
-                                android:textStyle="bold" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:maxLines="1"
-                            android:text="Design Patterns"
-                            android:textColor="#1E2D3D"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Gang of Four"
-                            android:textColor="#9BAAC0"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-                </LinearLayout>
             </HorizontalScrollView>
 
             <!-- ÚLTIMOS EMPRÉSTIMOS SECTION -->

@@ -47,9 +47,10 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tvTabPendentes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pendentes (12)"
+                    android:text="Pendentes"
                     android:textColor="#0D5DA3"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -66,9 +67,10 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tvTabAtivos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ativos (38)"
+                    android:text="Ativos"
                     android:textColor="#B9D1EA"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -88,22 +90,12 @@
         app:layout_constraintTop_toBottomOf="@id/header">
 
         <LinearLayout
-            android:id="@+id/cardsContainer"
+            android:id="@+id/pendentesContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp" />
 
-            <!-- Cards container - PENDENTES only -->
-            <include
-                android:id="@+id/cardPendenteOne"
-                layout="@layout/admin_emprestimo_card_pendente" />
-
-            <include
-                android:id="@+id/cardPendenteTwo"
-                layout="@layout/admin_emprestimo_card_pendente" />
-
-        </LinearLayout>
     </ScrollView>
 
     <!-- BOTTOM NAV (3 tabs for admin) -->
@@ -134,7 +126,8 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_home"
-                android:tint="#9BAAC0" />
+                android:tint="#9BAAC0"
+                tools:ignore="UseAppTint" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -158,7 +151,8 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_search"
-                android:tint="#9BAAC0" />
+                android:tint="#9BAAC0"
+                tools:ignore="UseAppTint" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -183,7 +177,8 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_book"
-                android:tint="#1474C4" />
+                android:tint="#1474C4"
+                tools:ignore="UseAppTint" />
 
             <TextView
                 android:layout_width="wrap_content"

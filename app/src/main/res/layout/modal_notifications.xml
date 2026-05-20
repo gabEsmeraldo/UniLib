@@ -10,7 +10,6 @@
     android:paddingEnd="20dp"
     android:paddingBottom="22dp">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,77 +45,13 @@
 
     </LinearLayout>
 
-    <!-- NOTIFICAÇÃO 1 -->
+    <!-- Container dinâmico das notificações reais -->
     <LinearLayout
-        android:id="@+id/cardNotificationOne"
+        android:id="@+id/notificationsListContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/bg_notification_item"
-        android:paddingStart="14dp"
-        android:paddingTop="12dp"
-        android:paddingEnd="14dp"
-        android:paddingBottom="10dp"
-        android:layout_marginBottom="10dp">
-
-        <TextView
-            android:id="@+id/tvNotificationOneText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="O empréstimo do livro POO Simplificado acabará nesta semana"
-            android:textColor="#1E2D3D"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:lineSpacingExtra="2dp" />
-
-        <TextView
-            android:id="@+id/tvNotificationOneDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hoje"
-            android:textAlignment="textEnd"
-            android:textColor="#5B6B85"
-            android:textSize="11sp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp" />
-
-    </LinearLayout>
-
-    <!-- NOTIFICAÇÃO 2 -->
-    <LinearLayout
-        android:id="@+id/cardNotificationTwo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/bg_notification_item"
-        android:paddingStart="14dp"
-        android:paddingTop="12dp"
-        android:paddingEnd="14dp"
-        android:paddingBottom="10dp"
-        android:layout_marginBottom="18dp">
-
-        <TextView
-            android:id="@+id/tvNotificationTwoText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hoje é o último dia para devolver o livro Desenvolvimento web, não esqueça para evitar taxas de devolução"
-            android:textColor="#1E2D3D"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:lineSpacingExtra="2dp" />
-
-        <TextView
-            android:id="@+id/tvNotificationTwoDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="3 Dias atrás"
-            android:textAlignment="textEnd"
-            android:textColor="#5B6B85"
-            android:textSize="11sp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp" />
-
-    </LinearLayout>
+        android:layout_marginBottom="18dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnMarkAsRead"
