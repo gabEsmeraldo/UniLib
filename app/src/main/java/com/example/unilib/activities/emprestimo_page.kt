@@ -33,15 +33,14 @@ class emprestimo_page : AppCompatActivity() {
         ativosContainer = findViewById(R.id.ativosContainer)
         reservasContainer = findViewById(R.id.reservasEmprestimosContainer)
 
-        carregarEmprestimosAbertos()
-        carregarReservasAtivas()
-        LoanRepository.createDueSoonNotificationsForCurrentUser()
+        
     }
 
     override fun onResume() {
         super.onResume()
         carregarEmprestimosAbertos()
         carregarReservasAtivas()
+        LoanRepository.createDueSoonNotificationsForCurrentUser()
     }
 
     /**
