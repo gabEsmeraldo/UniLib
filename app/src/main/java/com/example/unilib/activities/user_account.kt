@@ -34,7 +34,6 @@ class user_account : AppCompatActivity() {
         setupAccountActions()
         setupNotificationsButton()
         esconderEmprestimosMockados()
-        carregarReservasAtivas()
     }
 
     override fun onResume() {
