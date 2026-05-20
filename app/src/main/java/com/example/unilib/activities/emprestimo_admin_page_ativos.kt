@@ -28,7 +28,6 @@ class emprestimo_admin_page_ativos : AppCompatActivity() {
         ativosAdminContainer = findViewById(R.id.ativosAdminContainer)
 
         setupTabs()
-        carregarEmprestimosAtivos()
     }
 
     override fun onResume() {
