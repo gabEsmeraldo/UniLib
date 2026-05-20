@@ -401,14 +401,10 @@ object ReservationRepository {
 
     private fun generateReservationCode(): String {
         val alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        val uuid = UUID.randomUUID().toString().replace("-", "").uppercase(Locale.ROOT)
 
-        return buildString {
-            for (i in 0 until 6) {
-                val index = uuid[i].code % alphabet.length
-                append(alphabet[index])
-            }
-        }
+        return (1..6)
+            .map { alphabet.random() }
+            .joinToString("")
     }
 
     private fun normalizeCode(code: String): String {
