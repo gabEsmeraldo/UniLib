@@ -30,7 +30,6 @@ class emprestimo_admin_page : AppCompatActivity() {
         pendentesContainer = findViewById(R.id.pendentesContainer)
 
         setupTabs()
-        carregarReservasPendentes()
     }
 
     override fun onResume() {
