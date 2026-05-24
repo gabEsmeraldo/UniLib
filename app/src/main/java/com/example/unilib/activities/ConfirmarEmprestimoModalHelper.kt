@@ -11,13 +11,20 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.example.unilib.R
+import com.example.unilib.repository.ReservationRepository
 
 object ConfirmarEmprestimoModalHelper {
 
-    private const val VALID_CODE = "A4C123"
-
-    fun show(activity: Activity) {
+    /**
+     * Exibe o modal onde o admin digita o código apresentado pelo usuário.
+     * Se o código for válido, a reserva vira empréstimo ativo no Firestore.
+     */
+    fun show(
+        activity: Activity,
+        reservationId: String
+    ) {
         val dialog = Dialog(activity)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -26,57 +33,92 @@ object ConfirmarEmprestimoModalHelper {
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        val btnBack = dialog.findViewById<View>(R.id.btnBackConfirmarEmprestimo)
         val stateInput = dialog.findViewById<LinearLayout>(R.id.stateInputCodigo)
         val stateErro = dialog.findViewById<LinearLayout>(R.id.stateErroCodigo)
-        val stateSucesso = dialog.findViewById<LinearLayout>(R.id.stateRetiradaConfirmada)
+        val stateSuccess = dialog.findViewById<LinearLayout>(R.id.stateRetiradaConfirmada)
 
-        val states = listOf(stateInput, stateErro, stateSucesso)
-        fun showOnly(view: View) {
-            states.forEach { it.visibility = if (it === view) View.VISIBLE else View.GONE }
-        }
-
-        val btnBack = dialog.findViewById<View>(R.id.btnBackConfirmarEmprestimo)
         val etCodigo = dialog.findViewById<EditText>(R.id.etCodigoRetirada)
         val btnCancelar = dialog.findViewById<Button>(R.id.btnCancelarConfirmarEmprestimo)
         val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarRetirada)
-        val btnTentar = dialog.findViewById<Button>(R.id.btnTentarNovamenteCodigo)
-        val btnFechar = dialog.findViewById<Button>(R.id.btnFecharRetiradaConfirmada)
+        val btnTentarNovamente = dialog.findViewById<Button>(R.id.btnTentarNovamenteCodigo)
+        val btnFecharSucesso = dialog.findViewById<Button>(R.id.btnFecharRetiradaConfirmada)
 
         btnBack.setOnClickListener {
-            when {
-                stateErro.visibility == View.VISIBLE -> showOnly(stateInput)
-                stateSucesso.visibility == View.VISIBLE -> dialog.dismiss()
-                else -> dialog.dismiss()
-            }
+            dialog.dismiss()
         }
 
-        btnCancelar.setOnClickListener { dialog.dismiss() }
+        btnCancelar.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnTentarNovamente.setOnClickListener {
+            stateErro.visibility = View.GONE
+            stateSuccess.visibility = View.GONE
+            stateInput.visibility = View.VISIBLE
+            etCodigo.setText("")
+            etCodigo.requestFocus()
+        }
+
+        btnFecharSucesso.setOnClickListener {
+            dialog.dismiss()
+
+            // Recarrega a tela atual para a reserva sair da lista de pendentes.
+            activity.recreate()
+        }
 
         btnConfirmar.setOnClickListener {
-            val typed = etCodigo.text.toString().trim().uppercase()
-            if (typed == VALID_CODE) {
-                showOnly(stateSucesso)
-            } else {
-                showOnly(stateErro)
+            val codigoDigitado = etCodigo.text.toString().trim()
+
+            if (codigoDigitado.isBlank()) {
+                Toast.makeText(
+                    activity,
+                    "Digite o código de retirada.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
             }
+
+            btnConfirmar.isEnabled = false
+            btnCancelar.isEnabled = false
+
+            /**
+             * Valida o código no Firestore.
+             * Se estiver correto, cria o documento em user_lents_book
+             * e atualiza a reserva para APPROVED.
+             */
+            ReservationRepository.approveReservationWithCode(
+                reservationId = reservationId,
+                typedCode = codigoDigitado,
+                onSuccess = {
+                    btnConfirmar.isEnabled = true
+                    btnCancelar.isEnabled = true
+
+                    stateInput.visibility = View.GONE
+                    stateErro.visibility = View.GONE
+                    stateSuccess.visibility = View.VISIBLE
+                },
+                onError = {
+                    btnConfirmar.isEnabled = true
+                    btnCancelar.isEnabled = true
+
+                    stateInput.visibility = View.GONE
+                    stateSuccess.visibility = View.GONE
+                    stateErro.visibility = View.VISIBLE
+                }
+            )
         }
 
-        btnTentar.setOnClickListener {
-            etCodigo.setText("")
-            showOnly(stateInput)
-        }
-
-        btnFechar.setOnClickListener { dialog.dismiss() }
-
-        showOnly(stateInput)
         dialog.show()
 
         dialog.window?.let { window ->
             val width = (activity.resources.displayMetrics.widthPixels * 0.88).toInt()
+
             window.setLayout(
                 width,
                 WindowManager.LayoutParams.WRAP_CONTENT
             )
+
             window.setGravity(Gravity.CENTER)
 
             val params = window.attributes

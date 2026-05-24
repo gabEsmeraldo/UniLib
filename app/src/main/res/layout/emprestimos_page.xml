@@ -49,18 +49,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
+                android:letterSpacing="0.1"
                 android:text="ATIVOS"
                 android:textColor="@color/section_header"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.1" />
+                android:textStyle="bold" />
 
-            <!-- Active loan cards -->
-            <include layout="@layout/emprestimo_card_ativo" />
-
-            <include
-                android:id="@+id/cardEmprestimoAtrasado"
-                layout="@layout/emprestimo_card_atrasado" />
+            <!-- Container dinâmico dos empréstimos ativos/atrasados -->
+            <LinearLayout
+                android:id="@+id/ativosContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
             <!-- RESERVAS ATIVAS Section -->
             <TextView
@@ -69,14 +69,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="12dp"
+                android:letterSpacing="0.1"
                 android:text="RESERVAS ATIVAS"
                 android:textColor="@color/section_header"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.1" />
+                android:textStyle="bold" />
 
-            <!-- Reserved card -->
-            <include layout="@layout/emprestimo_card_reserva" />
+            <!-- Container dinâmico das reservas ativas -->
+            <LinearLayout
+                android:id="@+id/reservasEmprestimosContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
         </LinearLayout>
     </ScrollView>
@@ -93,8 +97,8 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:id="@+id/navHome"
@@ -108,7 +112,8 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_home"
-                android:tint="#9BAAC0" />
+                android:tint="#9BAAC0"
+                tools:ignore="UseAppTint" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -131,7 +136,8 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_search"
-                android:tint="#9BAAC0" />
+                android:tint="#9BAAC0"
+                tools:ignore="UseAppTint" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -155,7 +161,8 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_book"
-                android:tint="#1474C4" />
+                android:tint="#1474C4"
+                tools:ignore="UseAppTint" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -178,7 +185,8 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/ic_person"
-                android:tint="#9BAAC0" />
+                android:tint="#9BAAC0"
+                tools:ignore="UseAppTint" />
 
             <TextView
                 android:layout_width="wrap_content"

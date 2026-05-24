@@ -13,7 +13,14 @@ import com.example.unilib.R
 
 object ReservaModalHelper {
 
-    fun show(activity: Activity) {
+    /**
+     * Exibe o modal de confirmação da reserva.
+     * A reserva só será criada no Firebase se o usuário clicar em "Confirmar".
+     */
+    fun show(
+        activity: Activity,
+        onConfirm: () -> Unit
+    ) {
         val dialog = Dialog(activity)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -31,13 +38,14 @@ object ReservaModalHelper {
 
         btnConfirmarReserva.setOnClickListener {
             dialog.dismiss()
-            ReservaAtivaModalHelper.show(activity)
+            onConfirm()
         }
 
         dialog.show()
 
         dialog.window?.let { window ->
             val width = (activity.resources.displayMetrics.widthPixels * 0.88).toInt()
+
             window.setLayout(
                 width,
                 WindowManager.LayoutParams.WRAP_CONTENT

@@ -16,14 +16,20 @@ enum class EmprestimoStatus { PENDENTE, ATIVO, ATRASADO }
 
 object DetalhesEmprestimoModalHelper {
 
+    /**
+     * Exibe os detalhes de uma reserva/empréstimo para o admin.
+     * Quando for PENDENTE, recebe reservationId para aprovar a retirada pelo código.
+     */
     fun show(
         activity: Activity,
         status: EmprestimoStatus,
-        bookTitle: String = "Algoritmos e Estruturas de Dados",
-        bookAuthor: String = "Thomas H. Cormen et al.",
-        alunoName: String = "Narak Silva",
+        bookTitle: String = "Livro",
+        bookAuthor: String = "Autor não informado",
+        alunoName: String = "Usuário",
         dataLabel: String? = null,
-        taxaAtual: String? = null
+        taxaAtual: String? = null,
+        reservationId: String? = null,
+        loanId: String? = null
     ) {
         val dialog = Dialog(activity)
 
@@ -51,40 +57,66 @@ object DetalhesEmprestimoModalHelper {
             EmprestimoStatus.PENDENTE -> {
                 tvBadge.text = "● Pendente"
                 tvBadge.setTextColor(Color.parseColor("#0D5DA3"))
-                tvData.text = dataLabel ?: "Reservado em: 05/05/2026"
+                tvData.text = dataLabel ?: "Reservado agora"
                 tvTaxa.visibility = View.GONE
                 btnAcao.text = "Aprovar retirada"
             }
+
             EmprestimoStatus.ATIVO -> {
                 tvBadge.text = "● Ativo"
                 tvBadge.setTextColor(Color.parseColor("#16A34A"))
-                tvData.text = dataLabel ?: "Emprestado até: 27/03/2026"
+                tvData.text = dataLabel ?: "Empréstimo ativo"
                 tvTaxa.visibility = View.VISIBLE
-                tvTaxa.text = "Taxa de devoluçao atual: ${taxaAtual ?: "R$ 0,00"}"
+                tvTaxa.text = "Taxa de devolução atual: ${taxaAtual ?: "R$ 0,00"}"
                 btnAcao.text = "Devolução"
             }
+
             EmprestimoStatus.ATRASADO -> {
                 tvBadge.text = "● Atrasado"
                 tvBadge.setTextColor(Color.parseColor("#B91C1C"))
-                tvData.text = dataLabel ?: "5 dias de atraso"
+                tvData.text = dataLabel ?: "Empréstimo atrasado"
                 tvTaxa.visibility = View.VISIBLE
-                tvTaxa.text = "Taxa de devoluçao atual: ${taxaAtual ?: "R$ 10,00"}"
+                tvTaxa.text = "Taxa de devolução atual: ${taxaAtual ?: "R$ 0,00"}"
                 btnAcao.text = "Confirmar Devolução"
             }
         }
 
-        btnBack.setOnClickListener { dialog.dismiss() }
-        btnCancelar.setOnClickListener { dialog.dismiss() }
+        btnBack.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnCancelar.setOnClickListener {
+            dialog.dismiss()
+        }
 
         btnAcao.setOnClickListener {
             dialog.dismiss()
+
             when (status) {
-                EmprestimoStatus.PENDENTE -> ConfirmarEmprestimoModalHelper.show(activity)
+                EmprestimoStatus.PENDENTE -> {
+                    if (reservationId != null) {
+                        ConfirmarEmprestimoModalHelper.show(
+                            activity = activity,
+                            reservationId = reservationId
+                        )
+                    }
+                }
+
                 EmprestimoStatus.ATIVO,
-                EmprestimoStatus.ATRASADO -> ConfirmarDevolucaoModalHelper.show(
-                    activity,
-                    bookTitle = bookTitle
-                )
+                EmprestimoStatus.ATRASADO -> {
+                    if (loanId != null) {
+                        ConfirmarDevolucaoModalHelper.show(
+                            activity = activity,
+                            bookTitle = bookTitle,
+                            loanId = loanId
+                        )
+                    } else {
+                        ConfirmarDevolucaoModalHelper.show(
+                            activity = activity,
+                            bookTitle = bookTitle
+                        )
+                    }
+                }
             }
         }
 
@@ -92,10 +124,12 @@ object DetalhesEmprestimoModalHelper {
 
         dialog.window?.let { window ->
             val width = (activity.resources.displayMetrics.widthPixels * 0.88).toInt()
+
             window.setLayout(
                 width,
                 WindowManager.LayoutParams.WRAP_CONTENT
             )
+
             window.setGravity(Gravity.CENTER)
 
             val params = window.attributes
