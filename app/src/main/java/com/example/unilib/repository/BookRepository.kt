@@ -16,6 +16,24 @@ class BookRepository {
             .addOnFailureListener { onError(it) }
     }
 
+    fun getNewestBooks(
+        limit: Int = 10,
+        onSuccess: (List<Book>) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        db.collection("books")
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .limit(limit.toLong())
+            .get()
+            .addOnSuccessListener { result ->
+                val books = result.documents.mapNotNull { doc ->
+                    doc.toObject(Book::class.java)?.also { it.id = doc.id }
+                }
+                onSuccess(books)
+            }
+            .addOnFailureListener { onError(it) }
+    }
+
     fun getTopLentBooks(
         limit: Int = 10,
         onSuccess: (List<Book>) -> Unit,
