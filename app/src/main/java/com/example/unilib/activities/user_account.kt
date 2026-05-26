@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
+import com.example.unilib.repository.LoanRepository
 import com.example.unilib.repository.ReservationRepository
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
@@ -22,6 +23,7 @@ import kotlin.math.max
 class user_account : AppCompatActivity() {
 
     private lateinit var reservasContainer: LinearLayout
+    private lateinit var returnedLoansContainer: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +32,7 @@ class user_account : AppCompatActivity() {
         NavBarHelper.setup(this, NavTab.ACCOUNT)
 
         reservasContainer = findViewById(R.id.reservasContainer)
+        returnedLoansContainer = findViewById(R.id.llReturnedLoans)
 
         setupAccountActions()
         setupNotificationsButton()
@@ -39,6 +42,7 @@ class user_account : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         carregarReservasAtivas()
+        carregarEmprestimosDevolvidos()
     }
 
     private fun setupNotificationsButton() {
@@ -64,8 +68,7 @@ class user_account : AppCompatActivity() {
      * Eles serão substituídos depois pelos empréstimos reais vindos do Firebase.
      */
     private fun esconderEmprestimosMockados() {
-        findViewById<View>(R.id.cardEmprestimoAlgoritmos)?.visibility = View.GONE
-        findViewById<View>(R.id.cardEmprestimoDesenvolvimento)?.visibility = View.GONE
+        // mock cards removed from layout; nothing to hide
     }
 
     /**
@@ -250,6 +253,116 @@ class user_account : AppCompatActivity() {
         card.addView(tvTempo)
 
         return card
+    }
+
+    private fun carregarEmprestimosDevolvidos() {
+        returnedLoansContainer.removeAllViews()
+
+        LoanRepository.getCurrentUserReturnedLoans(
+            onSuccess = { loans ->
+                returnedLoansContainer.removeAllViews()
+
+                if (loans.isEmpty()) {
+                    val tv = TextView(this).apply {
+                        text = "Nenhum empréstimo devolvido"
+                        setTextColor(Color.parseColor("#9BAAC0"))
+                        textSize = 13f
+                        setPadding(dp(18), dp(8), dp(18), dp(8))
+                    }
+                    returnedLoansContainer.addView(tv)
+                    return@getCurrentUserReturnedLoans
+                }
+
+                loans.forEachIndexed { index, loanDoc ->
+                    LoanRepository.getBookFromLoan(
+                        loanDocument = loanDoc,
+                        onSuccess = { bookDoc ->
+                            val title = bookDoc?.getString("title") ?: "Livro devolvido"
+                            val author = bookDoc?.getString("author") ?: ""
+                            val returnedAt = loanDoc.getTimestamp("returned_at")
+                            val dateLabel = if (returnedAt != null)
+                                "Devolvido em ${LoanRepository.formatDate(returnedAt)}"
+                            else "Devolvido"
+
+                            val card = LinearLayout(this).apply {
+                                orientation = LinearLayout.HORIZONTAL
+                                isClickable = false
+                                gravity = android.view.Gravity.CENTER_VERTICAL
+                                setPadding(dp(12), dp(12), dp(12), dp(12))
+                                setBackgroundResource(R.drawable.bg_card_white)
+                                layoutParams = LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                                ).apply {
+                                    marginStart = dp(18)
+                                    marginEnd = dp(18)
+                                    bottomMargin = dp(10)
+                                }
+                            }
+
+                            val capa = FrameLayout(this).apply {
+                                layoutParams = LinearLayout.LayoutParams(dp(56), dp(72))
+                                setBackgroundResource(getBookBackground(index))
+                            }
+                            val emoji = TextView(this).apply {
+                                text = getBookEmoji(index)
+                                textSize = 24f
+                                gravity = android.view.Gravity.CENTER
+                                layoutParams = FrameLayout.LayoutParams(
+                                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                                    android.view.Gravity.CENTER
+                                )
+                            }
+                            capa.addView(emoji)
+
+                            val info = LinearLayout(this).apply {
+                                orientation = LinearLayout.VERTICAL
+                                layoutParams = LinearLayout.LayoutParams(
+                                    0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f
+                                ).apply { marginStart = dp(12) }
+                            }
+                            val tvTitle = TextView(this).apply {
+                                text = title
+                                setTextColor(Color.parseColor("#1E2D3D"))
+                                textSize = 14f
+                                setTypeface(null, android.graphics.Typeface.BOLD)
+                                maxLines = 1
+                            }
+                            val tvDate = TextView(this).apply {
+                                text = dateLabel
+                                setTextColor(Color.parseColor("#9BAAC0"))
+                                textSize = 12f
+                                layoutParams = LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                                ).apply { topMargin = dp(4) }
+                            }
+                            if (author.isNotBlank()) {
+                                val tvAuthor = TextView(this).apply {
+                                    text = author
+                                    setTextColor(Color.parseColor("#5C6B82"))
+                                    textSize = 12f
+                                }
+                                info.addView(tvTitle)
+                                info.addView(tvAuthor)
+                                info.addView(tvDate)
+                            } else {
+                                info.addView(tvTitle)
+                                info.addView(tvDate)
+                            }
+
+                            card.addView(capa)
+                            card.addView(info)
+
+                            returnedLoansContainer.addView(card)
+                        },
+                        onError = {}
+                    )
+                }
+            },
+            onError = {}
+        )
     }
 
     private fun mostrarMensagemReservas(mensagem: String) {
