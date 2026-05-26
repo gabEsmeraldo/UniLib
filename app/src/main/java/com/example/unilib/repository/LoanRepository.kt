@@ -75,8 +75,6 @@ object LoanRepository {
         db.collection(COLLECTION_LENTS)
             .whereEqualTo("user_id", userRef)
             .whereEqualTo("status", STATUS_RETURNED)
-            .orderBy("returned_at", com.google.firebase.firestore.Query.Direction.DESCENDING)
-            .limit(10)
             .get()
             .addOnSuccessListener { result ->
                 onSuccess(result.documents)

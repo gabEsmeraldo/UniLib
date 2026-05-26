@@ -262,7 +262,11 @@ class user_account : AppCompatActivity() {
             onSuccess = { loans ->
                 returnedLoansContainer.removeAllViews()
 
-                if (loans.isEmpty()) {
+                val limited = loans
+                    .sortedByDescending { it.getTimestamp("returned_at")?.toDate()?.time ?: 0L }
+                    .take(10)
+
+                if (limited.isEmpty()) {
                     val tv = TextView(this).apply {
                         text = "Nenhum empréstimo devolvido"
                         setTextColor(Color.parseColor("#9BAAC0"))
@@ -273,7 +277,7 @@ class user_account : AppCompatActivity() {
                     return@getCurrentUserReturnedLoans
                 }
 
-                loans.forEachIndexed { index, loanDoc ->
+                limited.forEachIndexed { index, loanDoc ->
                     LoanRepository.getBookFromLoan(
                         loanDocument = loanDoc,
                         onSuccess = { bookDoc ->
