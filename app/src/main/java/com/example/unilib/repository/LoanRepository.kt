@@ -3,6 +3,7 @@ package com.example.unilib.repository
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -146,7 +147,13 @@ object LoanRepository {
                 )
             )
 
-            transaction.update(bookRef, "available", currentAvailable + 1L)
+            transaction.update(
+                bookRef,
+                mapOf(
+                    "available" to currentAvailable + 1L,
+                    "lentCount" to FieldValue.increment(-1L)
+                )
+            )
 
             true
         }.addOnSuccessListener {

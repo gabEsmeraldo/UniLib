@@ -13,9 +13,10 @@ data class Book(
     var synopsis: String = "",
     var quantity: Long = 0,
     var available: Long = 0,
+    var lentCount: Long = 0,
     var imageUrl: String = "",
     @ServerTimestamp
     var createdAt: Date? = null
 ) {
-    constructor() : this("", "", "", "", emptyList(), "", 0, 0, "", null)
+    constructor() : this("", "", "", "", emptyList(), "", 0, 0, 0, "", null)
 }
