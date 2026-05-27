@@ -16,10 +16,36 @@ import com.google.firebase.Timestamp
 class AdminHomePage : AppCompatActivity() {
 
     private val bookRepository = BookRepository()
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.unilib.R
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.FirebaseFirestoreLegacyRegistrar
+
+class AdminHomePage : AppCompatActivity() {
+
+    private lateinit var db: FirebaseFirestore
+
+    private lateinit var txtPendentes: TextView
+    private lateinit var txtAtivos: TextView
+    private lateinit var txtAcervo: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.admin_home_page)
+
+        db = FirebaseFirestore.getInstance()
+
+        txtPendentes = findViewById(R.id.CountPendentes)
+        txtAtivos = findViewById(R.id.CountAtivos)
+        txtAcervo = findViewById(R.id.CountAcervo)
+
+        txtPendentes.text = "..."
+        txtAtivos.text = "..."
+        txtAcervo.text = "..."
+
+        carregarEstatisticasDashboard()
 
         AdminNavBarHelper.setup(this, AdminNavTab.HOME)
         setupNavigation()
@@ -29,6 +55,50 @@ class AdminHomePage : AppCompatActivity() {
         super.onResume()
         loadTopLentBooks()
         loadPendingApprovals()
+    }
+
+    private fun carregarEstatisticasDashboard() {
+        carregarPendentes()
+        carregarAtivos()
+        carregarAcervo()
+    }
+
+    private fun carregarPendentes() {
+        db.collection("user_reserves_book")
+            .whereEqualTo("status", "PENDING")
+            .get()
+            .addOnSuccessListener { documents ->
+                txtPendentes.text = documents.size().toString()
+            }
+            .addOnFailureListener { e ->
+                txtPendentes.text = "-"
+                Toast.makeText(this, "Erro Pendentes: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun carregarAtivos() {
+        db.collection("user_lents_book")
+            .whereIn("status", listOf("ACTIVE", "Atrasado"))
+            .get()
+            .addOnSuccessListener { documents ->
+                txtAtivos.text = documents.size().toString()
+            }
+            .addOnFailureListener { e ->
+                txtAtivos.text = "-"
+                Toast.makeText(this, "Erro Ativos: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun carregarAcervo() {
+        db.collection("books")
+            .get()
+            .addOnSuccessListener { documents ->
+                txtAcervo.text = documents.size().toString()
+            }
+            .addOnFailureListener { e ->
+                txtAcervo.text = "-"
+                Toast.makeText(this, "Erro Acervo: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun setupNavigation() {

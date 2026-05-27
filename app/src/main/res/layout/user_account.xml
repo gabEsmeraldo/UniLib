@@ -97,10 +97,10 @@
                     android:background="@drawable/bg_avatar_circle">
 
                     <TextView
+                        android:id="@+id/iniciaisUsuario"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="LS"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -114,26 +114,26 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/nomeUsuario"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Lucas Silva"
                         android:textColor="#1E2D3D"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/emailUsuario"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="lucas.silva@aluno.unilib.edu.br"
                         android:textColor="#9BAAC0"
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/cpfUsuario"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="CPF: 123.456.789-00"
                         android:textColor="#5C6B82"
                         android:textSize="12sp"
                         android:textStyle="bold" />

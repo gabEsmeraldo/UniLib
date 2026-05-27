@@ -216,9 +216,9 @@
                         android:padding="10dp">
 
                         <TextView
+                            android:id="@+id/CountPendentes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="12"
                             android:textColor="#FFFFFF"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -243,9 +243,9 @@
                         android:padding="10dp">
 
                         <TextView
+                            android:id="@+id/CountAtivos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="38"
                             android:textColor="#FFFFFF"
                             android:textSize="24sp"
                             android:textStyle="bold" />
@@ -269,9 +269,9 @@
                         android:padding="10dp">
 
                         <TextView
+                            android:id="@+id/CountAcervo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="284"
                             android:textColor="#FFFFFF"
                             android:textSize="24sp"
                             android:textStyle="bold" />

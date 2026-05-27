@@ -16,11 +16,23 @@ import com.example.unilib.R
 import com.example.unilib.repository.LoanRepository
 import com.example.unilib.repository.ReservationRepository
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Locale
 import kotlin.math.ceil
 import kotlin.math.max
 
 class user_account : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+
+    private lateinit var txtIniciais: TextView
+    private lateinit var txtNome: TextView
+    private lateinit var txtEmail: TextView
+    private lateinit var txtCpf: TextView
+    private lateinit var btnSair: View
 
     private lateinit var reservasContainer: LinearLayout
     private lateinit var returnedLoansContainer: LinearLayout
@@ -28,6 +40,15 @@ class user_account : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_account)
+
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
+        txtIniciais = findViewById(R.id.iniciaisUsuario)
+        txtNome = findViewById(R.id.nomeUsuario)
+        txtEmail = findViewById(R.id.emailUsuario)
+        txtCpf = findViewById(R.id.cpfUsuario)
+        btnSair = findViewById(R.id.btnSair)
 
         NavBarHelper.setup(this, NavTab.ACCOUNT)
 
@@ -37,6 +58,8 @@ class user_account : AppCompatActivity() {
         setupAccountActions()
         setupNotificationsButton()
         esconderEmprestimosMockados()
+        carregarDadosDoPerfil()
+        setupNavigation()
     }
 
     override fun onResume() {
@@ -417,4 +440,92 @@ class user_account : AppCompatActivity() {
     private fun dp(value: Int): Int {
         return (value * resources.displayMetrics.density).toInt()
     }
+
+    private fun carregarDadosDoPerfil() {
+        val userId = auth.currentUser?.uid
+
+        if (userId != null) {
+            db.collection("users").document(userId)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val nomeCompleto = document.getString("nome")
+                        val email = document.getString("email")
+                        val cpf = "CPF: ${document.getString("cpf")}"
+
+                        txtNome.text = nomeCompleto ?: "Nome não disponível"
+                        txtEmail.text = email ?: "E-mail não disponível"
+                        txtCpf.text = if (cpf.isNotEmpty()) {
+                            "CPF: ${formatarCpf(cpf)}"
+                        } else {
+                            "CPF não cadastrado"
+                        }
+
+
+
+                        if (!nomeCompleto.isNullOrEmpty()) {
+                            txtIniciais.text = gerarIniciais(nomeCompleto)
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Erro ao carregar dados: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            txtNome.text = "Usuário não autenticado"
+        }
+    }
+
+    private fun gerarIniciais(nome: String): String {
+        val palavras = nome.trim().split("\\s+".toRegex())
+
+        val palavrasValidas = palavras.filter { it.isNotEmpty() }
+
+        if (palavrasValidas.isEmpty()) return ""
+
+        val primeiraLetra = palavrasValidas.first().substring(0, 1)
+
+        val iniciais = if (palavrasValidas.size > 1) {
+            val ultimaLetra = palavrasValidas.last().substring(0, 1)
+            "$primeiraLetra$ultimaLetra"
+        } else {
+            primeiraLetra
+        }
+        return iniciais.map { caractere ->
+            if (caractere in 'a'..'z') caractere - 32 else caractere
+        }.joinToString("")
+    }
+
+    private fun setupNavigation() {
+        findViewById<View>(R.id.btnBack)?.setOnClickListener {
+            finish()
+        }
+
+        btnSair.setOnClickListener {
+            auth.signOut()
+
+            Toast.makeText(this, "Sessão encerrada", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, LoginPage::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    private fun formatarCpf(cpfBruto: String): String {
+        val apenasNumeros = cpfBruto.replace("\\D".toRegex(), "")
+
+        if (apenasNumeros.length != 11) {
+            return cpfBruto
+        }
+
+        val bloco1 = apenasNumeros.substring(0, 3)
+        val bloco2 = apenasNumeros.substring(3, 6)
+        val bloco3 = apenasNumeros.substring(6, 9)
+        val digitos = apenasNumeros.substring(9, 11)
+
+        return "$bloco1.$bloco2.$bloco3-$digitos"
+    }
+
 }

@@ -219,10 +219,10 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/nomeUsuario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Lucas Silva 👋"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp"
                     android:textStyle="bold" />
