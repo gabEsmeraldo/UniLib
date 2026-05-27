@@ -4,65 +4,198 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.example.unilib.repository.BookRepository
 
 class admin_book_details : AppCompatActivity() {
+
+    private val db = FirebaseFirestore.getInstance()
+    private var bookColor: String = "blue"
+
+    private val bookRepository = BookRepository()
+    private var currentBookId: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.admin_book_details)
 
-        val activeTab = intent.getStringExtra("ADMIN_NAV_TAB")?.let { runCatching { AdminNavTab.valueOf(it) }.getOrNull() } ?: AdminNavTab.HOME
+        val activeTab = intent.getStringExtra("ADMIN_NAV_TAB")
+            ?.let { runCatching { AdminNavTab.valueOf(it) }.getOrNull() }
+            ?: AdminNavTab.HOME
         AdminNavBarHelper.setup(this, activeTab)
         findViewById<View>(R.id.btnBack)?.setOnClickListener { finish() }
 
-        val requestedTitle = intent.getStringExtra("TITULO_LIVRO")
-        val book = requestedTitle?.let { booksByTitle[it] } ?: booksByTitle.values.first()
-        renderBook(book)
+        bookColor = intent.getStringExtra("BOOK_COLOR") ?: "blue"
 
-        val requestedColor = intent.getStringExtra("BOOK_COLOR") ?: colorByTitle[book.title] ?: "blue"
-        applyBookColor(requestedColor)
-
-        wireEditModals(book)
+        loadBookFromFirestore()
     }
 
-    private fun wireEditModals(book: BookInfo) {
+    private fun loadBookFromFirestore() {
+        val bookId = intent.getStringExtra("BOOK_ID")
+        val title = intent.getStringExtra("TITULO_LIVRO")
+
+        when {
+            !bookId.isNullOrBlank() -> {
+                currentBookId = bookId
+                db.collection("books").document(bookId).get()
+                    .addOnSuccessListener { document ->
+                        if (!document.exists()) {
+                            showErrorAndClose("Livro não encontrado.")
+                            return@addOnSuccessListener
+                        }
+                        onBookLoaded(document)
+                    }
+                    .addOnFailureListener { showErrorAndClose(it.message ?: "Erro ao carregar livro.") }
+            }
+
+            !title.isNullOrBlank() -> {
+                db.collection("books").whereEqualTo("title", title).limit(1).get()
+                    .addOnSuccessListener { result ->
+                        val document = result.documents.firstOrNull()
+                        if (document == null) {
+                            showErrorAndClose("Livro não encontrado.")
+                            return@addOnSuccessListener
+                        }
+                        onBookLoaded(document)
+                    }
+                    .addOnFailureListener { showErrorAndClose(it.message ?: "Erro ao carregar livro.") }
+            }
+
+            else -> showErrorAndClose("Nenhum livro foi informado.")
+        }
+    }
+
+    private fun onBookLoaded(document: DocumentSnapshot) {
+        val title = document.getString("title") ?: ""
+        val author = document.getString("author") ?: ""
+        val isbn = document.get("isbn")?.toString() ?: ""
+        val synopsis = document.getString("synopsis") ?: ""
+        val quantity = getLong(document, "quantity")
+        val available = getLong(document, "available")
+        val borrowed = (quantity - available).coerceAtLeast(0L)
+        val reserved = getLong(document, "reserved")
+
+        renderBook(title, author, isbn, quantity, available, borrowed, reserved, synopsis)
+        applyBookColor(bookColor)
+        wireEditModals(title, author, synopsis, quantity, available)
+    }
+
+    private fun renderBook(
+        title: String, author: String, isbn: String,
+        total: Long, available: Long, borrowed: Long, reserved: Long, synopsis: String
+    ) {
+        findViewById<TextView>(R.id.tvBookTitle)?.text = title
+        findViewById<TextView>(R.id.tvBookAuthor)?.text = author
+        findViewById<TextView>(R.id.tvIsbn)?.text = "ISBN: $isbn"
+        findViewById<TextView>(R.id.tvTotal)?.text = total.toString()
+        findViewById<TextView>(R.id.tvDisponiveis)?.text = available.toString()
+        findViewById<TextView>(R.id.tvEmprestados)?.text = borrowed.toString()
+        findViewById<TextView>(R.id.tvReservados)?.text = reserved.toString()
+        findViewById<TextView>(R.id.tvSinopseDisplay)?.text = synopsis
+    }
+
+    private fun wireEditModals(
+        title: String, author: String, synopsis: String,
+        total: Long, available: Long
+    ) {
         findViewById<View>(R.id.btnEditarNome)?.setOnClickListener {
-            EditarNomeModalHelper.show(this, book.title)
+            EditarNomeModalHelper.show(this, title) { novoNome ->
+                bookRepository.updateBookField(
+                    bookId = currentBookId,
+                    fieldName = "title",
+                    newValue = novoNome,
+                    onSuccess = {
+                        Toast.makeText(this, "Nome atualizado!", Toast.LENGTH_SHORT).show()
+                        loadBookFromFirestore()
+                    },
+                    onError = { e ->
+                        Toast.makeText(this, "Erro: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                )
+            }
         }
         findViewById<View>(R.id.btnEditarAutor)?.setOnClickListener {
-            EditarAutorModalHelper.show(this, book.author)
+            EditarAutorModalHelper.show(this, author) { novoAutor ->
+                bookRepository.updateBookField(
+                    bookId = currentBookId,
+                    fieldName = "author",
+                    newValue = novoAutor,
+                    onSuccess = {
+                        Toast.makeText(this, "Autor atualizado!", Toast.LENGTH_SHORT).show()
+                        loadBookFromFirestore()
+                    },
+                    onError = { e ->
+                        Toast.makeText(this, "Erro: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                )
+            }
         }
         findViewById<View>(R.id.btnEditarImagem)?.setOnClickListener {
-            EditarImagemModalHelper.show(this)
+            EditarImagemModalHelper.show(this) {
+                Toast.makeText(this, "Funcionalidade ainda não implementada", Toast.LENGTH_SHORT).show()
+            }
         }
         findViewById<View>(R.id.btnEditarQuantidade)?.setOnClickListener {
             EditarQuantidadeModalHelper.show(
                 this,
-                currentQuantity = book.total,
-                availableLabel = "${book.available} Disponíveis"
-            )
+                currentQuantity = total.toString(),
+                availableLabel = "$available Disponíveis"
+            ) { novaQuantidade ->
+                bookRepository.updateBookField(
+                    bookId = currentBookId,
+                    fieldName = "quantity",
+                    newValue = novaQuantidade,
+                    onSuccess = {
+                        Toast.makeText(this, "Quantidade atualizada!", Toast.LENGTH_SHORT).show()
+                        loadBookFromFirestore()
+                    },
+                    onError = { e ->
+                        Toast.makeText(this, "Erro: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                )
+            }
         }
         findViewById<View>(R.id.btnEditarSinopse)?.setOnClickListener {
-            EditarSinopseModalHelper.show(this, book.synopsis)
+            EditarSinopseModalHelper.show(this, synopsis) { novaSinopse ->
+                bookRepository.updateBookField(
+                    bookId = currentBookId,
+                    fieldName = "synopsis",
+                    newValue = novaSinopse,
+                    onSuccess = {
+                        Toast.makeText(this, "Sinopse atualizada!", Toast.LENGTH_SHORT).show()
+                        loadBookFromFirestore()
+                    },
+                    onError = { e ->
+                        Toast.makeText(this, "Erro: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                )
+            }
         }
         findViewById<View>(R.id.btnEditarTags)?.setOnClickListener {
             EditarTagsModalHelper.show(this)
         }
         findViewById<View>(R.id.btnExcluirLivro)?.setOnClickListener {
-            ConfirmarExclusaoModalHelper.show(this, book.title)
+            ConfirmarExclusaoModalHelper.show(
+                this,
+                title,
+                onConfirm = {
+                    bookRepository.deleteBook(
+                        bookId = currentBookId,
+                        onSuccess = {
+                            Toast.makeText(this, "Livro excluído com sucesso!", Toast.LENGTH_SHORT).show()
+                            finish()
+                        },
+                        onError = { exception ->
+                            Toast.makeText(this, "Erro ao excluir: ${exception.message}", Toast.LENGTH_LONG).show()
+                        }
+                    )
+                }
+            )
         }
-    }
-
-    private fun renderBook(book: BookInfo) {
-        findViewById<TextView>(R.id.tvBookTitle)?.text = book.title
-        findViewById<TextView>(R.id.tvBookAuthor)?.text = book.author
-        findViewById<TextView>(R.id.tvIsbn)?.text = "ISBN: ${book.isbn}"
-        findViewById<TextView>(R.id.tvTotal)?.text = book.total
-        findViewById<TextView>(R.id.tvDisponiveis)?.text = book.available
-        findViewById<TextView>(R.id.tvEmprestados)?.text = book.borrowed
-        findViewById<TextView>(R.id.tvReservados)?.text = book.reserved
-        findViewById<TextView>(R.id.tvSinopseDisplay)?.text = book.synopsis
     }
 
     private fun applyBookColor(color: String) {
@@ -72,16 +205,22 @@ class admin_book_details : AppCompatActivity() {
         findViewById<View>(R.id.heroSection)?.setBackgroundColor(Color.parseColor(theme.heroColor))
     }
 
-    private data class BookInfo(
-        val title: String,
-        val author: String,
-        val isbn: String,
-        val total: String,
-        val available: String,
-        val borrowed: String,
-        val reserved: String,
-        val synopsis: String
-    )
+    private fun showErrorAndClose(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        finish()
+    }
+
+    private fun getLong(document: DocumentSnapshot, field: String): Long {
+        val value = document.get(field) ?: return 0L
+        return when (value) {
+            is Long -> value
+            is Int -> value.toLong()
+            is Double -> value.toLong()
+            is Float -> value.toLong()
+            is String -> value.toLongOrNull() ?: 0L
+            else -> 0L
+        }
+    }
 
     private data class BookColorTheme(
         val coverDrawable: Int,
@@ -97,21 +236,5 @@ class admin_book_details : AppCompatActivity() {
             "red" to BookColorTheme(R.drawable.bg_book_red, "#B71C1C", "#C62828"),
             "gray" to BookColorTheme(R.drawable.bg_book_gray, "#37474F", "#546E7A")
         )
-
-        val colorByTitle = mapOf(
-            "Algoritmos e Estruturas de Dados" to "blue",
-            "Engenharia de Software" to "purple",
-            "Clean Code" to "green",
-            "Redes de Computadores" to "red",
-            "Banco de Dados" to "red"
-        )
-
-        val booksByTitle = listOf(
-            BookInfo("Algoritmos e Estruturas de Dados", "Thomas H. Cormen et al.", "978-85-216-1474-6", "5", "3", "2", "1", "Introducao ao estudo de algoritmos, estruturas de dados e analise de complexidade para resolver problemas computacionais com eficiencia."),
-            BookInfo("Engenharia de Software", "Ian Sommerville", "978-85-7922-015-2", "3", "0", "3", "1", "Apresenta fundamentos de engenharia de software, processos, requisitos, arquitetura, testes e evolucao de sistemas."),
-            BookInfo("Clean Code", "Robert C. Martin", "978-85-7522-200-1", "6", "1", "5", "2", "Guia pratico para escrever codigo legivel, simples e testavel, com tecnicas de refatoracao e boas praticas de manutencao."),
-            BookInfo("Redes de Computadores", "Andrew S. Tanenbaum", "978-85-7605-924-0", "10", "1", "9", "0", "Aborda conceitos essenciais de redes, protocolos, camadas, transmissao de dados e funcionamento da Internet."),
-            BookInfo("Banco de Dados", "Date, C.J.", "978-85-352-9176-2", "5", "2", "3", "1", "Cobre modelagem relacional, algebra relacional, normalizacao, SQL e fundamentos para projeto e manutencao de bancos de dados.")
-        ).associateBy { it.title }
     }
 }
