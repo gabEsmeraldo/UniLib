@@ -148,7 +148,7 @@ object NotificationRepository {
     }
 
     fun getCurrentUserUnreadNotificationsCount(
-        OnSuccess: (Int) -> Unit,
+        onSuccess: (Int) -> Unit,
         onError: (Exception) -> Unit
     ) {
         val uid = auth.currentUser?.uid
@@ -164,7 +164,7 @@ object NotificationRepository {
             .whereEqualTo("read" , false)
             .get()
             .addOnSuccessListener { result ->
-                OnSuccess(result.size())
+                onSuccess(result.size())
             }
             .addOnFailureListener { exception ->
                 onError(exception)
