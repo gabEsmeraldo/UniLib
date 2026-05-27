@@ -7,24 +7,17 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
 import com.example.unilib.repository.BookRepository
 import com.example.unilib.repository.ReservationRepository
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
 
 class AdminHomePage : AppCompatActivity() {
 
     private val bookRepository = BookRepository()
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.example.unilib.R
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.FirebaseFirestoreLegacyRegistrar
-
-class AdminHomePage : AppCompatActivity() {
-
     private lateinit var db: FirebaseFirestore
 
     private lateinit var txtPendentes: TextView

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
@@ -53,6 +52,42 @@ class UserHomePage : AppCompatActivity() {
             intent.putExtra("NAV_TAB", NavTab.HOME.name)
             startActivity(intent)
         }
+    }
+
+    private fun carregarNomeUsuario() {
+        val userId = auth.currentUser?.uid
+
+        if (userId != null) {
+            db.collection("users").document(userId)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val nomeBruto = document.get("nome")
+                        val nomeFormatado = obterDoisPrimeirosNomes(nomeBruto)
+
+                        if (nomeFormatado.isNotEmpty()) {
+                            txtNomeUsuario.text = nomeFormatado
+                        } else {
+                            txtNomeUsuario.text = "Usuário"
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Erro ao carregar perfil: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            txtNomeUsuario.text = "Usuário"
+        }
+    }
+
+    private fun obterDoisPrimeirosNomes(nomeDoBanco: Any?): String {
+        val nomeCompleto = java.lang.String.valueOf(nomeDoBanco ?: "")
+        val nomeLimpo = nomeCompleto.replace("[", "").replace("]", "").trim()
+
+        return nomeLimpo.split("\\s+".toRegex())
+            .filter { it.isNotEmpty() }
+            .take(2)
+            .joinToString(" ")
     }
 
     private fun loadNewestBooks() {
@@ -131,42 +166,5 @@ class UserHomePage : AppCompatActivity() {
             },
             onError = {}
         )
-    }
-}
-
-    private fun carregarNomeUsuario() {
-        val userId = auth.currentUser?.uid
-
-        if (userId != null) {
-            db.collection("users").document(userId)
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        val nomeBruto = document.get("nome")
-                        val nomeFormatado = obterDoisPrimeirosNomes(nomeBruto)
-
-                        if (nomeFormatado.isNotEmpty()) {
-                            txtNomeUsuario.text = nomeFormatado
-                        } else {
-                            txtNomeUsuario.text = "Usuário"
-                        }
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(this, "Erro ao carregar perfil: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-        } else {
-            txtNomeUsuario.text = "Usuário"
-        }
-    }
-
-    private fun obterDoisPrimeirosNomes(nomeDoBanco: Any?): String {
-        val nomeCompleto = java.lang.String.valueOf(nomeDoBanco ?: "")
-        val nomeLimpo = nomeCompleto.replace("[", "").replace("]", "").trim()
-
-        return nomeLimpo.split("\\s+".toRegex())
-            .filter { it.isNotEmpty() }
-            .take(2)
-            .joinToString(" ")
     }
 }
