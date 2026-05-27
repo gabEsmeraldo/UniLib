@@ -23,6 +23,10 @@ class AdminHomePage : AppCompatActivity() {
 
         AdminNavBarHelper.setup(this, AdminNavTab.HOME)
         setupNavigation()
+    }
+
+    override fun onResume() {
+        super.onResume()
         loadTopLentBooks()
         loadPendingApprovals()
     }
@@ -46,6 +50,7 @@ class AdminHomePage : AppCompatActivity() {
 
     private fun loadPendingApprovals() {
         val container = findViewById<LinearLayout>(R.id.llPendingApprovals)
+        container.removeAllViews()
 
         ReservationRepository.getPendingReservationsForAdmin(
             onSuccess = { reservations ->
@@ -123,6 +128,7 @@ class AdminHomePage : AppCompatActivity() {
 
     private fun loadTopLentBooks() {
         val container = findViewById<LinearLayout>(R.id.llFeaturedBooks)
+        container.removeAllViews()
         val backgrounds = listOf(
             R.drawable.bg_book_blue,
             R.drawable.bg_book_green,

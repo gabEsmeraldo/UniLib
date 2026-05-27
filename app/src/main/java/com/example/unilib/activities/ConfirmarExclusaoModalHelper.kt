@@ -14,7 +14,7 @@ import com.example.unilib.R
 
 object ConfirmarExclusaoModalHelper {
 
-    fun show(activity: Activity, bookTitle: String = "Excluir livro") {
+    fun show(activity: Activity, bookTitle: String, onConfirm: () -> Unit) {
         val dialog = Dialog(activity)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -32,7 +32,7 @@ object ConfirmarExclusaoModalHelper {
 
         btnBack.setOnClickListener { dialog.dismiss() }
         btnCancelar.setOnClickListener { dialog.dismiss() }
-        btnConfirmar.setOnClickListener { dialog.dismiss() }
+        btnConfirmar.setOnClickListener { onConfirm(); dialog.dismiss() }
 
         dialog.show()
 

@@ -9,11 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.example.unilib.repository.BookRepository
 
 class admin_book_details : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
     private var bookColor: String = "blue"
+
+    private val bookRepository = BookRepository()
+    private var currentBookId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +40,7 @@ class admin_book_details : AppCompatActivity() {
 
         when {
             !bookId.isNullOrBlank() -> {
+                currentBookId = bookId
                 db.collection("books").document(bookId).get()
                     .addOnSuccessListener { document ->
                         if (!document.exists()) {
@@ -120,7 +125,22 @@ class admin_book_details : AppCompatActivity() {
             EditarTagsModalHelper.show(this)
         }
         findViewById<View>(R.id.btnExcluirLivro)?.setOnClickListener {
-            ConfirmarExclusaoModalHelper.show(this, title)
+            ConfirmarExclusaoModalHelper.show(
+                this,
+                title,
+                onConfirm = {
+                    bookRepository.deleteBook(
+                        bookId = currentBookId,
+                        onSuccess = {
+                            Toast.makeText(this, "Livro excluído com sucesso!", Toast.LENGTH_SHORT).show()
+                            finish()
+                        },
+                        onError = { exception ->
+                            Toast.makeText(this, "Erro ao excluir: ${exception.message}", Toast.LENGTH_LONG).show()
+                        }
+                    )
+                }
+            )
         }
     }
 

@@ -51,4 +51,12 @@ class BookRepository {
             }
             .addOnFailureListener { onError(it) }
     }
+
+    fun deleteBook(bookId: String, onSuccess: () -> Unit, onError: (Exception) -> Unit) {
+        db.collection("books")
+            .document(bookId)
+            .delete()
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { onError(it) }
+    }
 }
