@@ -44,8 +44,6 @@ class UserHomePage : AppCompatActivity() {
         NavBarHelper.setup(this, NavTab.HOME)
         setupNotificationsButton()
         setupChatButton()
-        loadTopLentBooks()
-        loadNewestBooks()
     }
 
     override fun onResume() {
@@ -143,7 +141,6 @@ class UserHomePage : AppCompatActivity() {
 
     private fun loadNewestBooks() {
         val container = findViewById<LinearLayout>(R.id.llNewBooks)
-        container.removeAllViews()
         val backgrounds = listOf(
             R.drawable.bg_book_blue,
             R.drawable.bg_book_green,
@@ -183,7 +180,6 @@ class UserHomePage : AppCompatActivity() {
 
     private fun loadTopLentBooks() {
         val container = findViewById<LinearLayout>(R.id.llRecommendedBooks)
-        container.removeAllViews()
         val backgrounds = listOf(
             R.drawable.bg_book_blue,
             R.drawable.bg_book_green,
