@@ -47,6 +47,7 @@ object NotificationRepository {
             }
     }
 
+
     /**
      * Cria uma notificação para o usuário atualmente logado.
      * Útil quando a própria tela do usuário precisa registrar um aviso.
@@ -140,6 +141,30 @@ object NotificationRepository {
                     .addOnFailureListener { exception ->
                         onError(exception)
                     }
+            }
+            .addOnFailureListener { exception ->
+                onError(exception)
+            }
+    }
+
+    fun getCurrentUserUnreadNotificationsCount(
+        OnSuccess: (Int) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        val uid = auth.currentUser?.uid
+
+        if (uid == null) {
+            onError(Exception("Usuário não autenticado."))
+            return
+        }
+
+        db.collection(COLLECTION_USERS)
+            .document(uid)
+            .collection(COLLECTION_NOTIFICATIONS)
+            .whereEqualTo("read" , false)
+            .get()
+            .addOnSuccessListener { result ->
+                OnSuccess(result.size())
             }
             .addOnFailureListener { exception ->
                 onError(exception)

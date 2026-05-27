@@ -13,6 +13,9 @@ import com.example.unilib.repository.BookRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import android.view.View
+import com.example.unilib.repository.LoanRepository
+import com.example.unilib.repository.NotificationRepository
 
 class UserHomePage : AppCompatActivity() {
 
@@ -22,6 +25,10 @@ class UserHomePage : AppCompatActivity() {
 
     private lateinit var txtNomeUsuario: TextView
 
+    private lateinit var tvActiveLoansMessage: TextView
+
+    private lateinit var notificationBadgeDot: View
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_home_page)
@@ -30,12 +37,23 @@ class UserHomePage : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         txtNomeUsuario = findViewById(R.id.nomeUsuario)
+        tvActiveLoansMessage = findViewById(R.id.tvActiveLoansMessage)
+        notificationBadgeDot = findViewById(R.id.notificationBadgeDot)
 
-        carregarNomeUsuario()
 
         NavBarHelper.setup(this, NavTab.HOME)
         setupNotificationsButton()
         setupChatButton()
+        loadTopLentBooks()
+        loadNewestBooks()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        carregarNomeUsuario()
+        loadActiveLoansSummary()
+        updateNotificationsBadge()
         loadTopLentBooks()
         loadNewestBooks()
     }
@@ -79,6 +97,39 @@ class UserHomePage : AppCompatActivity() {
             txtNomeUsuario.text = "Usuário"
         }
     }
+    private fun loadActiveLoansSummary() {
+        tvActiveLoansMessage.text = "Carregando empréstimos ativos..."
+
+        LoanRepository.getCurrentUserOpenLoans(
+            onSuccess = { loans ->
+                val count = loans.size
+
+                tvActiveLoansMessage.text = when(count) {
+                    0 -> "Você não possui empréstimos ativos"
+                    1 -> "Você tem 1 empréstimo ativo"
+                    else -> "Você tem $count empréstimos ativos"
+                }
+            },
+            onError = {
+                tvActiveLoansMessage.text = "Não foi possível carregar seus empréstimos ativos"
+            }
+        )
+    }
+
+    private fun updateNotificationsBadge() {
+        NotificationRepository.getCurrentUserUnreadNotificationsCount(
+            onSuccess = { unreadCount ->
+                notificationBadgeDot.visibility = if (unreadCount > 0) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            },
+            onError = {
+                notificationBadgeDot.visibility = View.GONE
+            }
+        )
+    }
 
     private fun obterDoisPrimeirosNomes(nomeDoBanco: Any?): String {
         val nomeCompleto = java.lang.String.valueOf(nomeDoBanco ?: "")
@@ -92,6 +143,7 @@ class UserHomePage : AppCompatActivity() {
 
     private fun loadNewestBooks() {
         val container = findViewById<LinearLayout>(R.id.llNewBooks)
+        container.removeAllViews()
         val backgrounds = listOf(
             R.drawable.bg_book_blue,
             R.drawable.bg_book_green,
@@ -131,6 +183,7 @@ class UserHomePage : AppCompatActivity() {
 
     private fun loadTopLentBooks() {
         val container = findViewById<LinearLayout>(R.id.llRecommendedBooks)
+        container.removeAllViews()
         val backgrounds = listOf(
             R.drawable.bg_book_blue,
             R.drawable.bg_book_green,
