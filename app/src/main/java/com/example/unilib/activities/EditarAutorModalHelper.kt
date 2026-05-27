@@ -14,7 +14,7 @@ import com.example.unilib.R
 
 object EditarAutorModalHelper {
 
-    fun show(activity: Activity, currentAuthor: String = "") {
+    fun show(activity: Activity, currentAuthor: String = "", onConfirm: (String) -> Unit) {
         val dialog = Dialog(activity)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -32,7 +32,13 @@ object EditarAutorModalHelper {
 
         btnBack.setOnClickListener { dialog.dismiss() }
         btnCancelar.setOnClickListener { dialog.dismiss() }
-        btnConfirmar.setOnClickListener { dialog.dismiss() }
+        btnConfirmar.setOnClickListener {
+            val newAuthor = etAutor.text.toString().trim()
+            if (newAuthor.isNotBlank()) {
+                onConfirm(newAuthor)
+                dialog.dismiss()
+            }
+        }
 
         dialog.show()
 

@@ -143,7 +143,13 @@ object ReservationRepository {
             )
 
             transaction.set(reserveRef, reserveData)
-            transaction.update(bookRef, "available", available - 1L)
+            transaction.update(
+                bookRef,
+                mapOf(
+                    "available" to available - 1L,
+                    "lentCount" to FieldValue.increment(1L)
+                )
+            )
 
             ReservationCreatedResult(
                 reservationId = reserveRef.id,
@@ -251,7 +257,13 @@ object ReservationRepository {
                 )
             )
 
-            transaction.update(bookRef, "available", available + 1L)
+            transaction.update(
+                bookRef,
+                mapOf(
+                    "available" to available + 1L,
+                    "lentCount" to FieldValue.increment(-1L)
+                )
+            )
 
             true
         }.addOnSuccessListener {

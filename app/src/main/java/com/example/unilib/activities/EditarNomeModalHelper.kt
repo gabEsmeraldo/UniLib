@@ -14,7 +14,7 @@ import com.example.unilib.R
 
 object EditarNomeModalHelper {
 
-    fun show(activity: Activity, currentName: String = "") {
+    fun show(activity: Activity, currentName: String = "", onConfirm: (String) -> Unit) {
         val dialog = Dialog(activity)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -32,7 +32,13 @@ object EditarNomeModalHelper {
 
         btnBack.setOnClickListener { dialog.dismiss() }
         btnCancelar.setOnClickListener { dialog.dismiss() }
-        btnConfirmar.setOnClickListener { dialog.dismiss() }
+        btnConfirmar.setOnClickListener {
+            val newName = etNome.text.toString().trim()
+            if (newName.isNotBlank()) {
+                onConfirm(newName)
+                dialog.dismiss()
+            }
+        }
 
         dialog.show()
 

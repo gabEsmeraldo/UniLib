@@ -13,7 +13,7 @@ import com.example.unilib.R
 
 object EditarImagemModalHelper {
 
-    fun show(activity: Activity) {
+    fun show(activity: Activity, onConfirm: () -> Unit) {
         val dialog = Dialog(activity)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -27,12 +27,14 @@ object EditarImagemModalHelper {
         val btnCancelar = dialog.findViewById<Button>(R.id.btnCancelarEditarImagem)
         val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarEditarImagem)
 
-        // Placeholder is decorative — no real picker integration yet.
         placeholder.setOnClickListener { /* no-op */ }
 
         btnBack.setOnClickListener { dialog.dismiss() }
         btnCancelar.setOnClickListener { dialog.dismiss() }
-        btnConfirmar.setOnClickListener { dialog.dismiss() }
+        btnConfirmar.setOnClickListener {
+            onConfirm()
+            dialog.dismiss()
+        }
 
         dialog.show()
 

@@ -17,7 +17,8 @@ object EditarQuantidadeModalHelper {
     fun show(
         activity: Activity,
         currentQuantity: String = "0",
-        availableLabel: String? = null
+        availableLabel: String? = null,
+        onConfirm: (Int) -> Unit
     ) {
         val dialog = Dialog(activity)
 
@@ -33,10 +34,7 @@ object EditarQuantidadeModalHelper {
         val btnIncrementar = dialog.findViewById<View>(R.id.btnIncrementarQuantidade)
         val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarEditarQuantidade)
 
-        // Stepper state — start from the current quantity, fall back to 0 on parse failure.
         var count = currentQuantity.toIntOrNull()?.coerceAtLeast(0) ?: 0
-        // The "<n> Disponíveis" label tracks the live count. If a custom label was passed,
-        // honor it for the initial render but switch to the dynamic format on first tap.
         var customLabelInUse = availableLabel != null
 
         fun render() {
@@ -57,7 +55,10 @@ object EditarQuantidadeModalHelper {
         }
 
         btnBack.setOnClickListener { dialog.dismiss() }
-        btnConfirmar.setOnClickListener { dialog.dismiss() }
+        btnConfirmar.setOnClickListener {
+            onConfirm(count)
+            dialog.dismiss()
+        }
 
         dialog.show()
 

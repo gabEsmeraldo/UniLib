@@ -2,18 +2,22 @@ package com.example.unilib.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.view.LayoutInflater
 import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
+import com.example.unilib.repository.BookRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UserHomePage : AppCompatActivity() {
 
+    private val bookRepository = BookRepository()
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
@@ -31,9 +35,10 @@ class UserHomePage : AppCompatActivity() {
         carregarNomeUsuario()
 
         NavBarHelper.setup(this, NavTab.HOME)
-        setupBookCards()
         setupNotificationsButton()
         setupChatButton()
+        loadTopLentBooks()
+        loadNewestBooks()
     }
 
     private fun setupNotificationsButton() {
@@ -50,35 +55,84 @@ class UserHomePage : AppCompatActivity() {
         }
     }
 
-    private fun setupBookCards() {
-        findViewById<View>(R.id.cardAlgoritmosHome).setOnClickListener {
-            openBookDetails("Algoritmos e Estruturas de Dados", "blue")
-        }
+    private fun loadNewestBooks() {
+        val container = findViewById<LinearLayout>(R.id.llNewBooks)
+        val backgrounds = listOf(
+            R.drawable.bg_book_blue,
+            R.drawable.bg_book_green,
+            R.drawable.bg_book_purple,
+            R.drawable.bg_book_red,
+            R.drawable.bg_book_gray
+        )
+        val colorNames = listOf("blue", "green", "purple", "red", "gray")
 
-        findViewById<View>(R.id.cardCleanCodeHome).setOnClickListener {
-            openBookDetails("Clean Code", "green")
-        }
+        bookRepository.getNewestBooks(10,
+            onSuccess = { books ->
+                books.forEachIndexed { index, book ->
+                    val card = LayoutInflater.from(this)
+                        .inflate(R.layout.item_book_card, container, false)
 
-        findViewById<View>(R.id.cardEngenhariaHome).setOnClickListener {
-            openBookDetails("Engenharia de Software", "purple")
-        }
+                    card.findViewById<FrameLayout>(R.id.bookCover)
+                        .setBackgroundResource(backgrounds[index % backgrounds.size])
+                    card.findViewById<TextView>(R.id.tvAvailBadge).text = "${book.available} disp."
+                    card.findViewById<TextView>(R.id.tvBookTitle).text = book.title
+                    card.findViewById<TextView>(R.id.tvBookAuthor).text = book.author
 
-        findViewById<View>(R.id.cardIaHome).setOnClickListener {
-            openBookDetails("Inteligência Artificial", "red")
-        }
+                    val colorName = colorNames[index % colorNames.size]
+                    card.setOnClickListener {
+                        val intent = Intent(this, BookDetails::class.java)
+                        intent.putExtra("BOOK_ID", book.id)
+                        intent.putExtra("BOOK_COLOR", colorName)
+                        intent.putExtra("NAV_TAB", NavTab.HOME.name)
+                        startActivity(intent)
+                    }
 
-        findViewById<View>(R.id.cardBancoDadosHome).setOnClickListener {
-            openBookDetails("Banco de Dados", "gray")
-        }
+                    container.addView(card)
+                }
+            },
+            onError = {}
+        )
     }
 
-    private fun openBookDetails(title: String, color: String) {
-        val intent = Intent(this, BookDetails::class.java)
-        intent.putExtra("TITULO_LIVRO", title)
-        intent.putExtra("BOOK_COLOR", color)
-        intent.putExtra("NAV_TAB", NavTab.HOME.name)
-        startActivity(intent)
+    private fun loadTopLentBooks() {
+        val container = findViewById<LinearLayout>(R.id.llRecommendedBooks)
+        val backgrounds = listOf(
+            R.drawable.bg_book_blue,
+            R.drawable.bg_book_green,
+            R.drawable.bg_book_purple,
+            R.drawable.bg_book_red,
+            R.drawable.bg_book_gray
+        )
+        val colorNames = listOf("blue", "green", "purple", "red", "gray")
+
+        bookRepository.getTopLentBooks(10,
+            onSuccess = { books ->
+                books.forEachIndexed { index, book ->
+                    val card = LayoutInflater.from(this)
+                        .inflate(R.layout.item_book_card, container, false)
+
+                    card.findViewById<FrameLayout>(R.id.bookCover)
+                        .setBackgroundResource(backgrounds[index % backgrounds.size])
+                    card.findViewById<TextView>(R.id.tvAvailBadge).text = "${book.available} disp."
+                    card.findViewById<TextView>(R.id.tvBookTitle).text = book.title
+                    card.findViewById<TextView>(R.id.tvBookAuthor).text = book.author
+
+                    val colorName = colorNames[index % colorNames.size]
+                    card.setOnClickListener {
+                        val intent = Intent(this, BookDetails::class.java)
+                        intent.putExtra("BOOK_ID", book.id)
+                        intent.putExtra("BOOK_COLOR", colorName)
+                        intent.putExtra("NAV_TAB", NavTab.HOME.name)
+                        startActivity(intent)
+                    }
+
+                    container.addView(card)
+                }
+            },
+            onError = {}
+        )
     }
+}
 
     private fun carregarNomeUsuario() {
         val userId = auth.currentUser?.uid
