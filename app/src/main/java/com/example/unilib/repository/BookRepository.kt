@@ -59,4 +59,18 @@ class BookRepository {
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { onError(it) }
     }
+
+    fun updateBookField(
+        bookId: String,
+        fieldName: String,
+        newValue: Any,
+        onSuccess: () -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        db.collection("books")
+            .document(bookId)
+            .update(fieldName, newValue)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { onError(it) }
+    }
 }

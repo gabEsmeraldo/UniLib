@@ -103,23 +103,77 @@ class admin_book_details : AppCompatActivity() {
         total: Long, available: Long
     ) {
         findViewById<View>(R.id.btnEditarNome)?.setOnClickListener {
-            EditarNomeModalHelper.show(this, title)
+            EditarNomeModalHelper.show(this, title) { novoNome ->
+                bookRepository.updateBookField(
+                    bookId = currentBookId,
+                    fieldName = "title",
+                    newValue = novoNome,
+                    onSuccess = {
+                        Toast.makeText(this, "Nome atualizado!", Toast.LENGTH_SHORT).show()
+                        loadBookFromFirestore()
+                    },
+                    onError = { e ->
+                        Toast.makeText(this, "Erro: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                )
+            }
         }
         findViewById<View>(R.id.btnEditarAutor)?.setOnClickListener {
-            EditarAutorModalHelper.show(this, author)
+            EditarAutorModalHelper.show(this, author) { novoAutor ->
+                bookRepository.updateBookField(
+                    bookId = currentBookId,
+                    fieldName = "author",
+                    newValue = novoAutor,
+                    onSuccess = {
+                        Toast.makeText(this, "Autor atualizado!", Toast.LENGTH_SHORT).show()
+                        loadBookFromFirestore()
+                    },
+                    onError = { e ->
+                        Toast.makeText(this, "Erro: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                )
+            }
         }
         findViewById<View>(R.id.btnEditarImagem)?.setOnClickListener {
-            EditarImagemModalHelper.show(this)
+            EditarImagemModalHelper.show(this) {
+                Toast.makeText(this, "Funcionalidade ainda não implementada", Toast.LENGTH_SHORT).show()
+            }
         }
         findViewById<View>(R.id.btnEditarQuantidade)?.setOnClickListener {
             EditarQuantidadeModalHelper.show(
                 this,
                 currentQuantity = total.toString(),
                 availableLabel = "$available Disponíveis"
-            )
+            ) { novaQuantidade ->
+                bookRepository.updateBookField(
+                    bookId = currentBookId,
+                    fieldName = "quantity",
+                    newValue = novaQuantidade,
+                    onSuccess = {
+                        Toast.makeText(this, "Quantidade atualizada!", Toast.LENGTH_SHORT).show()
+                        loadBookFromFirestore()
+                    },
+                    onError = { e ->
+                        Toast.makeText(this, "Erro: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                )
+            }
         }
         findViewById<View>(R.id.btnEditarSinopse)?.setOnClickListener {
-            EditarSinopseModalHelper.show(this, synopsis)
+            EditarSinopseModalHelper.show(this, synopsis) { novaSinopse ->
+                bookRepository.updateBookField(
+                    bookId = currentBookId,
+                    fieldName = "synopsis",
+                    newValue = novaSinopse,
+                    onSuccess = {
+                        Toast.makeText(this, "Sinopse atualizada!", Toast.LENGTH_SHORT).show()
+                        loadBookFromFirestore()
+                    },
+                    onError = { e ->
+                        Toast.makeText(this, "Erro: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                )
+            }
         }
         findViewById<View>(R.id.btnEditarTags)?.setOnClickListener {
             EditarTagsModalHelper.show(this)

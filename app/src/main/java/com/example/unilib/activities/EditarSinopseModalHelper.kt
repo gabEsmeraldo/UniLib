@@ -14,7 +14,7 @@ import com.example.unilib.R
 
 object EditarSinopseModalHelper {
 
-    fun show(activity: Activity, currentSinopse: String = "") {
+    fun show(activity: Activity, currentSinopse: String = "", onConfirm: (String) -> Unit) {
         val dialog = Dialog(activity)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -32,7 +32,13 @@ object EditarSinopseModalHelper {
 
         btnBack.setOnClickListener { dialog.dismiss() }
         btnCancelar.setOnClickListener { dialog.dismiss() }
-        btnConfirmar.setOnClickListener { dialog.dismiss() }
+        btnConfirmar.setOnClickListener {
+            val newSinopse = etSinopse.text.toString().trim()
+            if (newSinopse.isNotBlank()) {
+                onConfirm(newSinopse)
+                dialog.dismiss()
+            }
+        }
 
         dialog.show()
 
