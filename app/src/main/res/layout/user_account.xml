@@ -81,6 +81,7 @@
 
             <!-- PROFILE CARD -->
             <LinearLayout
+                android:id="@+id/cardPerfil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
@@ -89,12 +90,15 @@
                 android:background="@drawable/bg_card_white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:clickable="true"
+                android:focusable="true"
                 android:padding="16dp">
 
                 <FrameLayout
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@drawable/bg_avatar_circle">
+
 
                     <TextView
                         android:id="@+id/iniciaisUsuario"
@@ -104,6 +108,13 @@
                         android:textColor="#FFFFFF"
                         android:textSize="20sp"
                         android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ivUserPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
                 </FrameLayout>
 
                 <LinearLayout

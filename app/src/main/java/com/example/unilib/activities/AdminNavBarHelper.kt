@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
 
-enum class AdminNavTab { HOME, SEARCH, LOANS, NONE }
+enum class AdminNavTab { HOME, SEARCH, LOANS, USERS, NONE }
 
 object AdminNavBarHelper {
     fun setup(activity: AppCompatActivity, activeTab: AdminNavTab) {
@@ -37,6 +37,15 @@ object AdminNavBarHelper {
             active = activeTab == AdminNavTab.LOANS
         ) {
             activity.startActivity(Intent(activity, emprestimo_admin_page::class.java))
+            activity.finish()
+        }
+
+        setupTab(
+            activity = activity,
+            ids = intArrayOf(R.id.navAdminUsers, R.id.nav_users),
+            active = activeTab == AdminNavTab.USERS
+        ) {
+            activity.startActivity(Intent(activity, AdminUsersPage::class.java))
             activity.finish()
         }
     }

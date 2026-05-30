@@ -1,0 +1,52 @@
+package com.example.unilib.activities
+
+import android.app.Activity
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.Gravity
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
+import com.example.unilib.R
+
+object EditarNomeUsuarioModalHelper {
+
+    fun show(activity: Activity, currentName: String = "", onConfirm: (String) -> Unit) {
+        val dialog = Dialog(activity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.modal_editar_nome_usuario)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val btnBack = dialog.findViewById<View>(R.id.btnBackEditarNomeUsuario)
+        val etNome = dialog.findViewById<EditText>(R.id.etEditarNomeUsuario)
+        val btnCancelar = dialog.findViewById<Button>(R.id.btnCancelarEditarNomeUsuario)
+        val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarEditarNomeUsuario)
+
+        etNome.setText(currentName)
+
+        btnBack.setOnClickListener { dialog.dismiss() }
+        btnCancelar.setOnClickListener { dialog.dismiss() }
+        btnConfirmar.setOnClickListener {
+            val newName = etNome.text.toString().trim()
+            if (newName.isNotBlank()) {
+                onConfirm(newName)
+                dialog.dismiss()
+            }
+        }
+
+        dialog.show()
+        dialog.window?.let { window ->
+            val width = (activity.resources.displayMetrics.widthPixels * 0.88).toInt()
+            window.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+            window.setGravity(Gravity.CENTER)
+            val params = window.attributes
+            params.dimAmount = 0.55f
+            window.attributes = params
+            window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        }
+    }
+}
