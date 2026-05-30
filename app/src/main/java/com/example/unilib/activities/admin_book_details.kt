@@ -9,8 +9,10 @@ import android.net.Uri
 import androidx.palette.graphics.Palette
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -102,11 +104,13 @@ class admin_book_details : AppCompatActivity() {
         val borrowed = (quantity - available).coerceAtLeast(0L)
         val reserved = getLong(document, "reserved")
         currentImageBase64 = document.getString("imageUrl") ?: ""
+        val tags = (document.get("tags") as? List<*>)?.filterIsInstance<String>() ?: emptyList()
 
         renderBook(title, author, isbn, quantity, available, borrowed, reserved, synopsis)
         applyBookColor(bookColor)
         displayBookCoverImage(currentImageBase64)
-        wireEditModals(title, author, synopsis, quantity, available)
+        displayTags(tags)
+        wireEditModals(title, author, synopsis, quantity, available, tags)
     }
 
     private fun renderBook(
@@ -123,9 +127,31 @@ class admin_book_details : AppCompatActivity() {
         findViewById<TextView>(R.id.tvSinopseDisplay)?.text = synopsis
     }
 
+    private fun displayTags(tags: List<String>) {
+        val container = findViewById<LinearLayout>(R.id.tagsContainer) ?: return
+        container.removeAllViews()
+        val dp8 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics).toInt()
+        val dp6 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6f, resources.displayMetrics).toInt()
+        val dp12 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12f, resources.displayMetrics).toInt()
+        tags.forEach { tag ->
+            val tv = TextView(this).apply {
+                text = tag
+                setTextColor(Color.parseColor("#0D5DA3"))
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                setBackgroundResource(R.drawable.bg_tag_outline)
+                setPadding(dp12, dp6, dp12, dp6)
+            }
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { marginEnd = dp8 }
+            container.addView(tv, params)
+        }
+    }
+
     private fun wireEditModals(
         title: String, author: String, synopsis: String,
-        total: Long, available: Long
+        total: Long, available: Long, currentTags: List<String> = emptyList()
     ) {
         findViewById<View>(R.id.btnEditarNome)?.setOnClickListener {
             EditarNomeModalHelper.show(this, title) { novoNome ->
@@ -217,8 +243,22 @@ class admin_book_details : AppCompatActivity() {
                 )
             }
         }
+        val currentTagsStr = currentTags.joinToString(", ")
         findViewById<View>(R.id.btnEditarTags)?.setOnClickListener {
-            EditarTagsModalHelper.show(this)
+            EditarTagsModalHelper.show(this, currentTagsStr) { newTags ->
+                bookRepository.updateBookField(
+                    bookId = currentBookId,
+                    fieldName = "tags",
+                    newValue = newTags,
+                    onSuccess = {
+                        displayTags(newTags)
+                        Toast.makeText(this, "Tags atualizadas!", Toast.LENGTH_SHORT).show()
+                    },
+                    onError = { e ->
+                        Toast.makeText(this, "Erro: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                )
+            }
         }
         findViewById<View>(R.id.btnExcluirLivro)?.setOnClickListener {
             ConfirmarExclusaoModalHelper.show(

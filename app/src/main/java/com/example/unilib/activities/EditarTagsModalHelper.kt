@@ -14,7 +14,7 @@ import com.example.unilib.R
 
 object EditarTagsModalHelper {
 
-    fun show(activity: Activity, currentTags: String = "") {
+    fun show(activity: Activity, currentTags: String = "", onConfirm: (List<String>) -> Unit = {}) {
         val dialog = Dialog(activity)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -32,7 +32,11 @@ object EditarTagsModalHelper {
 
         btnBack.setOnClickListener { dialog.dismiss() }
         btnCancelar.setOnClickListener { dialog.dismiss() }
-        btnConfirmar.setOnClickListener { dialog.dismiss() }
+        btnConfirmar.setOnClickListener {
+            val tags = etTags.text.toString().split(",").map { it.trim() }.filter { it.isNotEmpty() }
+            onConfirm(tags)
+            dialog.dismiss()
+        }
 
         dialog.show()
 

@@ -3,6 +3,7 @@ package com.example.unilib.activities
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -114,6 +115,7 @@ class BookDetails : AppCompatActivity() {
         val location = document.getString("location") ?: "Não informado"
         val synopsis = document.getString("synopsis") ?: "Sinopse não informada"
         val imageUrl = document.getString("imageUrl") ?: ""
+        val tags = (document.get("tags") as? List<*>)?.filterIsInstance<String>() ?: emptyList()
 
         findViewById<TextView>(R.id.tvBookTitle).text = title
         findViewById<TextView>(R.id.tvBookAuthor).text = author
@@ -126,6 +128,7 @@ class BookDetails : AppCompatActivity() {
 
         applyBookColor("blue")
         displayBookCoverImage(imageUrl)
+        displayTags(tags)
     }
 
     private fun setupActionButtons() {
@@ -221,6 +224,28 @@ class BookDetails : AppCompatActivity() {
             exception.message ?: "Erro ao criar reserva.",
             Toast.LENGTH_LONG
         ).show()
+    }
+
+    private fun displayTags(tags: List<String>) {
+        val container = findViewById<LinearLayout>(R.id.tagsContainer) ?: return
+        container.removeAllViews()
+        val dp8 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics).toInt()
+        val dp6 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6f, resources.displayMetrics).toInt()
+        val dp12 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12f, resources.displayMetrics).toInt()
+        tags.forEach { tag ->
+            val tv = TextView(this).apply {
+                text = tag
+                setTextColor(Color.parseColor("#0D5DA3"))
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                setBackgroundResource(R.drawable.bg_tag_outline)
+                setPadding(dp12, dp6, dp12, dp6)
+            }
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { marginEnd = dp8 }
+            container.addView(tv, params)
+        }
     }
 
     private fun displayBookCoverImage(base64: String) {
