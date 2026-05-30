@@ -173,7 +173,7 @@ object ReservationRepository {
 
     /**
      * Busca reservas pendentes do usuário logado.
-     * A tela Conta e a tela Meus Empréstimos podem usar essa função.
+     * Reservas expiradas são filtradas do resultado e marcadas como EXPIRED em background.
      */
     fun getCurrentUserPendingReservations(
         onSuccess: (List<DocumentSnapshot>) -> Unit,
@@ -193,7 +193,7 @@ object ReservationRepository {
             .whereEqualTo("status", STATUS_PENDING)
             .get()
             .addOnSuccessListener { result ->
-                onSuccess(result.documents)
+                filterAndExpireStale(result.documents, onSuccess)
             }
             .addOnFailureListener { exception ->
                 onError(exception)
@@ -202,7 +202,7 @@ object ReservationRepository {
 
     /**
      * Busca todas as reservas pendentes.
-     * Essa função é usada pelo administrador na aba "Pendentes".
+     * Reservas expiradas são filtradas do resultado e marcadas como EXPIRED em background.
      */
     fun getPendingReservationsForAdmin(
         onSuccess: (List<DocumentSnapshot>) -> Unit,
@@ -212,11 +212,72 @@ object ReservationRepository {
             .whereEqualTo("status", STATUS_PENDING)
             .get()
             .addOnSuccessListener { result ->
-                onSuccess(result.documents)
+                filterAndExpireStale(result.documents, onSuccess)
             }
             .addOnFailureListener { exception ->
                 onError(exception)
             }
+    }
+
+    /**
+     * Splits docs into active vs stale, fires background expiration for each stale one,
+     * then immediately returns only the active ones to the caller.
+     */
+    private fun filterAndExpireStale(
+        docs: List<DocumentSnapshot>,
+        onFiltered: (List<DocumentSnapshot>) -> Unit
+    ) {
+        val now = System.currentTimeMillis()
+        val active = mutableListOf<DocumentSnapshot>()
+        val stale = mutableListOf<DocumentSnapshot>()
+
+        for (doc in docs) {
+            val expiresAt = doc.getTimestamp("expires_at")
+            if (expiresAt != null && expiresAt.toDate().time < now) {
+                stale.add(doc)
+            } else {
+                active.add(doc)
+            }
+        }
+
+        stale.forEach { expireReservationInBackground(it) }
+        onFiltered(active)
+    }
+
+    /**
+     * Marks a reservation as EXPIRED and restores the book's available count.
+     * Runs as a fire-and-forget transaction — errors are silently ignored since
+     * the next load will retry any reservation that wasn't cleaned up.
+     */
+    private fun expireReservationInBackground(doc: DocumentSnapshot) {
+        val reserveRef = doc.reference
+        val bookRef = doc.getDocumentReference("book_id") ?: return
+
+        db.runTransaction { transaction ->
+            val reserveSnapshot = transaction.get(reserveRef)
+
+            if (!reserveSnapshot.exists()) return@runTransaction
+            if (reserveSnapshot.getString("status") != STATUS_PENDING) return@runTransaction
+
+            val bookSnapshot = transaction.get(bookRef)
+            val available = getLongField(bookSnapshot, "available") ?: 0L
+
+            transaction.update(
+                reserveRef,
+                mapOf(
+                    "status" to STATUS_EXPIRED,
+                    "expired_at" to Timestamp.now()
+                )
+            )
+
+            transaction.update(
+                bookRef,
+                mapOf(
+                    "available" to available + 1L,
+                    "lentCount" to FieldValue.increment(-1L)
+                )
+            )
+        }
     }
 
     /**
