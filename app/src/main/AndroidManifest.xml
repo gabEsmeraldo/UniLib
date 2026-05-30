@@ -67,6 +67,15 @@
         <activity
             android:name=".activities.AdminAddBook"
             android:exported="false" />
+        <activity
+            android:name=".activities.AdminUsersPage"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AdminUserDetailsPage"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UserEditPage"
+            android:exported="false" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

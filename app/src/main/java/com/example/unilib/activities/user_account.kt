@@ -29,6 +29,7 @@ class user_account : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
 
     private lateinit var txtIniciais: TextView
+    private lateinit var ivUserPhoto: ImageView
     private lateinit var txtNome: TextView
     private lateinit var txtEmail: TextView
     private lateinit var txtCpf: TextView
@@ -45,10 +46,15 @@ class user_account : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         txtIniciais = findViewById(R.id.iniciaisUsuario)
+        ivUserPhoto = findViewById(R.id.ivUserPhoto)
         txtNome = findViewById(R.id.nomeUsuario)
         txtEmail = findViewById(R.id.emailUsuario)
         txtCpf = findViewById(R.id.cpfUsuario)
         btnSair = findViewById(R.id.btnSair)
+
+        findViewById<View>(R.id.cardPerfil)?.setOnClickListener {
+            startActivity(Intent(this, UserEditPage::class.java))
+        }
 
         NavBarHelper.setup(this, NavTab.ACCOUNT)
 
@@ -58,12 +64,12 @@ class user_account : AppCompatActivity() {
         setupAccountActions()
         setupNotificationsButton()
         esconderEmprestimosMockados()
-        carregarDadosDoPerfil()
         setupNavigation()
     }
 
     override fun onResume() {
         super.onResume()
+        carregarDadosDoPerfil()
         carregarReservasAtivas()
         carregarEmprestimosDevolvidos()
     }
@@ -453,23 +459,20 @@ class user_account : AppCompatActivity() {
                 .get()
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
-                        val nomeCompleto = document.getString("nome")
+                        val nomeCompleto = document.getString("nome") ?: ""
                         val email = document.getString("email")
-                        val cpf = "CPF: ${document.getString("cpf")}"
+                        val cpfRaw = document.getString("cpf") ?: ""
+                        val photoUrl = document.getString("photoUrl") ?: ""
 
-                        txtNome.text = nomeCompleto ?: "Nome não disponível"
+                        txtNome.text = nomeCompleto.ifEmpty { "Nome não disponível" }
                         txtEmail.text = email ?: "E-mail não disponível"
-                        txtCpf.text = if (cpf.isNotEmpty()) {
-                            "CPF: ${formatarCpf(cpf)}"
+                        txtCpf.text = if (cpfRaw.isNotEmpty()) {
+                            "CPF: ${formatarCpf(cpfRaw)}"
                         } else {
                             "CPF não cadastrado"
                         }
 
-
-
-                        if (!nomeCompleto.isNullOrEmpty()) {
-                            txtIniciais.text = gerarIniciais(nomeCompleto)
-                        }
+                        applyUserAvatar(ivUserPhoto, txtIniciais, nomeCompleto, photoUrl)
                     }
                 }
                 .addOnFailureListener { e ->
@@ -478,26 +481,6 @@ class user_account : AppCompatActivity() {
         } else {
             txtNome.text = "Usuário não autenticado"
         }
-    }
-
-    private fun gerarIniciais(nome: String): String {
-        val palavras = nome.trim().split("\\s+".toRegex())
-
-        val palavrasValidas = palavras.filter { it.isNotEmpty() }
-
-        if (palavrasValidas.isEmpty()) return ""
-
-        val primeiraLetra = palavrasValidas.first().substring(0, 1)
-
-        val iniciais = if (palavrasValidas.size > 1) {
-            val ultimaLetra = palavrasValidas.last().substring(0, 1)
-            "$primeiraLetra$ultimaLetra"
-        } else {
-            primeiraLetra
-        }
-        return iniciais.map { caractere ->
-            if (caractere in 'a'..'z') caractere - 32 else caractere
-        }.joinToString("")
     }
 
     private fun setupNavigation() {
@@ -517,19 +500,6 @@ class user_account : AppCompatActivity() {
         }
     }
 
-    private fun formatarCpf(cpfBruto: String): String {
-        val apenasNumeros = cpfBruto.replace("\\D".toRegex(), "")
-
-        if (apenasNumeros.length != 11) {
-            return cpfBruto
-        }
-
-        val bloco1 = apenasNumeros.substring(0, 3)
-        val bloco2 = apenasNumeros.substring(3, 6)
-        val bloco3 = apenasNumeros.substring(6, 9)
-        val digitos = apenasNumeros.substring(9, 11)
-
-        return "$bloco1.$bloco2.$bloco3-$digitos"
-    }
+    private fun formatarCpf(cpfBruto: String): String = com.example.unilib.activities.formatarCpf(cpfBruto)
 
 }
