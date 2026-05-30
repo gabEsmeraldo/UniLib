@@ -151,6 +151,7 @@ class UserHomePage : AppCompatActivity() {
         )
         val colorNames = listOf("blue", "green", "purple", "red", "gray")
 
+        container.removeAllViews()
         bookRepository.getNewestBooks(10,
             onSuccess = { books ->
                 books.forEachIndexed { index, book ->
@@ -200,6 +201,7 @@ class UserHomePage : AppCompatActivity() {
         )
         val colorNames = listOf("blue", "green", "purple", "red", "gray")
 
+        container.removeAllViews()
         bookRepository.getTopLentBooks(10,
             onSuccess = { books ->
                 books.forEachIndexed { index, book ->

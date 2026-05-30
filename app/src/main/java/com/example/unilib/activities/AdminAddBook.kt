@@ -106,7 +106,7 @@ class AdminAddBook : AppCompatActivity() {
                 return@setOnClickListener
             }
             val tags = if (tagsText.isNotEmpty()) {
-                tagsText.split(",", " ").map { it.trim() }.filter { it.isNotEmpty() }
+                tagsText.split(",").map { it.trim() }.filter { it.isNotEmpty() }
             } else {
                 emptyList()
             }
