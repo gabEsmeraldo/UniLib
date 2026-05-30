@@ -168,29 +168,62 @@
                 android:textSize="15sp"
                 android:inputType="number"/>
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/layoutAddImage"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginBottom="40dp"
+                android:layout_width="120dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/bg_dashed"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:id="@+id/addImageHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🖼️"
+                        android:textSize="28sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="Adicionar Capa"
+                        android:textColor="#0D5DA3"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ivAddBookPreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvChangeImageHint"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="🖼️"
-                    android:textSize="32sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Adicionar Imagem da Capa"
-                    android:textColor="#0D5DA3"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:layout_gravity="bottom"
+                    android:background="#88000000"
+                    android:gravity="center"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:text="Trocar"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+            </FrameLayout>
 
             <Button
                 android:id="@+id/btnEnter"

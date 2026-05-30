@@ -3,19 +3,20 @@ package com.example.unilib.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unilib.R
 import com.example.unilib.repository.BookRepository
+import com.example.unilib.repository.LoanRepository
+import com.example.unilib.repository.NotificationRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import android.view.View
-import com.example.unilib.repository.LoanRepository
-import com.example.unilib.repository.NotificationRepository
 
 class UserHomePage : AppCompatActivity() {
 
@@ -162,6 +163,16 @@ class UserHomePage : AppCompatActivity() {
                     card.findViewById<TextView>(R.id.tvBookTitle).text = book.title
                     card.findViewById<TextView>(R.id.tvBookAuthor).text = book.author
 
+                    if (book.imageUrl.isNotEmpty()) {
+                        ImageUtils.base64ToBitmap(book.imageUrl)?.let { bmp ->
+                            card.findViewById<TextView>(R.id.tvBookEmoji)?.visibility = View.GONE
+                            card.findViewById<ImageView>(R.id.ivBookCoverImage)?.apply {
+                                setImageBitmap(bmp)
+                                visibility = View.VISIBLE
+                            }
+                        }
+                    }
+
                     val colorName = colorNames[index % colorNames.size]
                     card.setOnClickListener {
                         val intent = Intent(this, BookDetails::class.java)
@@ -200,6 +211,16 @@ class UserHomePage : AppCompatActivity() {
                     card.findViewById<TextView>(R.id.tvAvailBadge).text = "${book.available} disp."
                     card.findViewById<TextView>(R.id.tvBookTitle).text = book.title
                     card.findViewById<TextView>(R.id.tvBookAuthor).text = book.author
+
+                    if (book.imageUrl.isNotEmpty()) {
+                        ImageUtils.base64ToBitmap(book.imageUrl)?.let { bmp ->
+                            card.findViewById<TextView>(R.id.tvBookEmoji)?.visibility = View.GONE
+                            card.findViewById<ImageView>(R.id.ivBookCoverImage)?.apply {
+                                setImageBitmap(bmp)
+                                visibility = View.VISIBLE
+                            }
+                        }
+                    }
 
                     val colorName = colorNames[index % colorNames.size]
                     card.setOnClickListener {

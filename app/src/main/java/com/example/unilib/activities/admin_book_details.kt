@@ -1,23 +1,46 @@
 package com.example.unilib.activities
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.net.Uri
+import androidx.palette.graphics.Palette
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.example.unilib.R
+import com.example.unilib.repository.BookRepository
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.example.unilib.repository.BookRepository
+import com.yalantis.ucrop.UCrop
 
 class admin_book_details : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
     private var bookColor: String = "blue"
-
     private val bookRepository = BookRepository()
     private var currentBookId: String = ""
+    private var currentImageBase64: String = ""
+    private var cameraPhotoUri: Uri? = null
+    private var pendingCropUri: Uri? = null
+
+    override fun onResume() {
+        super.onResume()
+        pendingCropUri?.let { uri ->
+            pendingCropUri = null
+            launchCrop(uri)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,9 +101,11 @@ class admin_book_details : AppCompatActivity() {
         val available = getLong(document, "available")
         val borrowed = (quantity - available).coerceAtLeast(0L)
         val reserved = getLong(document, "reserved")
+        currentImageBase64 = document.getString("imageUrl") ?: ""
 
         renderBook(title, author, isbn, quantity, available, borrowed, reserved, synopsis)
         applyBookColor(bookColor)
+        displayBookCoverImage(currentImageBase64)
         wireEditModals(title, author, synopsis, quantity, available)
     }
 
@@ -135,9 +160,26 @@ class admin_book_details : AppCompatActivity() {
             }
         }
         findViewById<View>(R.id.btnEditarImagem)?.setOnClickListener {
-            EditarImagemModalHelper.show(this) {
-                Toast.makeText(this, "Funcionalidade ainda não implementada", Toast.LENGTH_SHORT).show()
-            }
+            EditarImagemModalHelper.show(
+                activity = this,
+                initialBase64 = currentImageBase64,
+                onPickImage = { showImageSourcePicker() },
+                onConfirm = { base64 ->
+                    bookRepository.updateBookField(
+                        bookId = currentBookId,
+                        fieldName = "imageUrl",
+                        newValue = base64,
+                        onSuccess = {
+                            currentImageBase64 = base64
+                            displayBookCoverImage(base64)
+                            Toast.makeText(this, "Imagem atualizada!", Toast.LENGTH_SHORT).show()
+                        },
+                        onError = { e ->
+                            Toast.makeText(this, "Erro: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
+                    )
+                }
+            )
         }
         findViewById<View>(R.id.btnEditarQuantidade)?.setOnClickListener {
             EditarQuantidadeModalHelper.show(
@@ -198,10 +240,126 @@ class admin_book_details : AppCompatActivity() {
         }
     }
 
+    private fun showImageSourcePicker() {
+        AlertDialog.Builder(this)
+            .setTitle("Selecionar imagem")
+            .setItems(arrayOf("Câmera", "Galeria")) { _, which ->
+                if (which == 0) checkCameraPermissionAndLaunch() else launchGallery()
+            }
+            .show()
+    }
+
+    private fun checkCameraPermissionAndLaunch() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            launchCamera()
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.CAMERA),
+                REQUEST_CAMERA_PERMISSION
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                launchCamera()
+            } else {
+                Toast.makeText(this, "Permissão de câmera negada", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun launchCamera() {
+        val photoFile = ImageUtils.createTempCameraFile(this)
+        cameraPhotoUri = FileProvider.getUriForFile(this, "${packageName}.fileprovider", photoFile)
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+            putExtra(MediaStore.EXTRA_OUTPUT, cameraPhotoUri)
+            putExtra("android.intent.extras.CAMERA_FACING", 0) // 0 = back camera
+            putExtra("android.intent.extras.LENS_FACING_FRONT", 0)
+        }
+        startActivityForResult(intent, REQUEST_CAMERA)
+    }
+
+    private fun launchGallery() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply { type = "image/*" }
+        startActivityForResult(intent, REQUEST_GALLERY)
+    }
+
+    private fun launchCrop(sourceUri: Uri) {
+        val destFile = ImageUtils.createTempCameraFile(this)
+        val destUri = Uri.fromFile(destFile)
+        UCrop.of(sourceUri, destUri)
+            .withAspectRatio(3f, 4f)
+            .withMaxResultSize(600, 800)
+            .start(this)
+    }
+
+    @Suppress("DEPRECATION")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CAMERA -> {
+                if (resultCode == RESULT_OK) {
+                    pendingCropUri = cameraPhotoUri
+                }
+            }
+            REQUEST_GALLERY -> {
+                if (resultCode == RESULT_OK) {
+                    pendingCropUri = data?.data
+                }
+            }
+            UCrop.REQUEST_CROP -> {
+                if (resultCode == RESULT_OK && data != null) {
+                    try {
+                        val resultUri = UCrop.getOutput(data) ?: return
+                        val bitmap = contentResolver.openInputStream(resultUri)
+                            ?.use { BitmapFactory.decodeStream(it) } ?: return
+                        val base64 = ImageUtils.compressBitmapToBase64(bitmap)
+                        bitmap.recycle()
+                        EditarImagemModalHelper.setSelectedImage(base64)
+                    } catch (e: Exception) {
+                        Toast.makeText(this, "Falha ao processar imagem", Toast.LENGTH_SHORT).show()
+                    } catch (e: OutOfMemoryError) {
+                        Toast.makeText(this, "Imagem muito grande", Toast.LENGTH_SHORT).show()
+                    }
+                } else if (resultCode == UCrop.RESULT_ERROR) {
+                    val err = UCrop.getError(data ?: return)
+                    Toast.makeText(this, "Erro ao recortar: ${err?.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun displayBookCoverImage(base64: String) {
+        if (base64.isEmpty()) return
+        val bitmap = ImageUtils.base64ToBitmap(base64) ?: return
+        findViewById<TextView>(R.id.tvBookEmoji)?.visibility = View.GONE
+        findViewById<ImageView>(R.id.ivBookCoverImage)?.apply {
+            setImageBitmap(bitmap)
+            visibility = View.VISIBLE
+        }
+        Palette.from(bitmap).generate { palette ->
+            val dominant = palette?.getDominantColor(Color.parseColor("#1565C0"))
+                ?: Color.parseColor("#1565C0")
+            val dark = ImageUtils.forceDark(dominant)
+            val darker = ImageUtils.darkenColor(dark, 0.80f)
+            findViewById<View>(R.id.bookCover)?.setBackgroundColor(dark)
+            findViewById<View>(R.id.heroSection)?.setBackgroundColor(darker)
+        }
+    }
+
     private fun applyBookColor(color: String) {
         val theme = colorThemes[color] ?: colorThemes.getValue("blue")
         findViewById<View>(R.id.bookCover)?.setBackgroundResource(theme.coverDrawable)
-        findViewById<View>(R.id.headerBar)?.setBackgroundColor(Color.parseColor(theme.darkColor))
         findViewById<View>(R.id.heroSection)?.setBackgroundColor(Color.parseColor(theme.heroColor))
     }
 
@@ -229,6 +387,10 @@ class admin_book_details : AppCompatActivity() {
     )
 
     private companion object {
+        const val REQUEST_CAMERA = 1001
+        const val REQUEST_GALLERY = 1002
+        const val REQUEST_CAMERA_PERMISSION = 1003
+
         val colorThemes = mapOf(
             "blue" to BookColorTheme(R.drawable.bg_book_blue, "#0D47A1", "#1565C0"),
             "green" to BookColorTheme(R.drawable.bg_book_green, "#004D40", "#00695C"),

@@ -47,6 +47,10 @@
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:textStyle="bold" />
+
+        <Space
+            android:layout_width="34dp"
+            android:layout_height="34dp" />
     </LinearLayout>
 
     <LinearLayout

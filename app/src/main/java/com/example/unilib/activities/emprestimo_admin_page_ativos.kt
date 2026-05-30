@@ -137,6 +137,7 @@ class emprestimo_admin_page_ativos : AppCompatActivity() {
     ): LinearLayout {
         val title = bookDocument?.getString("title") ?: "Livro"
         val author = bookDocument?.getString("author") ?: "Autor não informado"
+        val imageUrl = bookDocument?.getString("imageUrl") ?: ""
 
         val userName = userDocument?.getString("name")
             ?: userDocument?.getString("nome")
@@ -198,7 +199,8 @@ class emprestimo_admin_page_ativos : AppCompatActivity() {
                     alunoName = userName,
                     dataLabel = dataLabel,
                     taxaAtual = fineText,
-                    loanId = loanDocument.id
+                    loanId = loanDocument.id,
+                    imageUrl = imageUrl
                 )
             }
         }
@@ -225,6 +227,7 @@ class emprestimo_admin_page_ativos : AppCompatActivity() {
         }
 
         capa.addView(icon)
+        ImageUtils.loadBookCoverImage(capa, imageUrl)
 
         val infoColumn = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL

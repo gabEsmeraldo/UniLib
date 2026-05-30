@@ -4,10 +4,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.palette.graphics.Palette
 import com.example.unilib.R
 import com.example.unilib.repository.ReservationRepository
 import com.google.firebase.firestore.DocumentSnapshot
@@ -111,6 +113,7 @@ class BookDetails : AppCompatActivity() {
         val borrowed = (quantity - available).coerceAtLeast(0L)
         val location = document.getString("location") ?: "Não informado"
         val synopsis = document.getString("synopsis") ?: "Sinopse não informada"
+        val imageUrl = document.getString("imageUrl") ?: ""
 
         findViewById<TextView>(R.id.tvBookTitle).text = title
         findViewById<TextView>(R.id.tvBookAuthor).text = author
@@ -122,6 +125,7 @@ class BookDetails : AppCompatActivity() {
         findViewById<TextView>(R.id.tvSinopse).text = synopsis
 
         applyBookColor("blue")
+        displayBookCoverImage(imageUrl)
     }
 
     private fun setupActionButtons() {
@@ -219,11 +223,28 @@ class BookDetails : AppCompatActivity() {
         ).show()
     }
 
+    private fun displayBookCoverImage(base64: String) {
+        if (base64.isEmpty()) return
+        val bitmap = ImageUtils.base64ToBitmap(base64) ?: return
+        findViewById<TextView>(R.id.tvBookEmoji)?.visibility = View.GONE
+        findViewById<ImageView>(R.id.ivBookCoverImage)?.apply {
+            setImageBitmap(bitmap)
+            visibility = View.VISIBLE
+        }
+        Palette.from(bitmap).generate { palette ->
+            val dominant = palette?.getDominantColor(Color.parseColor("#1565C0"))
+                ?: Color.parseColor("#1565C0")
+            val dark = ImageUtils.forceDark(dominant)
+            val darker = ImageUtils.darkenColor(dark, 0.80f)
+            findViewById<View>(R.id.bookCover)?.setBackgroundColor(dark)
+            findViewById<View>(R.id.heroSection)?.setBackgroundColor(darker)
+        }
+    }
+
     private fun applyBookColor(color: String) {
         val theme = colorThemes[color] ?: colorThemes.getValue("blue")
 
         findViewById<View>(R.id.bookCover).setBackgroundResource(theme.coverDrawable)
-        findViewById<View>(R.id.headerBar).setBackgroundColor(Color.parseColor(theme.darkColor))
         findViewById<View>(R.id.heroSection).setBackgroundColor(Color.parseColor(theme.heroColor))
     }
 
