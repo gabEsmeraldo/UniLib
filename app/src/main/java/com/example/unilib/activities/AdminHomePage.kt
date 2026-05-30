@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -126,6 +127,7 @@ class AdminHomePage : AppCompatActivity() {
                                 onSuccess = { userDoc ->
                                     val title = bookDoc?.getString("title") ?: "Livro reservado"
                                     val author = bookDoc?.getString("author") ?: ""
+                                    val imageUrl = bookDoc?.getString("imageUrl") ?: ""
                                     val userName = userDoc?.getString("name")
                                         ?: userDoc?.getString("nome")
                                         ?: "Usuário"
@@ -139,6 +141,9 @@ class AdminHomePage : AppCompatActivity() {
                                     card.findViewById<TextView>(R.id.emprestimo_title).text = title
                                     card.findViewById<TextView>(R.id.emprestimo_user_info).text = userInfo
                                     card.findViewById<TextView>(R.id.emprestimo_status_info).text = timeLabel
+                                    card.findViewById<FrameLayout>(R.id.capa_container)?.let {
+                                        ImageUtils.loadBookCoverImage(it, imageUrl)
+                                    }
                                     card.setOnClickListener {
                                         startActivity(Intent(this, emprestimo_admin_page::class.java))
                                     }
@@ -212,6 +217,16 @@ class AdminHomePage : AppCompatActivity() {
                     card.findViewById<TextView>(R.id.tvAvailBadge).text = "${book.available} disp."
                     card.findViewById<TextView>(R.id.tvBookTitle).text = book.title
                     card.findViewById<TextView>(R.id.tvBookAuthor).text = book.author
+
+                    if (book.imageUrl.isNotEmpty()) {
+                        ImageUtils.base64ToBitmap(book.imageUrl)?.let { bmp ->
+                            card.findViewById<TextView>(R.id.tvBookEmoji)?.visibility = View.GONE
+                            card.findViewById<ImageView>(R.id.ivBookCoverImage)?.apply {
+                                setImageBitmap(bmp)
+                                visibility = View.VISIBLE
+                            }
+                        }
+                    }
 
                     val colorName = colorNames[index % colorNames.size]
                     card.setOnClickListener {

@@ -56,4 +56,6 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.github.yalantis:ucrop:2.2.8")
+    implementation("androidx.palette:palette-ktx:1.0.0")
 }

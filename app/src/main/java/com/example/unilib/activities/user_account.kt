@@ -172,6 +172,7 @@ class user_account : AppCompatActivity() {
     ): LinearLayout {
         val title = bookDocument?.getString("title") ?: "Livro reservado"
         val author = bookDocument?.getString("author") ?: "Autor não informado"
+        val imageUrl = bookDocument?.getString("imageUrl") ?: ""
         val codigo = reservaDocument.getString("reservation_code") ?: "------"
         val expiresAt = reservaDocument.getTimestamp("expires_at")
         val tempoRestante = calcularTempoRestante(expiresAt)
@@ -231,6 +232,7 @@ class user_account : AppCompatActivity() {
         }
 
         capa.addView(emoji)
+        ImageUtils.loadBookCoverImage(capa, imageUrl)
         capa.addView(badge)
 
         val tvTitulo = TextView(this).apply {
@@ -306,6 +308,7 @@ class user_account : AppCompatActivity() {
                         onSuccess = { bookDoc ->
                             val title = bookDoc?.getString("title") ?: "Livro devolvido"
                             val author = bookDoc?.getString("author") ?: ""
+                            val imageUrl = bookDoc?.getString("imageUrl") ?: ""
                             val returnedAt = loanDoc.getTimestamp("returned_at")
                             val dateLabel = if (returnedAt != null)
                                 "Devolvido em ${LoanRepository.formatDate(returnedAt)}"
@@ -342,6 +345,7 @@ class user_account : AppCompatActivity() {
                                 )
                             }
                             capa.addView(emoji)
+                            ImageUtils.loadBookCoverImage(capa, imageUrl)
 
                             val info = LinearLayout(this).apply {
                                 orientation = LinearLayout.VERTICAL

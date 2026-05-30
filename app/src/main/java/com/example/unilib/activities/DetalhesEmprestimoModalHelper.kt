@@ -9,6 +9,8 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.unilib.R
 
@@ -29,7 +31,8 @@ object DetalhesEmprestimoModalHelper {
         dataLabel: String? = null,
         taxaAtual: String? = null,
         reservationId: String? = null,
-        loanId: String? = null
+        loanId: String? = null,
+        imageUrl: String = ""
     ) {
         val dialog = Dialog(activity)
 
@@ -52,6 +55,16 @@ object DetalhesEmprestimoModalHelper {
         tvTitulo.text = bookTitle
         tvAutor.text = bookAuthor
         tvAluno.text = "Aluno: $alunoName"
+
+        if (imageUrl.isNotEmpty()) {
+            ImageUtils.base64ToBitmap(imageUrl)?.let { bmp ->
+                dialog.findViewById<TextView>(R.id.tvDetalhesCapaEmoji)?.visibility = View.GONE
+                dialog.findViewById<ImageView>(R.id.ivDetalhesCapaImagem)?.apply {
+                    setImageBitmap(bmp)
+                    visibility = View.VISIBLE
+                }
+            }
+        }
 
         when (status) {
             EmprestimoStatus.PENDENTE -> {

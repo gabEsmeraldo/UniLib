@@ -137,6 +137,7 @@ class emprestimo_admin_page : AppCompatActivity() {
     ): LinearLayout {
         val title = bookDocument?.getString("title") ?: "Livro reservado"
         val author = bookDocument?.getString("author") ?: "Autor não informado"
+        val imageUrl = bookDocument?.getString("imageUrl") ?: ""
 
         val userName = userDocument?.getString("name")
             ?: userDocument?.getString("nome")
@@ -174,7 +175,8 @@ class emprestimo_admin_page : AppCompatActivity() {
                     bookAuthor = author,
                     alunoName = userName,
                     dataLabel = dataLabel,
-                    reservationId = reservaDocument.id
+                    reservationId = reservaDocument.id,
+                    imageUrl = imageUrl
                 )
             }
         }
@@ -199,6 +201,7 @@ class emprestimo_admin_page : AppCompatActivity() {
         }
 
         capa.addView(icon)
+        ImageUtils.loadBookCoverImage(capa, imageUrl)
 
         val infoColumn = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL

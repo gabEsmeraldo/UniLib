@@ -45,32 +45,45 @@
             android:layout_height="28dp" />
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/imagePlaceholder"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:background="@drawable/bg_modal_title_outline"
-        android:gravity="center"
-        android:orientation="vertical"
         android:layout_marginBottom="22dp"
         android:clickable="true"
         android:focusable="true">
 
-        <ImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/ic_add"
-            android:tint="#1474C4" />
+        <LinearLayout
+            android:id="@+id/placeholderHint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Adicionar imagem do livro"
-            android:textColor="#1474C4"
-            android:textSize="13sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_add"
+                android:tint="#1474C4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Adicionar imagem do livro"
+                android:textColor="#1474C4"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivPreviewImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -84,11 +84,19 @@
                     android:background="@drawable/bg_book_blue">
 
                     <TextView
+                        android:id="@+id/tvBookEmoji"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="📘"
                         android:textSize="48sp" />
+
+                    <ImageView
+                        android:id="@+id/ivBookCoverImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
                 </FrameLayout>
 
                 <!-- Book Title -->

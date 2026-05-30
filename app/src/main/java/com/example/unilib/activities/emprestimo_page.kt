@@ -181,6 +181,7 @@ class emprestimo_page : AppCompatActivity() {
     ): LinearLayout {
         val title = bookDocument?.getString("title") ?: "Livro"
         val author = bookDocument?.getString("author") ?: "Autor não informado"
+        val imageUrl = bookDocument?.getString("imageUrl") ?: ""
         val endDate = loanDocument.getTimestamp("end_date")
 
         val lateDays = LoanRepository.calculateLateDays(endDate)
@@ -238,6 +239,7 @@ class emprestimo_page : AppCompatActivity() {
         }
 
         capa.addView(icon)
+        ImageUtils.loadBookCoverImage(capa, imageUrl)
 
         val infoColumn = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
@@ -340,6 +342,7 @@ class emprestimo_page : AppCompatActivity() {
     ): LinearLayout {
         val title = bookDocument?.getString("title") ?: "Livro reservado"
         val author = bookDocument?.getString("author") ?: "Autor não informado"
+        val imageUrl = bookDocument?.getString("imageUrl") ?: ""
         val expiresAt = reservaDocument.getTimestamp("expires_at")
         val tempoRestante = calcularTempoRestante(expiresAt)
         val codigo = reservaDocument.getString("reservation_code") ?: "------"
@@ -388,6 +391,7 @@ class emprestimo_page : AppCompatActivity() {
         }
 
         capa.addView(icon)
+        ImageUtils.loadBookCoverImage(capa, imageUrl)
 
         val infoColumn = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
