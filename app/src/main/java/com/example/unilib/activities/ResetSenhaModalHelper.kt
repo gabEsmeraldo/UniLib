@@ -12,7 +12,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.example.unilib.R
+import com.google.firebase.auth.FirebaseAuth
 
 object ResetSenhaModalHelper {
 
@@ -27,6 +29,8 @@ object ResetSenhaModalHelper {
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        val auth = FirebaseAuth.getInstance()
+
         val stepEmail = dialog.findViewById<LinearLayout>(R.id.stepEmail)
         val stepCodigo = dialog.findViewById<LinearLayout>(R.id.stepCodigo)
         val stepCodigoErro = dialog.findViewById<LinearLayout>(R.id.stepCodigoErro)
@@ -40,66 +44,38 @@ object ResetSenhaModalHelper {
         }
 
         val btnBack = dialog.findViewById<ImageView>(R.id.btnBackResetSenha)
-
         val etEmail = dialog.findViewById<EditText>(R.id.etResetEmail)
         val btnEnviarCodigo = dialog.findViewById<Button>(R.id.btnEnviarCodigo)
 
         val etCodigo = dialog.findViewById<EditText>(R.id.etResetCodigo)
         val btnVerificarCodigo = dialog.findViewById<Button>(R.id.btnVerificarCodigo)
-
         val btnConfirmarCodigoErro = dialog.findViewById<Button>(R.id.btnConfirmarCodigoErro)
-
         val etNovaSenha = dialog.findViewById<EditText>(R.id.etNovaSenha)
         val etConfirmarNovaSenha = dialog.findViewById<EditText>(R.id.etConfirmarNovaSenha)
         val btnSalvarNovaSenha = dialog.findViewById<Button>(R.id.btnSalvarNovaSenha)
 
         val btnFechar = dialog.findViewById<Button>(R.id.btnFecharResetSenha)
 
-        // Header back: previous step or dismiss on Step 1
         btnBack.setOnClickListener {
-            when {
-                stepCodigo.visibility == View.VISIBLE -> showOnly(stepEmail)
-                stepCodigoErro.visibility == View.VISIBLE -> showOnly(stepEmail)
-                stepNovaSenha.visibility == View.VISIBLE -> showOnly(stepCodigo)
-                stepSucesso.visibility == View.VISIBLE -> dialog.dismiss()
-                else -> dialog.dismiss()
-            }
+            dialog.dismiss()
         }
 
         btnEnviarCodigo.setOnClickListener {
-            val email = etEmail.text.toString().trim()
+            val email = etEmail.text.toString().trim().lowercase()
+
             if (email.isEmpty() || !emailRegex.matches(email)) {
                 dialog.dismiss()
                 EmailInexistenteModalHelper.show(activity)
             } else {
-                etCodigo.setText("")
-                showOnly(stepCodigo)
-            }
-        }
-
-        btnVerificarCodigo.setOnClickListener {
-            val code = etCodigo.text.toString().trim()
-            if (code.isNotEmpty()) {
-                etNovaSenha.setText("")
-                etConfirmarNovaSenha.setText("")
-                showOnly(stepNovaSenha)
-            } else {
-                showOnly(stepCodigoErro)
-            }
-        }
-
-        btnConfirmarCodigoErro.setOnClickListener {
-            etCodigo.setText("")
-            showOnly(stepCodigo)
-        }
-
-        btnSalvarNovaSenha.setOnClickListener {
-            val nova = etNovaSenha.text.toString()
-            val confirmar = etConfirmarNovaSenha.text.toString()
-            if (nova.isNotEmpty() && confirmar.isNotEmpty()) {
-                showOnly(stepSucesso)
-            } else {
-                showOnly(stepCodigoErro)
+                auth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            showOnly(stepSucesso)
+                        } else {
+                            dialog.dismiss()
+                            Toast.makeText(activity, "Erro do servidor: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                        }
+                    }
             }
         }
 
