@@ -59,7 +59,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Insira o e-mail cadastrado para enviarmos o código"
+            android:text="Insira o e-mail cadastrado"
             android:textColor="#1E2D3D"
             android:textSize="13sp"
             android:textStyle="bold"
@@ -87,7 +87,7 @@
             android:id="@+id/btnEnviarCodigo"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Enviar código"
+            android:text="Enviar email de reset"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="14sp"

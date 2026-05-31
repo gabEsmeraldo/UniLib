@@ -15,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.unilib.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 object ResetSenhaModalHelper {
 
@@ -30,6 +31,7 @@ object ResetSenhaModalHelper {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val auth = FirebaseAuth.getInstance()
+        val db = FirebaseFirestore.getInstance()
 
         val stepEmail = dialog.findViewById<LinearLayout>(R.id.stepEmail)
         val stepCodigo = dialog.findViewById<LinearLayout>(R.id.stepCodigo)
@@ -46,6 +48,7 @@ object ResetSenhaModalHelper {
         val btnBack = dialog.findViewById<ImageView>(R.id.btnBackResetSenha)
         val etEmail = dialog.findViewById<EditText>(R.id.etResetEmail)
         val btnEnviarCodigo = dialog.findViewById<Button>(R.id.btnEnviarCodigo)
+        val btnFechar = dialog.findViewById<Button>(R.id.btnFecharResetSenha)
 
         val etCodigo = dialog.findViewById<EditText>(R.id.etResetCodigo)
         val btnVerificarCodigo = dialog.findViewById<Button>(R.id.btnVerificarCodigo)
@@ -53,8 +56,6 @@ object ResetSenhaModalHelper {
         val etNovaSenha = dialog.findViewById<EditText>(R.id.etNovaSenha)
         val etConfirmarNovaSenha = dialog.findViewById<EditText>(R.id.etConfirmarNovaSenha)
         val btnSalvarNovaSenha = dialog.findViewById<Button>(R.id.btnSalvarNovaSenha)
-
-        val btnFechar = dialog.findViewById<Button>(R.id.btnFecharResetSenha)
 
         btnBack.setOnClickListener {
             dialog.dismiss()
@@ -64,19 +65,33 @@ object ResetSenhaModalHelper {
             val email = etEmail.text.toString().trim().lowercase()
 
             if (email.isEmpty() || !emailRegex.matches(email)) {
-                dialog.dismiss()
-                EmailInexistenteModalHelper.show(activity)
-            } else {
-                auth.sendPasswordResetEmail(email)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            showOnly(stepSucesso)
-                        } else {
-                            dialog.dismiss()
-                            Toast.makeText(activity, "Erro do servidor: ${task.exception?.message}", Toast.LENGTH_LONG).show()
-                        }
-                    }
+                Toast.makeText(activity, "Por favor, digite um e-mail válido.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            db.collection("users")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnSuccessListener { documents ->
+                    if (documents.isEmpty) {
+                        dialog.dismiss()
+                        EmailInexistenteModalHelper.show(activity)
+                    } else {
+                        auth.sendPasswordResetEmail(email)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    // Avança a interface direto para o painel de sucesso
+                                    showOnly(stepSucesso)
+                                } else {
+                                    dialog.dismiss()
+                                    Toast.makeText(activity, "Erro: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                                }
+                            }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(activity, "Erro de conexão: ${e.message}", Toast.LENGTH_LONG).show()
+                }
         }
 
         btnFechar.setOnClickListener { dialog.dismiss() }
