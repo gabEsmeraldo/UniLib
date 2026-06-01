@@ -73,4 +73,44 @@ class BookRepository {
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { onError(it) }
     }
+
+    fun getAllBooks(
+        limit: Int = 20,
+        onSuccess: (List<Book>, com.google.firebase.firestore.DocumentSnapshot?) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        db.collection("books")
+            .orderBy("title", Query.Direction.ASCENDING)
+            .limit(limit.toLong())
+            .get()
+            .addOnSuccessListener { result ->
+                val books = result.documents.mapNotNull { doc ->
+                    doc.toObject(Book::class.java)?.also { it.id = doc.id }
+                }
+                val lastDoc = result.documents.lastOrNull()
+                onSuccess(books, lastDoc)
+            }
+            .addOnFailureListener { onError(it) }
+    }
+
+    fun getBooksAfter(
+        lastDocument: com.google.firebase.firestore.DocumentSnapshot,
+        limit: Int = 20,
+        onSuccess: (List<Book>, com.google.firebase.firestore.DocumentSnapshot?) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        db.collection("books")
+            .orderBy("title", Query.Direction.ASCENDING)
+            .startAfter(lastDocument)
+            .limit(limit.toLong())
+            .get()
+            .addOnSuccessListener { result ->
+                val books = result.documents.mapNotNull { doc ->
+                    doc.toObject(Book::class.java)?.also { it.id = doc.id }
+                }
+                val lastDoc = result.documents.lastOrNull()
+                onSuccess(books, lastDoc)
+            }
+            .addOnFailureListener { onError(it) }
+    }
 }
