@@ -25,8 +25,13 @@ object EmailInexistenteModalHelper {
         val btnBack = dialog.findViewById<View>(R.id.btnBackEmailInexistente)
         val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarEmailInexistente)
 
-        btnBack.setOnClickListener { dialog.dismiss() }
-        btnConfirmar.setOnClickListener { dialog.dismiss() }
+        val fecharEVoltar = {
+            dialog.dismiss()
+            ResetSenhaModalHelper.show(activity)
+        }
+
+        btnBack.setOnClickListener { fecharEVoltar() }
+        btnConfirmar.setOnClickListener { fecharEVoltar() }
 
         dialog.show()
 
