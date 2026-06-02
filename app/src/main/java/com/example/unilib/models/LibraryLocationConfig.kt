@@ -63,46 +63,46 @@ object LibraryLocationConfig {
      */
     val shelfCoordinates = mapOf(
         // Setor A - Tecnologia
-        "A01" to ShelfCoordinate(startDp = 70, topDp = 285),
-        "A02" to ShelfCoordinate(startDp = 115, topDp = 285),
-        "A03" to ShelfCoordinate(startDp = 160, topDp = 285),
-        "A04" to ShelfCoordinate(startDp = 205, topDp = 285),
+        "A01" to ShelfCoordinate(startDp = 55, topDp = 285),
+        "A02" to ShelfCoordinate(startDp = 95, topDp = 285),
+        "A03" to ShelfCoordinate(startDp = 135, topDp = 285),
+        "A04" to ShelfCoordinate(startDp = 175, topDp = 285),
 
         // Setor B - Finanças e Administração
-        "B01" to ShelfCoordinate(startDp = 70, topDp = 315),
-        "B02" to ShelfCoordinate(startDp = 115, topDp = 315),
-        "B03" to ShelfCoordinate(startDp = 160, topDp = 315),
-        "B04" to ShelfCoordinate(startDp = 205, topDp = 315),
+        "B01" to ShelfCoordinate(startDp = 55, topDp = 315),
+        "B02" to ShelfCoordinate(startDp = 95, topDp = 315),
+        "B03" to ShelfCoordinate(startDp = 135, topDp = 315),
+        "B04" to ShelfCoordinate(startDp = 175, topDp = 315),
 
         // Setor C - Literatura e Linguagens
-        "C01" to ShelfCoordinate(startDp = 70, topDp = 345),
-        "C02" to ShelfCoordinate(startDp = 115, topDp = 345),
-        "C03" to ShelfCoordinate(startDp = 160, topDp = 345),
-        "C04" to ShelfCoordinate(startDp = 205, topDp = 345),
+        "C01" to ShelfCoordinate(startDp = 55, topDp = 345),
+        "C02" to ShelfCoordinate(startDp = 95, topDp = 345),
+        "C03" to ShelfCoordinate(startDp = 135, topDp = 345),
+        "C04" to ShelfCoordinate(startDp = 175, topDp = 345),
 
         // Setor D - Direito e Ciências Sociais
-        "D01" to ShelfCoordinate(startDp = 70, topDp = 375),
-        "D02" to ShelfCoordinate(startDp = 115, topDp = 375),
-        "D03" to ShelfCoordinate(startDp = 160, topDp = 375),
-        "D04" to ShelfCoordinate(startDp = 205, topDp = 375),
+        "D01" to ShelfCoordinate(startDp = 55, topDp = 375),
+        "D02" to ShelfCoordinate(startDp = 95, topDp = 375),
+        "D03" to ShelfCoordinate(startDp = 135, topDp = 375),
+        "D04" to ShelfCoordinate(startDp = 175, topDp = 375),
 
         // Setor E - Saúde e Psicologia
-        "E01" to ShelfCoordinate(startDp = 70, topDp = 405),
-        "E02" to ShelfCoordinate(startDp = 115, topDp = 405),
-        "E03" to ShelfCoordinate(startDp = 160, topDp = 405),
-        "E04" to ShelfCoordinate(startDp = 205, topDp = 405),
+        "E01" to ShelfCoordinate(startDp = 55, topDp = 405),
+        "E02" to ShelfCoordinate(startDp = 95, topDp = 405),
+        "E03" to ShelfCoordinate(startDp = 135, topDp = 405),
+        "E04" to ShelfCoordinate(startDp = 175, topDp = 405),
 
         // Setor F - Engenharia e Arquitetura
-        "F01" to ShelfCoordinate(startDp = 70, topDp = 435),
-        "F02" to ShelfCoordinate(startDp = 115, topDp = 435),
-        "F03" to ShelfCoordinate(startDp = 160, topDp = 435),
-        "F04" to ShelfCoordinate(startDp = 205, topDp = 435),
+        "F01" to ShelfCoordinate(startDp = 55, topDp = 435),
+        "F02" to ShelfCoordinate(startDp = 95, topDp = 435),
+        "F03" to ShelfCoordinate(startDp = 135, topDp = 435),
+        "F04" to ShelfCoordinate(startDp = 175, topDp = 435),
 
         // Setor G - Educação e Humanas
-        "G01" to ShelfCoordinate(startDp = 70, topDp = 465),
-        "G02" to ShelfCoordinate(startDp = 115, topDp = 465),
-        "G03" to ShelfCoordinate(startDp = 160, topDp = 465),
-        "G04" to ShelfCoordinate(startDp = 205, topDp = 465)
+        "G01" to ShelfCoordinate(startDp = 55, topDp = 465),
+        "G02" to ShelfCoordinate(startDp = 95, topDp = 465),
+        "G03" to ShelfCoordinate(startDp = 135, topDp = 465),
+        "G04" to ShelfCoordinate(startDp = 175, topDp = 465)
     )
 
     fun getSectorByCode(code: String?): LibrarySector? {
