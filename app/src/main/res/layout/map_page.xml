@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F7F9FC"
-    tools:context=".MainActivity">
+    tools:context=".activities.map_page">
 
     <!-- HEADER -->
     <LinearLayout
@@ -209,20 +209,22 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvMapBookTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Algoritmos e Estruturas de Dados"
+                    android:text="Carregando livro..."
                     android:textColor="#1474C4"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvMapShortInstructions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:lineSpacingExtra="2dp"
-                    android:text="1. Entre pela entrada principal indicada no mapa.&#10;2. Siga em direção ao acesso das fileiras de estantes.&#10;3. Localize a região marcada com o pin vermelho.&#10;4. O exemplar estará na área sinalizada dentro das fileiras."
+                    android:text="Carregando localização do livro..."
                     android:textColor="#6B7A90"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -407,7 +409,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="📍 O marcador vermelho indica a região aproximada onde o exemplar está localizado nas fileiras de estantes."
+                        android:text="📍 Carregando localização do exemplar..."
                         android:textColor="#5C6B82"
                         android:textSize="12sp"
                         android:lineSpacingExtra="2dp" />
@@ -434,11 +436,12 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvHowToFind"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:lineSpacingExtra="3dp"
-                    android:text="1. Entre pela área principal da biblioteca.&#10;2. Siga até a Estante B.&#10;3. Procure a Prateleira 3.&#10;4. O livro estará sinalizado no local indicado no mapa."
+                    android:text="Carregando instruções de localização..."
                     android:textColor="#6B7A90"
                     android:textSize="13sp" />
             </LinearLayout>
