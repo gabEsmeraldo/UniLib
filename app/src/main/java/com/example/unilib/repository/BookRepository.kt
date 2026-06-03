@@ -74,6 +74,19 @@ class BookRepository {
             .addOnFailureListener { onError(it) }
     }
 
+    fun updateBookFields(
+        bookId: String,
+        fields: Map<String, Any>,
+        onSuccess: () -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        db.collection("books")
+            .document(bookId)
+            .update(fields)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { onError(it) }
+    }
+
     fun getAllBooks(
         limit: Int = 20,
         onSuccess: (List<Book>, com.google.firebase.firestore.DocumentSnapshot?) -> Unit,

@@ -213,10 +213,25 @@ class admin_book_details : AppCompatActivity() {
                 currentQuantity = total.toString(),
                 availableLabel = "$available Disponíveis"
             ) { novaQuantidade ->
-                bookRepository.updateBookField(
+                val novaQtdLong = novaQuantidade.toLong()
+                val diff = novaQtdLong - total
+                val newAvailable = available + diff
+
+                if (newAvailable < 0) {
+                    Toast.makeText(
+                        this,
+                        "Não é possível reduzir abaixo dos exemplares emprestados.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return@show
+                }
+
+                bookRepository.updateBookFields(
                     bookId = currentBookId,
-                    fieldName = "quantity",
-                    newValue = novaQuantidade,
+                    fields = mapOf(
+                        "quantity" to novaQtdLong,
+                        "available" to newAvailable
+                    ),
                     onSuccess = {
                         Toast.makeText(this, "Quantidade atualizada!", Toast.LENGTH_SHORT).show()
                         loadBookFromFirestore()
