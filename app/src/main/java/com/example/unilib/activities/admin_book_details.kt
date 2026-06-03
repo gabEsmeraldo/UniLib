@@ -209,22 +209,13 @@ class admin_book_details : AppCompatActivity() {
         }
         findViewById<View>(R.id.btnEditarQuantidade)?.setOnClickListener {
             EditarQuantidadeModalHelper.show(
-                this,
-                currentQuantity = total.toString(),
-                availableLabel = "$available Disponíveis"
+                activity = this,
+                currentTotal = total.toInt(),
+                currentAvailable = available.toInt()
             ) { novaQuantidade ->
                 val novaQtdLong = novaQuantidade.toLong()
                 val diff = novaQtdLong - total
-                val newAvailable = available + diff
-
-                if (newAvailable < 0) {
-                    Toast.makeText(
-                        this,
-                        "Não é possível reduzir abaixo dos exemplares emprestados.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    return@show
-                }
+                val newAvailable = maxOf(0L, available + diff)
 
                 bookRepository.updateBookFields(
                     bookId = currentBookId,
