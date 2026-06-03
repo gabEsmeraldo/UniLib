@@ -54,17 +54,32 @@
         android:gravity="center_vertical"
         android:layout_marginStart="6dp"
         android:layout_marginEnd="6dp"
-        android:layout_marginBottom="22dp">
+        android:layout_marginBottom="8dp">
 
-        <TextView
-            android:id="@+id/tvQuantidadeAtual"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="8 Disponíveis"
-            android:textColor="#1E2D3D"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvQuantidadeAtual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8 Total"
+                android:textColor="#1E2D3D"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvQuantidadeDisponivel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8 Disponíveis"
+                android:textColor="#5A7A99"
+                android:textSize="13sp" />
+
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/btnDecrementarQuantidade"
@@ -106,6 +121,14 @@
         </FrameLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E8EEF4"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="16dp" />
 
     <!-- CONFIRMAR -->
     <androidx.appcompat.widget.AppCompatButton

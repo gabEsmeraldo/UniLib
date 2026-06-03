@@ -16,8 +16,8 @@ object EditarQuantidadeModalHelper {
 
     fun show(
         activity: Activity,
-        currentQuantity: String = "0",
-        availableLabel: String? = null,
+        currentTotal: Int,
+        currentAvailable: Int,
         onConfirm: (Int) -> Unit
     ) {
         val dialog = Dialog(activity)
@@ -29,27 +29,28 @@ object EditarQuantidadeModalHelper {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val btnBack = dialog.findViewById<View>(R.id.btnBackEditarQuantidade)
-        val tvAtual = dialog.findViewById<TextView>(R.id.tvQuantidadeAtual)
+        val tvTotal = dialog.findViewById<TextView>(R.id.tvQuantidadeAtual)
+        val tvDisponivel = dialog.findViewById<TextView>(R.id.tvQuantidadeDisponivel)
         val btnDecrementar = dialog.findViewById<View>(R.id.btnDecrementarQuantidade)
         val btnIncrementar = dialog.findViewById<View>(R.id.btnIncrementarQuantidade)
         val btnConfirmar = dialog.findViewById<Button>(R.id.btnConfirmarEditarQuantidade)
 
-        var count = currentQuantity.toIntOrNull()?.coerceAtLeast(0) ?: 0
-        var customLabelInUse = availableLabel != null
+        var count = currentTotal.coerceAtLeast(0)
+
+        fun computedAvailable(): Int = maxOf(0, currentAvailable + (count - currentTotal))
 
         fun render() {
-            tvAtual.text = if (customLabelInUse) availableLabel else "$count Disponíveis"
+            tvTotal.text = "$count Total"
+            tvDisponivel.text = "${computedAvailable()} Disponíveis"
         }
         render()
 
         btnDecrementar.setOnClickListener {
-            customLabelInUse = false
             if (count > 0) count -= 1
             render()
         }
 
         btnIncrementar.setOnClickListener {
-            customLabelInUse = false
             count += 1
             render()
         }

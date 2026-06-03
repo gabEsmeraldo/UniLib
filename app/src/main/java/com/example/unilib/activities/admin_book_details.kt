@@ -209,14 +209,20 @@ class admin_book_details : AppCompatActivity() {
         }
         findViewById<View>(R.id.btnEditarQuantidade)?.setOnClickListener {
             EditarQuantidadeModalHelper.show(
-                this,
-                currentQuantity = total.toString(),
-                availableLabel = "$available Disponíveis"
+                activity = this,
+                currentTotal = total.toInt(),
+                currentAvailable = available.toInt()
             ) { novaQuantidade ->
-                bookRepository.updateBookField(
+                val novaQtdLong = novaQuantidade.toLong()
+                val diff = novaQtdLong - total
+                val newAvailable = maxOf(0L, available + diff)
+
+                bookRepository.updateBookFields(
                     bookId = currentBookId,
-                    fieldName = "quantity",
-                    newValue = novaQuantidade,
+                    fields = mapOf(
+                        "quantity" to novaQtdLong,
+                        "available" to newAvailable
+                    ),
                     onSuccess = {
                         Toast.makeText(this, "Quantidade atualizada!", Toast.LENGTH_SHORT).show()
                         loadBookFromFirestore()
