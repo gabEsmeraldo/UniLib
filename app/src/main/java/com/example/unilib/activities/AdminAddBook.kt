@@ -25,6 +25,10 @@ import com.example.unilib.R
 import com.example.unilib.models.Book
 import com.example.unilib.repository.BookRepository
 import com.yalantis.ucrop.UCrop
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import com.example.unilib.models.LibraryLocationConfig
 
 class AdminAddBook : AppCompatActivity() {
 
@@ -79,10 +83,16 @@ class AdminAddBook : AppCompatActivity() {
         val editTags = findViewById<EditText>(R.id.editTags)
         val editSynopsis = findViewById<EditText>(R.id.editSynopsis)
         val editQuantity = findViewById<EditText>(R.id.editQuantity)
+        val spinnerSector = findViewById<Spinner>(R.id.spinnerSector)
+        val spinnerShelf = findViewById<Spinner>(R.id.spinnerShelf)
+        val editShelfLevel = findViewById<EditText>(R.id.editShelfLevel)
+
         val btnEnter = findViewById<Button>(R.id.btnEnter)
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
         val btnCancel = findViewById<Button>(R.id.btnCancel)
         val layoutAddImage = findViewById<FrameLayout>(R.id.layoutAddImage)
+
+        setupLocationFields(spinnerSector, spinnerShelf)
 
         layoutAddImage.setOnClickListener { showImageSourcePicker() }
 
@@ -96,7 +106,22 @@ class AdminAddBook : AppCompatActivity() {
             val tagsText = editTags.text.toString().trim()
             val synopsis = editSynopsis.text.toString().trim()
             val quantityText = editQuantity.text.toString().trim()
-            if (title.isEmpty() || author.isEmpty() || isbn.isEmpty() || quantityText.isEmpty()) {
+            val selectedSectorName = spinnerSector.selectedItem?.toString() ?: ""
+            val selectedSector = LibraryLocationConfig.getSectorByDisplayName(selectedSectorName)
+
+            val sectorCode = selectedSector?.code.orEmpty()
+            val shelfCode = spinnerShelf.selectedItem?.toString()?.trim().orEmpty()
+            val shelfLevel = editShelfLevel.text.toString().trim()
+
+            if (
+                title.isEmpty() ||
+                author.isEmpty() ||
+                isbn.isEmpty() ||
+                quantityText.isEmpty() ||
+                sectorCode.isEmpty() ||
+                shelfCode.isEmpty() ||
+                shelfLevel.isEmpty()
+            ) {
                 Toast.makeText(this, "Preencha todos os campos obrigatórios", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -117,7 +142,10 @@ class AdminAddBook : AppCompatActivity() {
                 tags = tags,
                 synopsis = synopsis,
                 quantity = quantity,
-                imageUrl = selectedImageBase64
+                imageUrl = selectedImageBase64,
+                sectorCode = sectorCode,
+                shelfCode = shelfCode,
+                shelfLevel = shelfLevel
             )
             btnEnter.isEnabled = false
             btnEnter.text = "Salvando..."
@@ -243,6 +271,55 @@ class AdminAddBook : AppCompatActivity() {
             visibility = View.VISIBLE
         }
         findViewById<View>(R.id.tvChangeImageHint)?.visibility = View.VISIBLE
+    }
+
+    private fun setupLocationFields(
+        spinnerSector: Spinner,
+        spinnerShelf: Spinner
+    ) {
+        val sectorNames = LibraryLocationConfig.getSectorNames()
+
+        val sectorAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            sectorNames
+        )
+
+        sectorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSector.adapter = sectorAdapter
+
+        fun updateShelvesForSelectedSector() {
+            val selectedSectorName = spinnerSector.selectedItem?.toString()
+            val selectedSector = LibraryLocationConfig.getSectorByDisplayName(selectedSectorName)
+
+            val shelves = LibraryLocationConfig.getShelvesBySectorCode(selectedSector?.code)
+
+            val shelfAdapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                shelves
+            )
+
+            shelfAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerShelf.adapter = shelfAdapter
+        }
+
+        spinnerSector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                updateShelvesForSelectedSector()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Não precisa fazer nada.
+            }
+        }
+
+        updateShelvesForSelectedSector()
     }
 
     private fun navigateBack() {

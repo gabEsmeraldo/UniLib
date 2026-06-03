@@ -15,6 +15,7 @@ import com.example.unilib.R
 import com.example.unilib.repository.ReservationRepository
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.example.unilib.models.LibraryLocationConfig
 
 class BookDetails : AppCompatActivity() {
 
@@ -112,7 +113,17 @@ class BookDetails : AppCompatActivity() {
             ?: getLongField(document, "copies")
             ?: 0L
         val borrowed = (quantity - available).coerceAtLeast(0L)
-        val location = document.getString("location") ?: "Não informado"
+
+        val sectorCode = document.getString("sectorCode")
+        val shelfCode = document.getString("shelfCode")
+        val shelfLevel = document.getString("shelfLevel")
+
+        val location = LibraryLocationConfig.buildLocationText(
+            sectorCode = sectorCode,
+            shelfCode = shelfCode,
+            shelfLevel = shelfLevel
+        )
+
         val synopsis = document.getString("synopsis") ?: "Sinopse não informada"
         val imageUrl = document.getString("imageUrl") ?: ""
         val tags = (document.get("tags") as? List<*>)?.filterIsInstance<String>() ?: emptyList()
@@ -136,10 +147,15 @@ class BookDetails : AppCompatActivity() {
         val btnReservar = findViewById<LinearLayout>(R.id.btnReservar)
 
         btnLocalizar.setOnClickListener {
+            if (currentBookId.isNullOrBlank()) {
+                Toast.makeText(this, "Livro ainda não carregado.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val intent = Intent(this, map_page::class.java)
+            intent.putExtra("BOOK_ID", currentBookId)
             intent.putExtra("NAV_TAB", activeTab.name)
             startActivity(intent)
-            finish()
         }
 
         btnReservar.setOnClickListener {

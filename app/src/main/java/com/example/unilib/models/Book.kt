@@ -1,6 +1,5 @@
 package com.example.unilib.models
 
-import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.ServerTimestamp
 import java.util.Date
 
@@ -15,8 +14,28 @@ data class Book(
     var available: Long = 0,
     var lentCount: Long = 0,
     var imageUrl: String = "",
+
+    var sectorCode: String = "",
+    var shelfCode: String = "",
+    var shelfLevel: String = "",
+
     @ServerTimestamp
     var createdAt: Date? = null
 ) {
-    constructor() : this("", "", "", "", emptyList(), "", 0, 0, 0, "", null)
+    constructor() : this(
+        "",
+        "",
+        "",
+        "",
+        emptyList(),
+        "",
+        0,
+        0,
+        0,
+        "",
+        "",
+        "",
+        "",
+        null
+    )
 }
