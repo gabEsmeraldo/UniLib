@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Locale
 import kotlin.math.ceil
 import kotlin.math.max
+import com.example.unilib.repository.NotificationRepository
 
 class user_account : AppCompatActivity() {
 
@@ -38,6 +39,8 @@ class user_account : AppCompatActivity() {
     private lateinit var reservasContainer: LinearLayout
     private lateinit var returnedLoansContainer: LinearLayout
 
+    private lateinit var notificationBadgeDot: View
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_account)
@@ -51,6 +54,7 @@ class user_account : AppCompatActivity() {
         txtEmail = findViewById(R.id.emailUsuario)
         txtCpf = findViewById(R.id.cpfUsuario)
         btnSair = findViewById(R.id.btnSair)
+        notificationBadgeDot = findViewById(R.id.notificationBadgeDot)
 
         findViewById<View>(R.id.cardPerfil)?.setOnClickListener {
             startActivity(Intent(this, UserEditPage::class.java))
@@ -72,6 +76,22 @@ class user_account : AppCompatActivity() {
         carregarDadosDoPerfil()
         carregarReservasAtivas()
         carregarEmprestimosDevolvidos()
+        updateNotificationsBadge()
+    }
+
+    private fun updateNotificationsBadge() {
+        NotificationRepository.getCurrentUserUnreadNotificationsCount(
+            onSuccess = { unreadCount ->
+                notificationBadgeDot.visibility = if (unreadCount > 0) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            },
+            onError = {
+                notificationBadgeDot.visibility = View.GONE
+            }
+        )
     }
 
     private fun setupNotificationsButton() {

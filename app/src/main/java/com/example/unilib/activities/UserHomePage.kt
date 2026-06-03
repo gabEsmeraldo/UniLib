@@ -14,7 +14,6 @@ import com.example.unilib.R
 import com.example.unilib.repository.BookRepository
 import com.example.unilib.repository.LoanRepository
 import com.example.unilib.repository.NotificationRepository
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -44,7 +43,7 @@ class UserHomePage : AppCompatActivity() {
 
         NavBarHelper.setup(this, NavTab.HOME)
         setupNotificationsButton()
-        setupChatButton()
+
     }
 
     override fun onResume() {
@@ -63,13 +62,6 @@ class UserHomePage : AppCompatActivity() {
         }
     }
 
-    private fun setupChatButton() {
-        findViewById<FloatingActionButton>(R.id.fabChat)?.setOnClickListener {
-            val intent = Intent(this, chat_ia_page::class.java)
-            intent.putExtra("NAV_TAB", NavTab.HOME.name)
-            startActivity(intent)
-        }
-    }
 
     private fun carregarNomeUsuario() {
         val userId = auth.currentUser?.uid

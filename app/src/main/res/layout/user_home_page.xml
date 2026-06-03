@@ -170,20 +170,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- FAB CHAT -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabChat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="Chat IA"
-        android:src="@drawable/ic_chat"
-        android:tint="#FFFFFF"
-        app:backgroundTint="#00C8D7"
-        app:layout_constraintBottom_toTopOf="@id/bottomNav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="24dp" />
 
     <!-- SCROLL CONTENT -->
     <ScrollView
