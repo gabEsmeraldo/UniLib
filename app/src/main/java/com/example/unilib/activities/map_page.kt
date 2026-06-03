@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.unilib.R
 import com.example.unilib.models.LibraryLocationConfig
 import com.google.firebase.firestore.FirebaseFirestore
+import com.example.unilib.repository.NotificationRepository
 
 class map_page : AppCompatActivity() {
 
@@ -23,6 +24,8 @@ class map_page : AppCompatActivity() {
     private lateinit var tvHowToFind: TextView
     private lateinit var bookMarker: LinearLayout
 
+    private lateinit var notificationBadgeDot: View
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.map_page)
@@ -32,6 +35,7 @@ class map_page : AppCompatActivity() {
         tvMapLocation = findViewById(R.id.tvMapLocation)
         tvHowToFind = findViewById(R.id.tvHowToFind)
         bookMarker = findViewById(R.id.bookMarker)
+        notificationBadgeDot = findViewById(R.id.notificationBadgeDot)
 
         val activeTab = intent.getStringExtra("NAV_TAB")
             ?.let { runCatching { NavTab.valueOf(it) }.getOrNull() }
@@ -45,6 +49,26 @@ class map_page : AppCompatActivity() {
 
         setupNotificationsButton()
         loadBookLocation()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateNotificationsBadge()
+    }
+
+    private fun updateNotificationsBadge() {
+        NotificationRepository.getCurrentUserUnreadNotificationsCount(
+            onSuccess = { unreadCount ->
+                notificationBadgeDot.visibility = if (unreadCount > 0) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            },
+            onError = {
+                notificationBadgeDot.visibility = View.GONE
+            }
+        )
     }
 
     private fun setupNotificationsButton() {
